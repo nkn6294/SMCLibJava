@@ -1,4 +1,4 @@
-package com.bkav.command.model;
+package com.bkav.command.model.control;
 
 public class ControlModelValue {
 	

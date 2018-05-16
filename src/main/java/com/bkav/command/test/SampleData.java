@@ -1,6 +1,11 @@
 package com.bkav.command.test;
 
 public class SampleData {
+	
+	public final static String[] ENTITYS = {
+			
+	};
+	
 	public final static String[] AREAS = {
 		"phong khach",
 		"phong ngu",
@@ -83,13 +88,43 @@ public class SampleData {
 			"Dat dieu hoa 1 24 do",
 			"Tang dieu hoa 1 10 do",
 			"Tang dieu hoa 1 10 do",
-			"Dieu chinh dieu hoa 1 tang|giam 10 do", //need status current
+			"Dieu chinh dieu hoa 1 giam 10 do", //need status current
 			"Dieu chinh dieu hoa 1 nho nhat",
 			
 			"Tang dieu hoa phong ngu 10 do",
 			"Tang dieu hoa phong ngu",
 			
 	};
+	
+	public final static String[] SampleCommands2 = {
+			
+			// thiet bi cu the, nhom thiet bi, noi suy qua loai thiet bi (1/n thiet bi), trang thai hien tai
+			
+			"Bat den 1 phong khach thu hai",//device with room
+			
+			"Bat den 1 thu ba", // device only
+			
+			"Bat den phong khach sang thu nam", // all device type in room
+			
+			"Bat tat ca den chieu thu tu hang tuan",
+			"Bat den sang chu nhat", 
+			"Mo rem", // all device type in current room (context)
+			
+			
+			"Kich hoat che do di ngu phong ngu", // function with room
+			"Kich hoat che do di ngu", // only function
+			
+			"Dat dieu hoa 1 24 do",
+			"Tang dieu hoa 1 10 do",
+			"Tang dieu hoa 1 10 do",
+			"Dieu chinh dieu hoa 1 tang 10 do", //need status current
+			"Dieu chinh dieu hoa 1 nho nhat",
+			
+			"Tang dieu hoa phong ngu 10 do",
+			"Tang dieu hoa phong ngu",
+			
+	};
+	
 	public final static String[] SampleSchedule = {
 			// chu y AM, PM, thoi gian hien tai, ngay trong thang..., gio,phut,giay -> h,m,s, hh:ss
 			"luc 2 gio 10 phut",

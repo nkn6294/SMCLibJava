@@ -18,7 +18,11 @@ public class ModelData {
 		"bat",
 		"tat",
 		"tang",
+		"tang len",
+		"len",
 		"giam",
+		"giam xuong",
+		"xuong",
 		"mo",
 		"dong",
 		"kich hoat",
@@ -28,6 +32,7 @@ public class ModelData {
 		"nho hon",
 		"lon nhat",
 		"nho nhat",
+		"dat",
 	};
 	
 	public final static String[] CONTEXTS = {

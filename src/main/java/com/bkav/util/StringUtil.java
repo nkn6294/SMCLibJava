@@ -14,6 +14,11 @@ public final class StringUtil {
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
         return pattern.matcher(nfdNormalizedString).replaceAll("");
     }
+    
+    public static String numberToText(String input) {
+    	// TODO number to text -> 0 -> 9, 10 -> 100, ....
+    	return input;
+    }
 	
 	public static float CheckSame(String[] sources, String[] dests) {
 		if (sources == null || dests == null || sources.length == 0 || dests.length == 0) {
