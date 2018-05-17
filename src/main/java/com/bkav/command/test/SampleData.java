@@ -15,6 +15,7 @@ public class SampleData {
 		"bep",
 		"phong chinh",
 		"phong hop",
+		"phong trung tam"
 	};
 	
 	public final static String[] FUNCTION = {

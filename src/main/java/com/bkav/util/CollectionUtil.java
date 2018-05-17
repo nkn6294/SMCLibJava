@@ -1,27 +1,40 @@
 package com.bkav.util;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Spliterator;
+import java.util.Spliterators;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
+import com.bkav.SystemManager;
 import com.bkav.command.common.TextProcesser;
 
 public class CollectionUtil {
 
+	public static <T> Stream<T> createStreamFromIterator(Iterator<T> iterator) {
+		Iterable<T> iterable = () -> iterator;
+		return StreamSupport.stream(iterable.spliterator(), false);
+	}
+	
+	public static <T> Stream<T> createStreamFromIterator2(Iterator<T> iterator) {
+		Spliterator<T> spliterator = Spliterators.spliteratorUnknownSize(iterator, Spliterator.ORDERED);
+		return StreamSupport.stream(spliterator, false);
+	}
+	
     public static <T> boolean Contains(T[] collection, T key) {
         if (collection == null) {
             return false;
         }
-        for (T t : collection) {
-            if (key.equals(t)) {
-                return true;
-            }
-        }
-        return false;
+        return Arrays.stream(collection)
+        		.filter(key::equals)
+        		.findFirst().isPresent();
     }
 
     public static <T> boolean Contains(List<T> collection, T key) {
@@ -30,17 +43,15 @@ public class CollectionUtil {
         }
         return collection.contains(key);
     }
-
     public static boolean Contains(Map<String, String[]> collection, String value) {
         if (collection == null || value == null) {
             return false;
         }
-        for (String key : collection.keySet()) {
-            if (value.startsWith(key)) {
-                return Contains(collection.get(key), value);
-            }
-        }
-        return false;
+    	return collection.entrySet().stream()
+    			.filter(entry -> value.startsWith(entry.getKey()))
+    			.flatMap(entry -> Arrays.stream(entry.getValue()))
+    			.filter(value::equals)
+    			.findFirst().isPresent(); 
     }
 
     public static <T> void Combine(List<T> sourceData, List<T> expandData) {
@@ -98,56 +109,37 @@ public class CollectionUtil {
             saveMap.put(chars[0], datas);
         }
     }
+    
     public static void showAllItem(Map<Character, Map<Integer, Set<String>>> saveMap) {
-        for(char c : saveMap.keySet()) {
-            Map<Integer, Set<String>> datas = saveMap.get(c);
-            for(int i : datas.keySet()) {
-                for(String str : datas.get(i)) {
-                    System.out.println(str);
-                }
-            }
-        }
+		saveMap.values().stream()//.parallel()  parallelStream()
+			.flatMap(map -> map.values().stream())
+			.flatMap(set -> set.stream())
+			.forEach(SystemManager.logger::info);
     }
     
-    public final static String[][] convert(String[] inputs) {
-    	List<String[]> output = new ArrayList<>();
-    	for (String input : inputs) {
-    		String[] item = StringUtil.splitString(input);
-    		if (item.length > 0) {
-    			output.add(StringUtil.splitString(input));    			
-    		}
-    	}
-    	return output.toArray(new String[output.size()][]);
+    public final static String[][] convert(String[] inputs) {    	
+    	return Arrays.stream(inputs)
+    			.map(StringUtil::splitString)
+    			.filter(item -> item.length > 0)
+    			.toArray(String[][]::new);
     }
     public final static String[][] convert(String[] inputs, TextProcesser textProcesser) {
-    	List<String[]> output = new ArrayList<>();
-    	for (String input : inputs) {
-    		String[] item = textProcesser.textToWords(textProcesser.preProccessText(input));
-    		if (item.length > 0) {
-    			output.add(StringUtil.splitString(input));    			
-    		}
-    		output.add(item);
-    	}
-    	return output.toArray(new String[output.size()][]);
+    	return Arrays.stream(inputs)
+	    		.map(textProcesser::preProccessText)
+	    		.map(textProcesser::textToWords)
+	    		.filter(item -> item.length > 0)
+	    		.toArray(String[][]::new);
     }
     public final static List<List<String>> convert(List<String> inputs) {
-    	List<List<String>> output = new ArrayList<>();
-    	for (String input : inputs) {
-    		List<String> item = StringUtil.splitStringToList(input);
-    		if (item.size() > 0) {
-    			output.add(StringUtil.splitStringToList(input));    			
-    		}
-    	}
-    	return output;
+		return inputs.stream()
+				.map(StringUtil::splitStringToList).filter(item -> item.size() > 0)
+				.collect(Collectors.toList());
     }
     public final static List<List<String>> convert(List<String> inputs, TextProcesser textProcesser) {
-    	List<List<String>> output = new ArrayList<>();
-    	for (String input : inputs) {
-    		List<String> item = textProcesser.textToListWords(textProcesser.preProccessText(input));
-    		if (item.size() > 0) {
-    			output.add(item);    			
-    		}
-    	}
-    	return output;
+    	return inputs.stream()
+		    	.map(textProcesser::preProccessText)
+				.map(textProcesser::textToListWords)
+				.filter(item -> item.size() > 0)
+				.collect(Collectors.toList());
     }
 }

@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public final class StringUtil {
 	
@@ -51,18 +53,7 @@ public final class StringUtil {
 		return CheckSame(splitString(source), dest);
 	}
     public static String[] splitString(String key) {
-        List<String> list = new ArrayList<>();
-        try {
-            final InputStreamBlock reader = new InputStreamBlock(new StringReader(key));
-            String word = reader.nextWord();
-            while (word != null) {
-                list.add(word.toLowerCase());
-                word = reader.nextWord();
-            }
-        } catch (IOException ex) {
-//            return new String[]{};
-        }
-        return list.toArray(new String[list.size()]);
+        return splitStringToList(key).stream().toArray(String[]::new);
     }
     public static List<String> splitStringToList(String key) {
         List<String> list = new ArrayList<>();
@@ -74,13 +65,12 @@ public final class StringUtil {
                 word = reader.nextWord();
             }
         } catch (IOException ex) {
-//            return new String[]{};
         }
         return list;
     }
     public static int search(String key, String source) {
-        String[] keys = key.split(" ");
-        String[] sources = source.split(" ");
+        String[] keys = splitString(key);
+        String[] sources = splitString(key);
         int count = 0;
         for (String element : sources) {
             if (count >= keys.length) {
@@ -94,18 +84,14 @@ public final class StringUtil {
     }
 
     public static List<String> search(String key, String[] sources) {
-        int maxItem = key.split(" ").length;
-        List<String> strings = new ArrayList<>();
-        for (String item : sources) {
-            if (search(key, item) == maxItem) {
-                strings.add(item);
-            }
-        }
-        return strings;
+        int maxItem = splitString(key).length;
+        return Arrays.stream(sources)
+        		.filter(item -> search(key, item) == maxItem)
+        		.collect(Collectors.toList());
     }
 
     public static List<Integer> searchByIndex(String key, String[] sources) {
-        int maxItem = key.split(" ").length;
+        int maxItem = splitString(key).length;
         List<Integer> strings = new ArrayList<>();
         for (int i = 0; i < sources.length; i++) {
             String item = sources[i];

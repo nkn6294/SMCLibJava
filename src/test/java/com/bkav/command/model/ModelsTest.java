@@ -1,6 +1,6 @@
 package com.bkav.command.model;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -9,10 +9,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.bkav.SystemManager;
+import com.bkav.command.model.control.ControlModel;
+import com.bkav.command.model.entity.HomeEntityModel;
+import com.bkav.command.model.time.TimeModel;
 import com.bkav.command.test.SampleData;
 import com.bkav.util.CollectionUtil;
 
-public class ModelTest {
+public class ModelsTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -24,7 +27,7 @@ public class ModelTest {
 
 	@Before
 	public void setUp() throws Exception {
-		this.model = this.createModel();
+		this.pipeLineModel = new PipeLineModel(new HomeEntityModel(), new ControlModel(), new TimeModel());
 	}
 
 	@After
@@ -32,23 +35,17 @@ public class ModelTest {
 	}
 
 	@Test
-	public final void testModel() {
-		if (this.model == null || this.commands == null) {
-			return;
-		}
+	public final void testModels() {
 		for (String[] command : commands) {
 			SystemManager.logger.info("-------------------------");
 			String commandString = String.join(" ", command);
 			SystemManager.logger.info("<" + commandString + ">");
-			this.model.test(command);
+			pipeLineModel.stream().filter(item -> item instanceof CommonModel<?>).forEach(item -> {
+				((CommonModel<?>) item).test(command);
+			});
 		}
-		assertTrue(true); // TODO TestModel model
+		assertTrue(true);// TODO test modelsTest.
 	}
-
-	protected CommonModel<?> model;
+	protected PipeLineModel pipeLineModel;
 	protected String[][] commands = CollectionUtil.convert(SampleData.SampleCommands2);
-
-	protected CommonModel<?> createModel() {
-		return null;
-	}
 }

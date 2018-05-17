@@ -6,7 +6,7 @@ import com.bkav.util.StringUtil;
 
 public interface TextProcesser {
 	default public String preProccessText(String text) {
-		return StringUtil.deAccentConvert(text);
+		return StringUtil.deAccentConvert(text.toLowerCase().replace('đ', 'd'));
 	};
 	
 	default public String[] textToWords(String text) {

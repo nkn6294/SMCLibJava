@@ -87,7 +87,13 @@ public class ModelData {
 		"sang", // 10 GIO SANG
 		"trua",
 		"chieu",
-		"toi"
+		"toi",
+		"buoi dem",
+		"buoi sang",
+		"buoi trua",
+		"buoi chieu",
+		"buoi toi", 
+		"buoi dem"
 	};
 	
 	public final static String[] DAY_IN_WEEK = {
