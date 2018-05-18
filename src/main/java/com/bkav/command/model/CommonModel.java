@@ -59,7 +59,7 @@ public abstract class CommonModel<T extends CommonData> implements Model {
 
 	@Override
 	public String[] process(String[] input) {
-		return (String[]) this.process(Arrays.stream(input).collect(Collectors.toList())).toArray();
+		return this.process(Arrays.stream(input).collect(Collectors.toList())).stream().toArray(String[]::new);
 	}
 
 	@Override
