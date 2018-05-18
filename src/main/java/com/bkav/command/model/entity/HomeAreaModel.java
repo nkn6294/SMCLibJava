@@ -10,7 +10,7 @@ import com.bkav.util.CollectionUtil;
 public class HomeAreaModel extends CommonModel<HomeArea> {
 
 	@Override
-	protected HomeArea createDataFromStringArray(String[] datas) {
+	protected HomeArea getDataFromStringArray(String[] datas) {
 		return HomeArea.createFromStringArray(datas);
 	}
 

@@ -20,7 +20,7 @@ public class TimeModel extends CollectionModel<CommonData> {
 	}
 
 	@Override
-	protected CommonData createDataFromStringArray(String[] datas) {
+	protected CommonData getDataFromStringArray(String[] datas) {
 		String id = CommonData.getSimpleName(datas);
 		return new CommonData(id);
 	}

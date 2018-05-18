@@ -18,7 +18,7 @@ public class HomeFunctionModel extends CommonModel<HomeFunction> {
 	}
 
 	@Override
-	protected HomeFunction createDataFromStringArray(String[] datas) {
+	protected HomeFunction getDataFromStringArray(String[] datas) {
 		return HomeFunction.createFromStringArray(datas);
 	}
 

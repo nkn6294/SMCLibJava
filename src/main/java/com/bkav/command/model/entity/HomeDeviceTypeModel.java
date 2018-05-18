@@ -18,7 +18,7 @@ public class HomeDeviceTypeModel extends CommonModel<HomeDeviceType> {
 	}
 
 	@Override
-	protected HomeDeviceType createDataFromStringArray(String[] datas) {
+	protected HomeDeviceType getDataFromStringArray(String[] datas) {
 		return HomeDeviceType.createFromStringArray(datas);
 	}
 

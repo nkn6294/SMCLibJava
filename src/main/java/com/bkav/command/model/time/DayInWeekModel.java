@@ -18,7 +18,7 @@ public class DayInWeekModel extends CommonModel<DayInWeek> {
 	}
 
 	@Override
-	protected DayInWeek createDataFromStringArray(String[] datas) {
+	protected DayInWeek getDataFromStringArray(String[] datas) {
 		return DayInWeek.createFromStringArray(datas);
 	}
 }

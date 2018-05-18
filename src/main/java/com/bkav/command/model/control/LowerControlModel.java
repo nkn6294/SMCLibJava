@@ -16,7 +16,7 @@ public class LowerControlModel extends CommonModel<Control> {
 		Arrays.sort(DATA_PROCESSED, DEFAULT_STRING_ARRAY_COMPARATOR);
 	}
 	@Override
-	protected Control createDataFromStringArray(String[] datas) {
+	protected Control getDataFromStringArray(String[] datas) {
 		return Control.createFromStringArray(datas, TypeControl.LOWER, 0);
 	}
 }

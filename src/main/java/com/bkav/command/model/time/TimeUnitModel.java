@@ -18,7 +18,7 @@ public class TimeUnitModel extends CommonModel<TimeUnit> {
 	}
 
 	@Override
-	protected TimeUnit createDataFromStringArray(String[] datas) {
+	protected TimeUnit getDataFromStringArray(String[] datas) {
 		return TimeUnit.createFromStringArray(datas);
 	}
 }

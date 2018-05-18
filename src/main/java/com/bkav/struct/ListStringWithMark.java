@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import com.bkav.util.StreamUtils;
@@ -23,21 +24,48 @@ public class ListStringWithMark implements Iterable<String> {
 		return this.strings[index];
 	}
 
-	public boolean isMark(int index) {
+	public Boolean isMark(int index) {
 		this.checkValidIndex(index);
 		return this.marks[index] > 0;
 	}
-
-	public void setMark(int... indexs) {
-		Arrays.stream(indexs).filter(this::isValidIndex).forEach(index -> this.marks[index]++);
+	
+	public Boolean isUnMark(int index) {
+		this.checkValidIndex(index);
+		return this.marks[index] <= 0;
 	}
 
+	public void setMark(int... indexs) {
+		Arrays.stream(indexs).filter(this::isValidIndex).forEach(this::markByIndex);
+	}
+
+	public int[] marks() {
+		return this.marks;
+	}
+	
+	public int getMark(int index) {
+		this.checkValidIndex(index);
+		return this.marks[index];
+	}
+	
+	public Boolean[] markValue() {
+		return IntStream.rangeClosed(this.minIndex, this.maxIndex)
+				.mapToObj(this::isMark).toArray(Boolean[]::new);
+	}
+	
+	public Integer[] markIndexs() {
+		return this.markStream().toArray(Integer[]::new);
+	}
+	
+	public Integer[] unMarkIndexs() {
+		return this.unMarkStream().toArray(Integer[]::new);
+	}
+	
 	public String[][] getMarks() {
 		List<String[]> result = new ArrayList<>();
 		List<String> item = new ArrayList<>();
-		for (int index = 0; index < this.strings.length; index++) {
-			if (isMark(index)) {
-				item.add(strings[index]);
+		for (int index = 0; index <= this.maxIndex; index++) {
+			if (this.isMark(index)) {
+				item.add(this.strings[index]);
 			} else if (item.size() > 0) {
 				result.add(item.toArray(new String[item.size()]));
 				item.clear();
@@ -49,9 +77,9 @@ public class ListStringWithMark implements Iterable<String> {
 	public String[][] getUnMarks() {
 		List<String[]> result = new ArrayList<>();
 		List<String> item = new ArrayList<>();
-		for (int index = 0; index < this.strings.length; index++) {
-			if (!isMark(index)) {
-				item.add(strings[index]);
+		for (int index = 0; index <= this.maxIndex; index++) {
+			if (!this.isMark(index)) {
+				item.add(this.strings[index]);
 			} else if (item.size() > 0) {
 				result.add(item.toArray(new String[item.size()]));
 				item.clear();
@@ -64,11 +92,11 @@ public class ListStringWithMark implements Iterable<String> {
 		if (indexs.length == 0) {
 			this.init(this.strings);
 		} else {
-			Arrays.stream(indexs).filter(this::isValidIndex).forEach(index -> this.marks[index] = 0);
+			Arrays.stream(indexs).filter(this::isValidIndex).forEach(this::resetMark);
 		}
 	}
 
-	public String[] getStrings() {
+	public String[] strings() {
 		return this.strings;
 	}
 
@@ -76,6 +104,16 @@ public class ListStringWithMark implements Iterable<String> {
 		return StreamUtils.createStream(new InnerIterator());
 	}
 
+	public Stream<String> markStream() {
+		return IntStream.rangeClosed(0, this.maxIndex)	
+				.filter(this::isMark).mapToObj(this::get);
+	}
+	
+	public Stream<String> unMarkStream() {
+		return IntStream.rangeClosed(0, this.maxIndex)
+				.filter(this::isUnMark).mapToObj(this::get);
+	}
+	
 	@Override
 	public Iterator<String> iterator() {
 		return new InnerIterator();
@@ -83,28 +121,38 @@ public class ListStringWithMark implements Iterable<String> {
 
 	private String[] strings;
 	private int[] marks;
-	int minIndex = 0;
-	int maxIndex = -1;
+	private int minIndex = 0;
+	private int maxIndex = -1;
 
+	private void resetMark(int index) {
+		this.marks[index] = 0;
+	}
+	
+	private void markByIndex(int index) {
+		this.marks[index] += 1;
+	}
+	
 	private final boolean isValidIndex(int index) {
-		return index >= this.minIndex && index <= this.maxIndex;
+		try {
+			this.checkValidIndex(index);
+		} catch (Exception ex) {
+			return false;
+		}
+		return true;
 	}
 
-	private final boolean checkValidIndex(int index) {
+	private final void checkValidIndex(int index) {
 		if (index < minIndex || index > maxIndex) {
 			throw new IndexOutOfBoundsException();
 		}
-		return true;
 	}
 
 	private final void init(String[] datas) {
 		this.strings = datas;
 		this.marks = new int[this.strings.length];
-		for (int index = 0; index < this.marks.length; index++) {
-			marks[index] = 0;
-		}
 		this.minIndex = 0;
 		this.maxIndex = this.marks.length - 1;
+		IntStream.rangeClosed(this.minIndex, this.maxIndex).forEach(this::resetMark);
 	}
 
 	private class InnerIterator implements Iterator<String> {
@@ -133,8 +181,8 @@ public class ListStringWithMark implements Iterable<String> {
 
 		private int findNext(int startIndex) {
 			int next = startIndex;
-			while (++next <= ListStringWithMark.this.marks.length - 1) {
-				if (!isMark(next)) {
+			while (++next <= ListStringWithMark.this.maxIndex) {
+				if (!ListStringWithMark.this.isMark(next)) {
 					return next;
 				}
 			}

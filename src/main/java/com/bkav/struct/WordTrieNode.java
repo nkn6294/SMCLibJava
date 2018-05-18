@@ -111,13 +111,13 @@ public class WordTrieNode<T> {
 			WordTrieNode<T> childNode = node.getChildrens().get(word);
 			if (childNode != null) {
 				node = childNode;
-				++index;
+				index++;
 			} else {
 				if (node.getId() != null) {
 					foundPharases.add(node.getId());
 				}
 				if (node == this) {
-					++index;
+					index++;
 				} else {
 					node = this;
 				}
@@ -129,6 +129,50 @@ public class WordTrieNode<T> {
 		return foundPharases;
 	}
 
+	public List<ResultFind<T>> findPharases(ResultFind<?> currentResult, List<ResultFind<T>> results) {
+		WordTrieNode<T> currentNode = this;
+		String[] words = currentResult.getRemains();
+		ListStringWithMark wordsWithMark = new ListStringWithMark(words);
+		if (results == null) {
+			results = new ArrayList<>();			
+		}
+		for (int index = 0; index < words.length;) {
+			String word = wordsWithMark.get(index);
+			WordTrieNode<T> childNode = currentNode.getChildrens().get(word);
+			if (childNode != null) {
+				currentNode = childNode;
+				wordsWithMark.setMark(index);
+				index++;
+			} else {
+				if (currentNode.getId() != null) {
+					List<String> remains = new ArrayList<>();
+					wordsWithMark.forEach(remains::add);
+					T value = currentNode.getId();
+					String[][] marks = wordsWithMark.getMarks();
+					ResultFind<T> resultFind = new ResultFind<>(value, marks.length > 0 ? marks[0] : new String[] {},
+							remains.toArray(new String[remains.size()]));
+					results.add(resultFind);
+					wordsWithMark.reset();
+				}
+				if (currentNode == this) {
+					index++;
+				} else {
+					currentNode = this;
+				}
+			}
+		}
+		if (currentNode.getId() != null) {
+			T value = currentNode.getId();
+			List<String> remains = new ArrayList<>();
+			wordsWithMark.forEach(remains::add);
+			String[][] marks = wordsWithMark.getMarks();
+			ResultFind<T> resultFind = new ResultFind<>(value, marks.length > 0 ? marks[0] : new String[] {},
+					remains.toArray(new String[remains.size()]));
+			results.add(resultFind);
+		}
+		return results;
+	}
+	
 	public Collection<T> findPharases(String[] words) {
 		return findPharases(words, null);
 	}
@@ -171,11 +215,11 @@ public class WordTrieNode<T> {
 
 	@Override
 	public String toString() {
-		if (this.childrens.isEmpty()) {
-			return ":[" + this.id + "]";
-		}
 		StringWriter writer = new StringWriter();
 		writer.append(":[" + this.id + "]");
+		if (this.childrens.isEmpty()) {
+			return writer.toString();
+		}
 		writer.append("{");
 		Iterator<String> iterator = this.childrens.keySet().iterator();
 		while (iterator.hasNext()) {

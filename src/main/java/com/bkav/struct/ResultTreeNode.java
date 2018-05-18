@@ -34,11 +34,11 @@ public class ResultTreeNode<T> {
 	
 	@Override
 	public String toString() {
-		if (this.childs.isEmpty()) {
-			return ":[" + this.value + "]";
-		}
 		StringWriter writer = new StringWriter();
 		writer.append(":[" + this.value + "]");
+		if (this.childs.isEmpty()) {
+			return writer.toString();
+		}
 		writer.append("{");
 		Iterator<ResultTreeNode<?>> iterator = this.childs.iterator();
 		while (iterator.hasNext()) {

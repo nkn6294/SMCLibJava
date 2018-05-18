@@ -24,7 +24,7 @@ public class ResultFind<T> {
 
 	@Override
 	public String toString() {
-		return String.format("ResultFind [value=%s, remain=%s]", value, Arrays.toString(remains));
+		return String.format("%s [value=%s, remain=%s]", this.getClass().getSimpleName(), value, Arrays.toString(remains));
 	}
 
 	private T value;

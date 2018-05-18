@@ -18,7 +18,7 @@ public class TimeInDayModel extends CommonModel<TimeInDay> {
 	}
 
 	@Override
-	protected TimeInDay createDataFromStringArray(String[] datas) {
+	protected TimeInDay getDataFromStringArray(String[] datas) {
 		return TimeInDay.createFromStringArray(datas);
 	}
 

@@ -15,15 +15,16 @@ public abstract class CommonModel<T extends CommonData> implements Model {
 
 	
 	public final static Comparator<String[]> DEFAULT_STRING_ARRAY_COMPARATOR = (array1, array2) -> {
-		// TODO sort with length array decrease
+		// sort with length array decrease
 		if (array1.length != array2.length) {
 			return array2.length > array2.length ? 1 : -1;
 		}
-		// TODO sort with equal sum
+		// sort with equal sum
 		for (int index = 0; index < array1.length; index++) {
 			int compare = array1[index].compareTo(array2[index]);
-			if (compare != 0)
-				return compare;
+			if (compare != 0) {
+				return compare;				
+			}
 		}
 		return 0;
 	};
@@ -42,7 +43,7 @@ public abstract class CommonModel<T extends CommonData> implements Model {
 			return this.wordTrieNode;
 		}
 		for (String[] data : datas) {
-			this.wordTrieNode.addPhrase(data, this.createDataFromStringArray(data));
+			this.wordTrieNode.addPhrase(data, this.getDataFromStringArray(data));
 		}
 		return this.wordTrieNode;
 	}
@@ -63,6 +64,7 @@ public abstract class CommonModel<T extends CommonData> implements Model {
 
 	@Override
 	public List<String> process(List<String> input) {
+		//TODO CommonModel.process
 		List<String> output = new ArrayList<>();
 		for (int index = 0; index < input.size(); index++) {
 
@@ -82,8 +84,10 @@ public abstract class CommonModel<T extends CommonData> implements Model {
 	protected String[][] DATA_PROCESSED;
 	protected Collection<CommonData> values = new ArrayList<>();
 	protected WordTrieNode<T> wordTrieNode;
-	
-	protected abstract T createDataFromStringArray(String[] datas);
+	/***
+	 * Create data for node
+	 */
+	protected abstract T getDataFromStringArray(String[] datas);
 	protected void init() {
 	};
 }

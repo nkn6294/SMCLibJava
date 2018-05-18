@@ -32,7 +32,7 @@ public class AdvanceControlModel extends CollectionModel<Control> {
 	}
 
 	@Override
-	protected Control createDataFromStringArray(String[] datas) {
+	protected Control getDataFromStringArray(String[] datas) {
 		return Control.createFromStringArray(datas, TypeControl.NONE, 0);
 	}
 }

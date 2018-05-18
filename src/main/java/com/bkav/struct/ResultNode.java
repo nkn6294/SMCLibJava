@@ -3,10 +3,6 @@ package com.bkav.struct;
 import java.io.StringWriter;
 
 public class ResultNode<T> {
-	private ResultFind<T> value;
-	private ResultNode<?> parent;
-	private ResultNode<?> child;
-
 	public ResultNode(ResultNode<?> parent, ResultFind<T> value) {
 		this.value = value;
 		this.parent = parent;
@@ -31,15 +27,17 @@ public class ResultNode<T> {
 
 	@Override
 	public String toString() {
-		if (this.child == null) {
-			return ":[" + this.value + "]";
-		}
 		StringWriter writer = new StringWriter();
 		writer.append(":[" + this.value + "]");
-		writer.append("{");
-		writer.append(this.child.toString());
-		writer.append("}");
+		if (this.child != null) {
+			writer.append("{");
+			writer.append(this.child.toString());
+			writer.append("}");			
+		}
 		return writer.toString();
 	}
 
+	private ResultFind<T> value;
+	private ResultNode<?> parent;
+	private ResultNode<?> child;
 }

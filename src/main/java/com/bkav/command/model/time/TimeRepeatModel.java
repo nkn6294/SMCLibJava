@@ -18,7 +18,7 @@ public class TimeRepeatModel extends CommonModel<TimeRepeat> {
 	}
 
 	@Override
-	protected TimeRepeat createDataFromStringArray(String[] datas) {
+	protected TimeRepeat getDataFromStringArray(String[] datas) {
 		return TimeRepeat.createFromStringArray(datas);
 	}
 }

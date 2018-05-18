@@ -17,7 +17,7 @@ public class MaxControlModel extends CommonModel<Control> {
 	}
 
 	@Override
-	protected Control createDataFromStringArray(String[] datas) {
+	protected Control getDataFromStringArray(String[] datas) {
 		return Control.createFromStringArray(datas, TypeControl.MAX, 0);
 	}
 
