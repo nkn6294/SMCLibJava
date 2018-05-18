@@ -10,7 +10,7 @@ import java.util.Map;
 public class TrieNode {
 
     public TrieNode() {
-        phraseID = -1;
+        this.phraseID = -1;
         this.children = new HashMap<>();
     }
 
@@ -34,13 +34,13 @@ public class TrieNode {
     public void addPhrase(String phrase, int phraseId) {
         TrieNode node = this;
         String[] words = phrase.split(" ");
-        for (int i = 0; i < words.length; i++) {
-            String word = words[i];
+        for (int index = 0; index < words.length; index++) {
+            String word = words[index];
             if (!node.getChildren().containsKey(word)) {
                 node.getChildren().put(word, new TrieNode());
             }
             node = node.getChildren().get(word);
-            if (i == words.length - 1) {
+            if (index == words.length - 1) {
                 node.setId(phraseId);
             }
         }
@@ -50,17 +50,17 @@ public class TrieNode {
         TrieNode node = this;
         List<Integer> foundPharases = new ArrayList<>();
         String[] words = textBody.split(" ");
-        for (int i = 0; i < words.length;) {
-            String word = words[i];
+        for (int index = 0; index < words.length;) {
+            String word = words[index];
             if (node.getChildren().containsKey(word)) {
                 node = node.getChildren().get(word);
-                ++i;
+                index++;
             } else {
                 if (node.getId() != -1) {
                     foundPharases.add(node.getId());
                 }
                 if (node == this) {
-                    ++i;
+                    index++;
                 } else {
                     node = this;
                 }

@@ -4,8 +4,8 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -51,9 +51,8 @@ public class TextProcesserTest {
 	@Test
 	public final void testTextToListWords() {
 		String input = "day la phong an";
-		String[] expected = {"day", "la", "phong", "an"};
 		List<String> output = this.textProcesser.textToListWords(input);
-		Arrays.stream(expected).forEach(output::remove);
+		Stream.of("day", "la", "phong", "an").forEach(output::remove);
 		assertTrue(output.size() == 0);
 	}
 

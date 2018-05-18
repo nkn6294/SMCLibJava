@@ -1,32 +1,18 @@
 package com.bkav.util;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Spliterator;
-import java.util.Spliterators;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 import com.bkav.SystemManager;
 import com.bkav.command.common.TextProcesser;
 
 public class CollectionUtil {
 
-	public static <T> Stream<T> createStreamFromIterator(Iterator<T> iterator) {
-		Iterable<T> iterable = () -> iterator;
-		return StreamSupport.stream(iterable.spliterator(), false);
-	}
-	
-	public static <T> Stream<T> createStreamFromIterator2(Iterator<T> iterator) {
-		Spliterator<T> spliterator = Spliterators.spliteratorUnknownSize(iterator, Spliterator.ORDERED);
-		return StreamSupport.stream(spliterator, false);
-	}
 	
     public static <T> boolean Contains(T[] collection, T key) {
         if (collection == null) {

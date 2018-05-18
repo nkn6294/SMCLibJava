@@ -27,7 +27,7 @@ public class CommandModelTest {
 	}
 
 	@Test
-	public final void test() {
+	public final void testCommandModel() {
 		assertTrue(true); // TODO CommandModel Test.
 	}
 

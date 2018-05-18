@@ -3,7 +3,9 @@ package com.bkav.struct;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -71,10 +73,8 @@ public class WordTrieNodeManagerTest {
 					assertTrue(resultFind.getValue() instanceof HomeDeviceType);
 					String[] detectes = resultFind.getDetects();
 					String[] remains = resultFind.getRemains();
-					LinkedList<String> strings = new LinkedList<>();
-					Arrays.stream(s1).forEach(strings::add);
-					Arrays.stream(detectes).forEach(strings::remove);
-					Arrays.stream(remains).forEach(strings::remove);
+					List<String> strings = Arrays.stream(s1).collect(Collectors.toList());
+					Stream.concat(Arrays.stream(detectes), Arrays.stream(remains)).forEach(strings::remove);
 					assertTrue(strings.size() == 0);
 					SystemManager.logger.info(resultFind.toString());
 				});

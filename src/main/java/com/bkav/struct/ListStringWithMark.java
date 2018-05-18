@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
-import com.bkav.util.CollectionUtil;
+import com.bkav.util.StreamUtils;
 
 public class ListStringWithMark implements Iterable<String> {
 	public ListStringWithMark(String[] strings) {
@@ -73,7 +73,7 @@ public class ListStringWithMark implements Iterable<String> {
 	}
 
 	public Stream<String> stream() {
-		return CollectionUtil.createStreamFromIterator(new InnerIterator());
+		return StreamUtils.createStream(new InnerIterator());
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package com.bkav.command.data;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.bkav.command.common.Model;
@@ -9,8 +10,8 @@ import com.bkav.command.model.PipeLineModel;
 
 public class TextWrapper {
 	
-	public static List<Model> proccess(TextWrapper text, PipeLineModel pipeLineModel) {
-		List<Model> models = new ArrayList<>();
+	public static List<ResultProcess> proccess(TextWrapper text, PipeLineModel pipeLineModel) {
+		List<ResultProcess> models = new ArrayList<>();
 		String[] words = text.words();
 		int currentLength = words.length;
 		for (Model model : pipeLineModel) {
@@ -18,7 +19,7 @@ public class TextWrapper {
 				continue;
 			}
 			currentLength = words.length;
-			models.add(model);
+			models.add(new ResultProcess(model, words));
 		}
 		return models;
 	}
@@ -47,6 +48,41 @@ public class TextWrapper {
 	
 	public String[] words() {
 		return this.words;
+	}
+	
+	public List<ResultProcess> proccess(PipeLineModel pipeLineModel) {
+		return TextWrapper.proccess(this, pipeLineModel);
+	}
+	
+	public static class ResultProcess {
+		public ResultProcess(Model model, String[] remains ) {
+			this.model = model;
+			this.remains = remains;
+		}
+		
+		public ResultProcess(Model model) {
+			this(model, new String[] {});
+		}
+		
+		public String[] getRemains() {
+			return this.remains;
+		}
+		
+		public void setRemains(String[] remains) {
+			this.remains = remains;
+		}
+		
+		public Model getModel() {
+			return this.model;
+		}
+		
+		@Override
+		public String toString() {
+			return String.format("%s [remains=%s, model=%s]", this.getClass().getSimpleName(), Arrays.toString(remains), model);
+		}
+
+		protected String[] remains;
+		protected Model model;
 	}
 	
 	private final static TextProcesser DefaultTextProcesser = new TextProcesser() {};

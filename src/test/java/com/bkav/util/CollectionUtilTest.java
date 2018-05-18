@@ -20,10 +20,6 @@ public class CollectionUtilTest {
 
 	@Before
 	public void setUp() throws Exception {
-		this.input = new String[] {
-			"00 01 02 03",
-			"10 11 12 13",
-		};
 	}
 
 	@After
@@ -32,7 +28,12 @@ public class CollectionUtilTest {
 
 	@Test
 	public void testConvertStringArray() {
-		String[][] converted = CollectionUtil.convert(this.input);
+		String[] input = new String[] {
+				"00 01 02 03 04",
+				"10 11 12 13 14",
+				"20 21 22 23 24"
+		};
+		String[][] converted = CollectionUtil.convert(input);
 		for (int i = 0; i < converted.length; i++) {
 			for (int j = 0; j < converted[i].length; j++) {
 				assertEquals("" + i + j, converted[i][j]);
@@ -54,6 +55,4 @@ public class CollectionUtilTest {
 	public final void testConvertListOfStringTextProcesser() {
 		assertTrue(true); //TODO testConvertListOfStringTextProcesser
 	}
-
-	private String[] input;
 }

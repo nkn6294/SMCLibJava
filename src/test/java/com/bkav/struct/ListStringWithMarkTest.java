@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.stream.IntStream;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -38,9 +40,9 @@ public class ListStringWithMarkTest {
 
 	@Test
 	public final void testGet() {
-		for (int index = 0; index < this.sample.length; index++) {
-			assertEquals(this.sample[index], this.listStringWithMark.get(index));
-		}
+		IntStream.range(0,  this.sample.length).forEach(index -> {
+			assertEquals(this.sample[index], this.listStringWithMark.get(index));			
+		});
 	}
 
 	@Test

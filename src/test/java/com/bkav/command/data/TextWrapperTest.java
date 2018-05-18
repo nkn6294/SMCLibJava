@@ -2,6 +2,8 @@ package com.bkav.command.data;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -9,7 +11,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.bkav.SystemManager;
-import com.bkav.command.common.Model;
 import com.bkav.command.model.PipeLineModel;
 import com.bkav.command.model.control.ControlModel;
 import com.bkav.command.model.entity.HomeEntityModel;
@@ -28,6 +29,8 @@ public class TextWrapperTest {
 
 	@Before
 	public void setUp() throws Exception {
+		this.pipeLineModel = new PipeLineModel(new HomeEntityModel(), new ControlModel(), new TimeModel());
+		this.commands = SampleData.SampleCommands;
 	}
 
 	@After
@@ -36,13 +39,12 @@ public class TextWrapperTest {
 
 	@Test
 	public final void testProccess() {
-		PipeLineModel pipeLineModel = new PipeLineModel(new HomeEntityModel(), new ControlModel(), new TimeModel());
-		String command = SampleData.SampleCommands[0];
-		TextWrapper textWrapper = new TextWrapper(command);
-		for (Model model : TextWrapper.proccess(textWrapper, pipeLineModel)) {
-			SystemManager.logger.info(model.toString());
-		}
+		Arrays.stream(this.commands).map(TextWrapper::new)
+				.map(textWrapper -> textWrapper.proccess(pipeLineModel).toString())
+				.forEach(SystemManager.logger::info);
 		assertTrue(true);// TODO test TextWrapper.process
 	}
 
+	private PipeLineModel pipeLineModel = new PipeLineModel(new HomeEntityModel(), new ControlModel(), new TimeModel());
+	private String[] commands;
 }

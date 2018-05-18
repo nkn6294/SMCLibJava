@@ -31,6 +31,7 @@ public class WordTrieNodeManager {
 	}
 	
 	public final static ResultTreeNode<?> processNodes(ResultTreeNode<?> parent, WordTrieNode<?> wordTrieNode, Iterator<WordTrieNode<?>> iterator) {
+		//TODO processNodes not complete
 		WordTrieNode<?> currentTrieNode = wordTrieNode;
 		if (currentTrieNode == null) {
 			if (!iterator.hasNext()) {
@@ -61,7 +62,6 @@ public class WordTrieNodeManager {
 		return parent.getChilds();
 	}
 	public static List<ResultFind<?>> findPharases(ResultFind<?> currentResult, WordTrieNode<?> rootNode) {
-//		SystemManager.logger.info(">" + currentResult);
 		WordTrieNode<?> currentNode = rootNode;
 		String[] words = currentResult.getRemains();
 		ListStringWithMark wordsWithMark = new ListStringWithMark(words);
@@ -102,7 +102,6 @@ public class WordTrieNodeManager {
 					remains.toArray(new String[remains.size()]));
 			results.add(resultFind);
 		}
-//		results.stream().map(Object::toString).forEach(SystemManager.logger::info);
 		return results;
 	}
 	
