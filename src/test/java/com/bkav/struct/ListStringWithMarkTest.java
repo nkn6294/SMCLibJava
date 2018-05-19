@@ -73,7 +73,7 @@ public class ListStringWithMarkTest {
 	@Test
 	public final void testMark() {
 		this.listStringWithMark.setMark(1, 2, 3);
-		this.listStringWithMark.reset(1, 3);
+		this.listStringWithMark.resetByIndex(1, 3);
 		assertFalse(this.listStringWithMark.isMark(1));
 		assertTrue(this.listStringWithMark.isMark(2));
 		assertFalse(this.listStringWithMark.isMark(3));
@@ -114,6 +114,20 @@ public class ListStringWithMarkTest {
 		assertArrayEquals(marks[0], new String[] {"1", "2"});
 		assertArrayEquals(marks[1], new String[] {"6", "7", "8"});
 	}
+	
+	@Test
+	public final void testGetFragmentStartIndexAt() {
+		assertTrue(true);//TODO testGetFragmentStartIndexAt.
+	}
+	
+	@Test
+	public final void testGetFragmentIndexWithContainIndex() {
+		this.listStringWithMark.setMark(3, 7);
+		int[] expected = new int[] {0, 1, 2};
+		int[] output = this.listStringWithMark.getFragmentIndex(1);
+		assertArrayEquals(expected, output);
+	}
+	
 	private ListStringWithMark listStringWithMark;
 	private String[] sample;
 }

@@ -61,6 +61,7 @@ public class WordTrieNodeManager {
 				if (currentNode.getId() != null) {
 					results.add(currentNode.getId());
 				}
+				wordsWithMark.resetFragment(index);
 				if (currentNode == rootNode) {
 					index++;
 				} else {

@@ -83,7 +83,7 @@ public class WordTrieNodeManagerTest {
 	@Test
 	public final void testFindPharases() {
 		WordTrieNode<HomeDeviceType> wordTrieNode = new HomeDeviceTypeModel().getWordTrieNode();
-		String[] s1 = { "phong", "khach", "phong", "an", "dieu", "hoa", "buoi", "den", "trua", "abc" };
+		String[] s1 = { "phong", "khach", "phong", "an", "dieu", "hoa", "buoi", "dieu", "den", "trua", "abc" };
 		SystemManager.logger.info(Arrays.toString(s1));
 		List<String> strings = Arrays.stream(s1).collect(Collectors.toList());
 		ResultsFind<HomeDeviceType> results = WordTrieNodeManager.findPharases(new ResultsFind<>(s1), wordTrieNode);
