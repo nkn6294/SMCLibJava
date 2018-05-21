@@ -91,7 +91,7 @@ public class WordTrieNodeManager {
 			} else {
 				Object valueNode = currentNode.getId();
 				if (valueNode != null) {
-					String[][] marks = wordsWithMark.getMarks();
+					String[][] marks = wordsWithMark.getFragments();
 					if (marks.length > 0) {
 						ResultFind<?> resultFind = new ResultFind<>(valueNode, marks[0],
 								wordsWithMark.unMarkStream().toArray(String[]::new));
@@ -107,7 +107,7 @@ public class WordTrieNodeManager {
 			}
 		}
 		if (currentNode.getId() != null) {
-			String[][] marks = wordsWithMark.getMarks();
+			String[][] marks = wordsWithMark.getFragments();
 			if (marks.length > 0) {
 				ResultFind<?> resultFind = new ResultFind<>(currentNode.getId(), marks[0],
 						wordsWithMark.unMarkStream().toArray(String[]::new));

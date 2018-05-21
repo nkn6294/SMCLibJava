@@ -148,7 +148,7 @@ public class WordTrieNode<T> {
 					List<String> remains = new ArrayList<>();
 					wordsWithMark.forEach(remains::add);
 					T value = currentNode.getId();
-					String[][] marks = wordsWithMark.getMarks();
+					String[][] marks = wordsWithMark.getFragments();
 					ResultFind<T> resultFind = new ResultFind<>(value, marks.length > 0 ? marks[0] : new String[] {},
 							remains.toArray(new String[remains.size()]));
 					results.add(resultFind);
@@ -165,7 +165,7 @@ public class WordTrieNode<T> {
 			T value = currentNode.getId();
 			List<String> remains = new ArrayList<>();
 			wordsWithMark.forEach(remains::add);
-			String[][] marks = wordsWithMark.getMarks();
+			String[][] marks = wordsWithMark.getFragments();
 			ResultFind<T> resultFind = new ResultFind<>(value, marks.length > 0 ? marks[0] : new String[] {},
 					remains.toArray(new String[remains.size()]));
 			results.add(resultFind);

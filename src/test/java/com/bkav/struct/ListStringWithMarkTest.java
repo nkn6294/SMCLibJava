@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -14,6 +15,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.bkav.SystemManager;
 
 public class ListStringWithMarkTest {
 
@@ -98,9 +101,9 @@ public class ListStringWithMarkTest {
 	}
 	
 	@Test
-	public final void testGetMarks() {
+	public final void testGetFragments() {
 		this.listStringWithMark.setMark(1, 2, 6, 7, 8);
-		String[][] marks = this.listStringWithMark.getMarks();
+		String[][] marks = this.listStringWithMark.getFragments();
 		assertEquals(2, marks.length);
 		assertArrayEquals(marks[0], new String[] {"1", "2"});
 		assertArrayEquals(marks[1], new String[] {"6", "7", "8"});
@@ -116,15 +119,79 @@ public class ListStringWithMarkTest {
 	}
 	
 	@Test
+	public final void getFragmentsContainIndex() {
+		this.listStringWithMark.setMark(1, 2, 3, 7, 8, 9);
+		for (int[] item : this.listStringWithMark.getFragmentsContainIndex(1, 2, 4,  7, 8)) {
+			SystemManager.logger.info(Arrays.toString(item));
+		}
+		assertEquals(0, 0);
+	}
+	
+	@Test
 	public final void testGetFragmentStartIndexAt() {
-		assertTrue(true);//TODO testGetFragmentStartIndexAt.
+		this.listStringWithMark.setMark(0, 1, 2, 3, 7, 8, 9);
+		int startInclusive = this.listStringWithMark.getFragmenStartIndextEndAt(0);
+		assertEquals(0, startInclusive);
+		startInclusive = this.listStringWithMark.getFragmenStartIndextEndAt(1);
+		assertEquals(0, startInclusive);
+		startInclusive = this.listStringWithMark.getFragmenStartIndextEndAt(2);
+		assertEquals(0, startInclusive);
+		startInclusive = this.listStringWithMark.getFragmenStartIndextEndAt(3);
+		assertEquals(0, startInclusive);
+		
+		startInclusive = this.listStringWithMark.getFragmenStartIndextEndAt(7);
+		assertEquals(7, startInclusive);
+		startInclusive = this.listStringWithMark.getFragmenStartIndextEndAt(8);
+		assertEquals(7, startInclusive);
+		startInclusive = this.listStringWithMark.getFragmenStartIndextEndAt(9);
+		assertEquals(7, startInclusive);
+	}
+	
+	@Test
+	public final void testGetFragmentEndIndexAt() {
+		this.listStringWithMark.setMark(0, 1, 2, 3, 7, 8, 9);
+		int endInclusive = this.listStringWithMark.getFragmentEndIndexStartAt(0);
+		assertEquals(3, endInclusive);
+		endInclusive = this.listStringWithMark.getFragmentEndIndexStartAt(1);
+		assertEquals(3, endInclusive);
+		endInclusive = this.listStringWithMark.getFragmentEndIndexStartAt(2);
+		assertEquals(3, endInclusive);
+		endInclusive = this.listStringWithMark.getFragmentEndIndexStartAt(3);
+		assertEquals(3, endInclusive);
+		
+		endInclusive = this.listStringWithMark.getFragmentEndIndexStartAt(7);
+		assertEquals(9, endInclusive);
+		endInclusive = this.listStringWithMark.getFragmentEndIndexStartAt(8);
+		assertEquals(9, endInclusive);
+		endInclusive = this.listStringWithMark.getFragmentEndIndexStartAt(9);
+		assertEquals(9, endInclusive);
 	}
 	
 	@Test
 	public final void testGetFragmentIndexWithContainIndex() {
-		this.listStringWithMark.setMark(3, 7);
-		int[] expected = new int[] {0, 1, 2};
-		int[] output = this.listStringWithMark.getFragmentIndex(1);
+		this.listStringWithMark.setMark(0, 1, 3, 4, 7, 8, 9);
+		int[] expected = new int[] {0, 1};
+		int[] output = this.listStringWithMark.getFragmentIndex(0);
+		assertArrayEquals(expected, output);
+		output = this.listStringWithMark.getFragmentIndex(1);
+		assertArrayEquals(expected, output);
+		
+		expected = new int[0];
+		output = this.listStringWithMark.getFragmentIndex(2);
+		assertArrayEquals(expected, output);
+		
+		expected = new int[] {3, 4};
+		output = this.listStringWithMark.getFragmentIndex(3);
+		assertArrayEquals(expected, output);
+		output = this.listStringWithMark.getFragmentIndex(4);
+		assertArrayEquals(expected, output);
+		
+		expected = new int[] {7, 8, 9};
+		output = this.listStringWithMark.getFragmentIndex(7);
+		assertArrayEquals(expected, output);
+		output = this.listStringWithMark.getFragmentIndex(8);
+		assertArrayEquals(expected, output);
+		output = this.listStringWithMark.getFragmentIndex(9);
 		assertArrayEquals(expected, output);
 	}
 	
