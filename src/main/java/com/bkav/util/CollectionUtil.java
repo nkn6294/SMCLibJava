@@ -13,13 +13,14 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import com.bkav.SystemManager;
 import com.bkav.command.common.TextProcesser;
 
 public class CollectionUtil {
 
-	public static boolean arrayEquals(Object[] object1, Object[] object2) {
+	public static <T> boolean arrayEquals(T[] object1, T[] object2) {
 		if (object1.length != object2.length) {
 			return false;
 		}
@@ -31,6 +32,61 @@ public class CollectionUtil {
 		return true;
 	}
 	
+	public static boolean arrayEquals(int[] object1, int[] object2) {
+		if (object1.length != object2.length) {
+			return false;
+		}
+		for (int index = 0; index < object1.length; index++) {
+			if (object1[index] != object2[index]) {
+				return false;
+			}
+		}
+		return true;
+	}
+	public static boolean arrayEquals(long[] object1, long[] object2) {
+		if (object1.length != object2.length) {
+			return false;
+		}
+		for (int index = 0; index < object1.length; index++) {
+			if (object1[index] != object2[index]) {
+				return false;
+			}
+		}
+		return true;
+	}
+	public static boolean arrayEquals(boolean[] object1, boolean[] object2) {
+		if (object1.length != object2.length) {
+			return false;
+		}
+		for (int index = 0; index < object1.length; index++) {
+			if (object1[index] != object2[index]) {
+				return false;
+			}
+		}
+		return true;
+	}
+	public static boolean arrayEquals(float[] object1, float[] object2) {
+		if (object1.length != object2.length) {
+			return false;
+		}
+		for (int index = 0; index < object1.length; index++) {
+			if (object1[index] != object2[index]) {
+				return false;
+			}
+		}
+		return true;
+	}
+	public static boolean arrayEquals(double[] object1, double[] object2) {
+		if (object1.length != object2.length) {
+			return false;
+		}
+		for (int index = 0; index < object1.length; index++) {
+			if (object1[index] != object2[index]) {
+				return false;
+			}
+		}
+		return true;
+	}
     public static <T> boolean Contains(T[] collection, T key) {
         if (collection != null) {
             return false;
@@ -216,11 +272,101 @@ public class CollectionUtil {
 	}
 	
 	public static <T> Predicate<T[]> distinctArray() {
-		List<Object[]> seen = new ArrayList<>();
-		return t -> seen.stream()
-				.filter(item -> arrayEquals(t, item))
-				.peek(seen::add).findFirst().isPresent();
+		List<T[]> seen = new ArrayList<>();
+		return itemInput -> {
+			boolean isContain = seen.stream().filter(item -> arrayEquals(itemInput, item)).findFirst().isPresent();
+			if (isContain) {
+				return false;
+			}
+			seen.add(itemInput);
+			return true;
+		};
 	}
 	
-	//
+	public static Predicate<int[]> distinctArrayInteger() {
+		List<int[]> seen = new ArrayList<>();
+		return itemInput -> {
+			boolean isContain = seen.stream().filter(item -> arrayEquals(itemInput, item)).findFirst().isPresent();
+			if (!isContain) {
+				seen.add(itemInput);
+			}
+			return !isContain;
+		};
+	}
+	
+	public static Predicate<long[]> distinctArrayLong() {
+		List<long[]> seen = new ArrayList<>();
+		return itemInput -> {
+			boolean isContain = seen.stream().filter(item -> arrayEquals(itemInput, item)).findFirst().isPresent();
+			if (!isContain) {
+				seen.add(itemInput);
+			}
+			return !isContain;
+		};
+	}
+	public static Predicate<boolean[]> distinctArrayBoolean() {
+		List<boolean[]> seen = new ArrayList<>();
+		return itemInput -> {
+			boolean isContain = seen.stream().filter(item -> arrayEquals(itemInput, item)).findFirst().isPresent();
+			if (!isContain) {
+				seen.add(itemInput);
+			}
+			return !isContain;
+		};
+	}
+	public static Predicate<float[]> distinctArrayFloat() {
+		List<float[]> seen = new ArrayList<>();
+		return itemInput -> {
+			boolean isContain = seen.stream().filter(item -> arrayEquals(itemInput, item)).findFirst().isPresent();
+			if (!isContain) {
+				seen.add(itemInput);
+			}
+			return !isContain;
+		};
+	}
+	public static Predicate<double[]> distinctArrayDouble() {
+		List<double[]> seen = new ArrayList<>();
+		return itemInput -> {
+			boolean isContain = seen.stream().filter(item -> arrayEquals(itemInput, item)).findFirst().isPresent();
+			if (!isContain) {
+				seen.add(itemInput);
+			}
+			return !isContain;
+		};
+	}
+	public static <T> Stream<T[]> optimalArray(T[][] input) {
+		return Arrays.stream(input)
+				.filter(array -> array.length > 0)
+				.filter(CollectionUtil.distinctArray());
+	}
+	public static int[][] optimalArrayInteger(int[][] input) {
+		return Arrays.stream(input)
+				.filter(array -> array.length > 0)
+				.filter(CollectionUtil.distinctArrayInteger())
+				.toArray(int[][]::new);
+	}
+	public static long[][] optimalArrayLong(long[][] input) {
+		return Arrays.stream(input)
+				.filter(array -> array.length > 0)
+				.filter(CollectionUtil.distinctArrayLong())
+				.toArray(long[][]::new);
+	}
+	public static boolean[][] optimalArrayBoolean(boolean[][] input) {
+		return Arrays.stream(input)
+				.filter(array -> array.length > 0)
+				.filter(CollectionUtil.distinctArrayBoolean())
+				.toArray(boolean[][]::new);
+	}
+	public static float[][] optimalArrayFloat(float[][] input) {
+		return Arrays.stream(input)
+				.filter(array -> array.length > 0)
+				.filter(CollectionUtil.distinctArrayFloat())
+				.toArray(float[][]::new);
+	}
+	public static double[][] optimalArrayDouble(double[][] input) {
+		return Arrays.stream(input)
+				.filter(array -> array.length > 0)
+				.filter(CollectionUtil.distinctArrayDouble())
+				.toArray(double[][]::new);
+	}
 }

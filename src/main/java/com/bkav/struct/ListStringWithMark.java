@@ -3,14 +3,11 @@ package com.bkav.struct;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.IntConsumer;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -21,11 +18,9 @@ public class ListStringWithMark implements Iterable<String> {
 	public ListStringWithMark(String[] strings) {
 		this.init(strings);
 	}
-
 	public int length() {
 		return this.strings.length;
 	}
-
 	public String get(int index) {
 		this.checkValidIndex(index);
 		return this.strings[index];
@@ -97,8 +92,7 @@ public class ListStringWithMark implements Iterable<String> {
 				item.clear();
 			}
 		}
-		Integer[][] output = result.toArray(new Integer[result.size()][]);
-		return CollectionUtil.toArray(output);
+		return result.toArray(new int[result.size()][]);
 	}
 
 	public String[][] getUnMarks() {
@@ -131,11 +125,11 @@ public class ListStringWithMark implements Iterable<String> {
 	}
 
 	public void resetByIndex(int... indexs) {
-		Arrays.stream(indexs).filter(this::isValidIndex).peek(this::resetMark);
+		Arrays.stream(indexs).filter(this::isValidIndex).forEach(this::resetMark);
 	}
 
 	public void resetByIndex(Collection<Integer> indexs) {
-		indexs.stream().filter(this::isValidIndex).peek(this::resetMark);
+		indexs.stream().filter(this::isValidIndex).forEach(this::resetMark);
 	}
 
 	public void reset() {
@@ -177,42 +171,43 @@ public class ListStringWithMark implements Iterable<String> {
 	}
 
 	public int[][] getFragmentsContainIndex(int... containIndexs) {
-		return Arrays.stream(containIndexs)
-				.distinct()
-				.mapToObj(this::getFragmentIndex)
-//				.filter(array -> array.length > 0)
-				.toArray(int[][]::new);
+		return Arrays.stream(containIndexs).mapToObj(this::getFragmentIndex).toArray(int[][]::new);
 	}
 
 	public int[][] getFragmentsContainIndex(Collection<Integer> containIndexs) {
-		return containIndexs.stream()
-				.distinct()
-				.map(this::getFragmentIndex)
-//				.filter(array -> array.length > 0)
-				.toArray(int[][]::new);
+		return containIndexs.stream().map(this::getFragmentIndex).toArray(int[][]::new);
 	}
 	public int[][] getFragmentsContainIndexOptimal(int... containIndexs) {
-//		TODO getFragmentsContainIndexOptimal
-		Set<Integer> starts = new HashSet<>();
 		return Arrays.stream(containIndexs)
-				.distinct()
-				.mapToObj(this::getFragmentIndex)
-				.filter(array -> array.length > 0)
-				.filter(arrays -> !starts.contains(arrays[0]))
-				.peek(array -> starts.add(array[0]))
-				.toArray(int[][]::new);
+					.distinct()
+					.mapToObj(this::getFragmentIndex)
+					.filter(array -> array.length > 0)
+					.filter(CollectionUtil.distinctArrayInteger())
+					.toArray(int[][]::new);
 	}
 
 	public int[][] getFragmentsContainIndexOptimal(Collection<Integer> containIndexs) {
-//		TODO getFragmentsContainIndexOptimal
-		Set<Integer> starts = new HashSet<>();
+		List<Integer> starts = new ArrayList<>();
+		List<Integer> ends = new ArrayList<>();
 		return containIndexs.stream()
-				.distinct()
-				.map(this::getFragmentIndex)
-				.filter(array -> array.length > 0)
-				.filter(arrays -> !starts.contains(arrays[0]))
-				.peek(array -> starts.add(array[0]))
-				.toArray(int[][]::new);
+			.distinct()
+			.filter(index -> {
+				for (int i = 0; i < starts.size(); i++) {
+					int start = starts.get(i);
+					int end = ends.get(i);
+					if (index >= start && index <= end) {
+						return false;
+					}
+				}
+				return true;
+			})
+			.map(this::getFragmentIndex)
+			.filter(array -> array.length > 0)
+			.peek(array -> {
+				starts.add(array[0]);
+				ends.add(array[array.length - 1]);
+			})
+			.toArray(int[][]::new);
 	}
 	
 	public void resetFragment(int containIndex) {
@@ -232,42 +227,26 @@ public class ListStringWithMark implements Iterable<String> {
 	}
 
 	public void resetFragments(int... containIndexs) {
-		Arrays.stream(containIndexs)
-				.distinct()
-				.filter(this::isValidIndex)
-				.filter(this::isMark)
-				.peek(this::resetFragment);
+		Arrays.stream(containIndexs).filter(this::isValidIndex).forEach(this::resetFragment);
 	}
 
 	public void resetFragments(Collection<Integer> containIndexs) {
-		containIndexs.stream()
-				.distinct()
-				.filter(this::isValidIndex)
-				.filter(this::isMark)
-				.peek(this::resetFragment);
+		containIndexs.stream().filter(this::isValidIndex).forEach(this::resetFragment);
 	}
 	public void resetFragmentsOptimal(int... containIndexs) {
-		int[] sortedIndex = Arrays.stream(containIndexs)
-				.distinct()
-				.filter(this::isValidIndex)
-				.filter(this::isMark)
-				.sorted().toArray();
-		if (sortedIndex.length == 0) {
-			return;
-		}
-		
-		//TODO resetFragments with varargs
+		Arrays.stream(containIndexs)
+			.distinct()
+			.filter(this::isValidIndex)
+			.filter(this::isMark)
+			.forEach(this::resetFragment);
 	}
 
 	public void resetFragmentsOptimal(Collection<Integer> containIndexs) {
-		Set<Integer> sortedIndex = containIndexs.stream()
-				.filter(this::isValidIndex)
-				.filter(this::isMark)
-				.sorted().collect(Collectors.toSet());
-		if (sortedIndex.size() == 0) {
-			return;
-		}
-		//TODO resetFragments with collection
+		containIndexs.stream()
+			.distinct()
+			.filter(this::isValidIndex)
+			.filter(this::isMark)
+			.forEach(this::resetFragment);
 	}
 
 	public String[] strings() {
