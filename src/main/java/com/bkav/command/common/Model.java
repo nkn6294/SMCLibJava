@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.bkav.command.data.CommonData;
+import com.bkav.struct.ResultsProcess;
 
 public interface Model {
     public String getModelName();
@@ -19,6 +20,10 @@ public interface Model {
     };
     
     default public List<String> process(List<String> input) {
+    	return input;
+    };
+    
+    default public ResultsProcess process(ResultsProcess input) {
     	return input;
     };
 }

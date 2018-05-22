@@ -1,6 +1,5 @@
 package com.bkav.struct;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -83,18 +82,12 @@ public class WordTrieNodeManagerTest {
 	@Test
 	public final void testFindPharases() {
 		WordTrieNode<HomeDeviceType> wordTrieNode = new HomeDeviceTypeModel().getWordTrieNode();
-		String[] s1 = { "phong", "khach", "phong", "an", "dieu", "hoa", "buoi", "dieu", "den", "trua", "abc" };
+		String[] s1 = { "phong", "khach", "phong", "an", "dieu", "hoa", "buoi", "trua", "dieu", "den", "abc"};
 		SystemManager.logger.info(Arrays.toString(s1));
-		List<String> strings = Arrays.stream(s1).collect(Collectors.toList());
 		ResultsFind<HomeDeviceType> results = WordTrieNodeManager.findPharases(new ResultsFind<>(s1), wordTrieNode);
-		assertFalse(results.isEmpty());
-		Arrays.stream(results.getRemains()).forEach(strings::remove);
-		results.stream()
-			.map(device -> device.getName())
-			.flatMap(name -> Arrays.stream(name.split("_")))
-			.peek(SystemManager.logger::info)
-			.forEach(strings::remove);
-		assertTrue(strings.size() == 0);
+		assertTrue(results.size() == 2);
+		results.stream().map(HomeDeviceType::getName).forEach(SystemManager.logger::info);
+		SystemManager.logger.info(Arrays.toString(results.remains()));
 	}
 	private WordTrieNodeManager wordTrieNodes;
 }

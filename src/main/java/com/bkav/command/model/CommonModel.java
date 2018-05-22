@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import com.bkav.command.common.Model;
 import com.bkav.command.data.CommonData;
+import com.bkav.struct.ResultsProcess;
 import com.bkav.struct.WordTrieNode;
 
 public abstract class CommonModel<T extends CommonData> implements Model {
@@ -58,18 +57,11 @@ public abstract class CommonModel<T extends CommonData> implements Model {
 	}
 
 	@Override
-	public String[] process(String[] input) {
-		return this.process(Arrays.stream(input).collect(Collectors.toList())).stream().toArray(String[]::new);
-	}
-
-	@Override
-	public List<String> process(List<String> input) {
-		//TODO CommonModel.process
-		List<String> output = new ArrayList<>();
-		for (int index = 0; index < input.size(); index++) {
-
+	public ResultsProcess process(ResultsProcess input) {
+		if (this.wordTrieNode != null) {
+			return this.wordTrieNode.findPharases(input);
 		}
-		return output;
+		return input;
 	}
 
 	public void test(String[]... commands) {

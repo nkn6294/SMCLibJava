@@ -19,7 +19,11 @@ public class ResultsFind<T> implements Iterable<T> {
 		this.values = values.stream().collect(Collectors.toList());
 		this.remains = remains;
 	}
-
+	
+	public int size() {
+		return this.values.size();
+	}
+	
 	public boolean isEmpty() {
 		return this.values.isEmpty();
 	}
@@ -36,17 +40,26 @@ public class ResultsFind<T> implements Iterable<T> {
 		this.values.clear();
 	}
 
-	public String[] getRemains() {
-		return remains;
+	public String[] remains() {
+		return this.remains;
+	}
+	
+	public void setRemains(String[] remains) {
+		this.remains = remains;
 	}
 
 	public Stream<T> stream() {
-		return values.stream();
+		return this.values.stream();
 	}
 
 	@Override
 	public Iterator<T> iterator() {
 		return this.values.iterator();
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%s [values=%s, remains=%s]", this.getClass().getSimpleName(), values, Arrays.toString(remains));
 	}
 
 	private List<T> values;

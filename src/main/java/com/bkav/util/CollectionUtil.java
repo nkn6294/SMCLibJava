@@ -88,7 +88,7 @@ public class CollectionUtil {
 		return true;
 	}
     public static <T> boolean Contains(T[] collection, T key) {
-        if (collection != null) {
+        if (collection == null) {
             return false;
         }
         return Arrays.stream(collection).filter(key::equals)

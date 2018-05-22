@@ -2,6 +2,7 @@ package com.bkav.struct;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -129,13 +130,10 @@ public class WordTrieNode<T> {
 		return foundPharases;
 	}
 
-	public List<ResultFind<T>> findPharases(ResultFind<?> currentResult, List<ResultFind<T>> results) {
+	public ResultsProcess findPharases(ResultsProcess currentResult) {
 		WordTrieNode<T> currentNode = this;
-		String[] words = currentResult.getRemains();
-		ListStringWithMark wordsWithMark = new ListStringWithMark(words);
-		if (results == null) {
-			results = new ArrayList<>();			
-		}
+		String[] words = currentResult.remains();
+		ListStringWithMark wordsWithMark =  new ListStringWithMark(words);
 		for (int index = 0; index < words.length;) {
 			String word = wordsWithMark.get(index);
 			WordTrieNode<T> childNode = currentNode.getChildrens().get(word);
@@ -145,15 +143,9 @@ public class WordTrieNode<T> {
 				index++;
 			} else {
 				if (currentNode.getId() != null) {
-					List<String> remains = new ArrayList<>();
-					wordsWithMark.forEach(remains::add);
-					T value = currentNode.getId();
-					String[][] marks = wordsWithMark.getFragments();
-					ResultFind<T> resultFind = new ResultFind<>(value, marks.length > 0 ? marks[0] : new String[] {},
-							remains.toArray(new String[remains.size()]));
-					results.add(resultFind);
-					wordsWithMark.reset();
+					currentResult.addValue(currentNode.getId());
 				}
+				wordsWithMark.resetFragment(index);
 				if (currentNode == this) {
 					index++;
 				} else {
@@ -162,15 +154,17 @@ public class WordTrieNode<T> {
 			}
 		}
 		if (currentNode.getId() != null) {
-			T value = currentNode.getId();
-			List<String> remains = new ArrayList<>();
-			wordsWithMark.forEach(remains::add);
-			String[][] marks = wordsWithMark.getFragments();
-			ResultFind<T> resultFind = new ResultFind<>(value, marks.length > 0 ? marks[0] : new String[] {},
-					remains.toArray(new String[remains.size()]));
-			results.add(resultFind);
+			currentResult.addValue(currentNode.getId());
 		}
-		return results;
+		//TODO update stringsMark in currentResult
+		ListStringWithMark stringsMark = currentResult.stringsMark();
+		int[] unmarksIndex = stringsMark.unMarkIndexs();
+		int[] marked = wordsWithMark.markIndexs();
+		Arrays.stream(marked).forEach(relativeIndex -> {
+			int absoluteIndex = unmarksIndex[relativeIndex];
+			stringsMark.setMark(absoluteIndex);
+		});
+		return currentResult;
 	}
 	
 	public Collection<T> findPharases(String[] words) {

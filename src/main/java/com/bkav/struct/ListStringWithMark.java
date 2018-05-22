@@ -15,6 +15,7 @@ import com.bkav.util.CollectionUtil;
 import com.bkav.util.StreamUtils;
 
 public class ListStringWithMark implements Iterable<String> {
+	//TODO viet rieng mash ra lop khac.
 	public ListStringWithMark(String[] strings) {
 		this.init(strings);
 	}
@@ -39,6 +40,17 @@ public class ListStringWithMark implements Iterable<String> {
 		Arrays.stream(indexs).filter(this::isValidIndex).forEach(this::markByIndex);
 	}
 
+	public void setMarkWithRelativeIndex(int... relativeIndexs) {
+		int[] unmarksIndex = this.unMarkIndexs();
+		if (unmarksIndex.length == 0) {
+			return;
+		}
+		Arrays.stream(relativeIndexs)
+			.filter(relativeIndex -> relativeIndex >= 0 && relativeIndex < unmarksIndex.length)
+			.mapToObj(relativeIndex -> relativeIndexs[relativeIndex])
+			.forEach(this::setMark);
+	}
+	
 	public void setMark(Collection<Integer> indexs) {
 		indexs.stream().filter(this::isValidIndex).forEach(this::markByIndex);
 	}
@@ -58,13 +70,13 @@ public class ListStringWithMark implements Iterable<String> {
 	}
 	
 	public int[] markIndexs() {
-		Integer[] output = this.markStream().toArray(Integer[]::new);
-		return CollectionUtil.toArray(output);
+		return IntStream.rangeClosed(this.minIndex, this.maxIndex)
+			.filter(this::isMark).toArray();
 	}
 
 	public int[] unMarkIndexs() {
-		Integer[] output = this.unMarkStream().toArray(Integer[]::new);
-		return CollectionUtil.toArray(output);
+		return IntStream.rangeClosed(this.minIndex, this.maxIndex)
+				.filter(this::isUnMark).toArray();
 	}
 
 	public String[][] getFragments() {
@@ -212,18 +224,7 @@ public class ListStringWithMark implements Iterable<String> {
 	
 	public void resetFragment(int containIndex) {
 		this.checkValidIndex(containIndex);
-		for (int index = containIndex; index <= this.maxIndex; index++) {
-			if (this.isUnMark(index)) {
-				break;
-			}
-			this.resetMark(index);
-		}
-		for (int index = containIndex - 1; index >= this.minIndex; index++) {
-			if (this.isUnMark(index)) {
-				break;
-			}
-			this.resetMark(index);
-		}
+		this.resetByIndex(this.getFragmentIndex(containIndex));
 	}
 
 	public void resetFragments(int... containIndexs) {
@@ -253,16 +254,24 @@ public class ListStringWithMark implements Iterable<String> {
 		return this.strings;
 	}
 
+	public String[] marksString() {
+		return this.markStream().toArray(String[]::new);
+	}
+	
+	public String[] unMarkString() {
+		return this.unMarkStream().toArray(String[]::new);
+	}
+	
 	public Stream<String> stream() {
 		return StreamUtils.createStream(new InnerIterator());
 	}
 
 	public Stream<String> markStream() {
-		return IntStream.rangeClosed(0, this.maxIndex).filter(this::isMark).mapToObj(this::get);
+		return IntStream.rangeClosed(this.minIndex, this.maxIndex).filter(this::isMark).mapToObj(this::get);
 	}
 
 	public Stream<String> unMarkStream() {
-		return IntStream.rangeClosed(0, this.maxIndex).filter(this::isUnMark).mapToObj(this::get);
+		return IntStream.rangeClosed(this.minIndex, this.maxIndex).filter(this::isUnMark).mapToObj(this::get);
 	}
 
 	@Override
@@ -318,6 +327,12 @@ public class ListStringWithMark implements Iterable<String> {
 			IntStream.range(startIndexInclusive, endIndexInclusive).mapToObj(this::get).toArray(String[]::new);
 	}
 	
+	@Override
+	public String toString() {
+		return String.format("%s [strings=%s, marks=%s, minIndex=%s, maxIndex=%s]",
+				this.getClass().getSimpleName(), Arrays.toString(strings), Arrays.toString(marks), minIndex, maxIndex);
+	}
+
 	private String[] strings;
 	private int[] marks;
 	private int minIndex = 0;

@@ -55,6 +55,7 @@ public final class StringUtil {
     public static String[] splitString(String key) {
         return splitStringToList(key).stream().toArray(String[]::new);
     }
+    
     public static List<String> splitStringToList(String key) {
         List<String> list = new ArrayList<>();
         try {

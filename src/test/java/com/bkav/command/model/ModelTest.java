@@ -12,9 +12,10 @@ import org.junit.Test;
 
 import com.bkav.SystemManager;
 import com.bkav.command.test.SampleData;
+import com.bkav.struct.ResultsProcess;
 import com.bkav.util.CollectionUtil;
 
-public class ModelTest {
+public abstract class ModelTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -42,7 +43,10 @@ public class ModelTest {
 			SystemManager.logger.info("-------------------------");
 			String commandString = String.join(" ", command);
 			SystemManager.logger.info("<" + commandString + ">");
-			this.model.test(command);			
+			ResultsProcess result = new ResultsProcess(command);
+			result = this.model.process(result);
+			this.model.test(command);
+			SystemManager.logger.info(result.toString());
 		});
 		assertTrue(true); // TODO TestModel model
 	}
@@ -50,7 +54,5 @@ public class ModelTest {
 	protected CommonModel<?> model;
 	protected String[][] commands = CollectionUtil.convert(SampleData.SampleCommands2);
 
-	protected CommonModel<?> createModel() {
-		return null;
-	}
+	protected abstract CommonModel<?> createModel();
 }

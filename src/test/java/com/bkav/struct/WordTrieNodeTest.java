@@ -1,12 +1,18 @@
 package com.bkav.struct;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.bkav.SystemManager;
+import com.bkav.command.model.entity.HomeDeviceTypeModel;
+import com.bkav.home.data.HomeDeviceType;
 
 public class WordTrieNodeTest {
 
@@ -27,98 +33,14 @@ public class WordTrieNodeTest {
 	}
 
 	@Test
-	public final void testWordTrieNodeWordTrieNodeOfTTString() {
-		assertTrue(true); // TODO testWordTrieNodeWordTrieNodeOfTTString
-	}
-
-	@Test
-	public final void testWordTrieNodeWordTrieNodeOfTT() {
-		assertTrue(true); // TODO  testWordTrieNodeWordTrieNodeOfTT
-	}
-
-	@Test
-	public final void testWordTrieNodeWordTrieNodeOfT() {
-		assertTrue(true); // TODO testWordTrieNodeWordTrieNodeOfT
-	}
-
-	@Test
-	public final void testWordTrieNode() {
-		assertTrue(true); // TODO testWordTrieNode
-	}
-
-	@Test
-	public final void testGetParent() {
-		assertTrue(true); // TODO testGetParent
-	}
-
-	@Test
-	public final void testGetId() {
-		assertTrue(true); // TODO testGetId
-	}
-
-	@Test
-	public final void testSetId() {
-		assertTrue(true); // TODO testSetId
-	}
-
-	@Test
-	public final void testIsRoot() {
-		assertTrue(true); // TODO testIsRoot
-	}
-
-	@Test
-	public final void testIsLeaf() {
-		assertTrue(true); // TODO testIsLeaf
-	}
-
-	@Test
-	public final void testGetLabel() {
-		assertTrue(true); // TODO testGetLabel
-	}
-
-	@Test
-	public final void testGetLabels() {
-		assertTrue(true); // TODO testGetLabels
-	}
-
-	@Test
-	public final void testAddPhraseStringArrayT() {
-		assertTrue(true); // TODO testAddPhraseStringArrayT
-	}
-
-	@Test
-	public final void testAddPhraseIteratorOfStringT() {
-		assertTrue(true); // TODO testAddPhraseIteratorOfStringT
-	}
-
-	@Test
-	public final void testFindPharasesStringArrayCollectionOfT() {
-		assertTrue(true); // TODO testFindPharasesStringArrayCollectionOfT
-	}
-
-	@Test
-	public final void testFindPharasesStringArray() {
-		assertTrue(true); // TODO testFindPharasesStringArray
-	}
-
-	@Test
-	public final void testFindPharasesIteratorOfStringCollectionOfT() {
-		assertTrue(true); // TODO testFindPharasesIteratorOfStringCollectionOfT
-	}
-
-	@Test
-	public final void testFindPharasesIteratorOfString() {
-		assertTrue(true); // TODO testFindPharasesIteratorOfString
-	}
-
-	@Test
-	public final void testToString() {
-		assertTrue(true); // TODO testToString
-	}
-
-	@Test
-	public final void testGetChildrens() {
-		assertTrue(true); // TODO testGetChildrens
+	public final void testFindPharases() {
+		WordTrieNode<HomeDeviceType> wordTrieNode = new HomeDeviceTypeModel().getWordTrieNode();
+		String[] s1 = { "phong", "khach", "phong", "an", "dieu", "hoa", "buoi", "trua", "dieu", "den", "abc"};
+		SystemManager.logger.info(Arrays.toString(s1));
+		ResultsProcess results = wordTrieNode.findPharases(new ResultsProcess(s1));
+		assertTrue(results.size() == 2);
+		results.stream().map(Object::toString).forEach(SystemManager.logger::info);
+		SystemManager.logger.info(Arrays.toString(results.remains()));
 	}
 
 }

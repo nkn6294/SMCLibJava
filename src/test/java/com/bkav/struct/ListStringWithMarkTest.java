@@ -16,6 +16,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.bkav.SystemManager;
+
 public class ListStringWithMarkTest {
 
 	@BeforeClass
@@ -118,7 +120,7 @@ public class ListStringWithMarkTest {
 	}
 
 	@Test
-	public final void getFragmentsContainIndex() {
+	public final void testGetFragmentsContainIndex() {
 		this.listStringWithMark.setMark(1, 2, 3, 7, 8, 9);
 		int[][] results = this.listStringWithMark.getFragmentsContainIndex(1, 2, 3, 4, 7, 8);
 		assertEquals(6, results.length);
@@ -131,7 +133,7 @@ public class ListStringWithMarkTest {
 	}
 	
 	@Test
-	public final void getFragmentsContainIndexOptimal() {
+	public final void testGetFragmentsContainIndexOptimal() {
 		this.listStringWithMark.setMark(1, 2, 3, 7, 8, 9);
 		int[][] results = this.listStringWithMark.getFragmentsContainIndexOptimal(1, 2, 3, 4, 7, 8);
 		assertEquals(2, results.length);
@@ -139,7 +141,7 @@ public class ListStringWithMarkTest {
 		assertArrayEquals(results[1], new int[] { 7, 8, 9 });
 	}
 	@Test
-	public final void getFragmentsContainIndexOptimal2() {
+	public final void testGetFragmentsContainIndexOptimal2() {
 		this.listStringWithMark.setMark(1, 2, 3, 7, 8, 9);
 		List<Integer> containsIndex = new ArrayList<>();
 		containsIndex.add(1);
@@ -150,7 +152,7 @@ public class ListStringWithMarkTest {
 		containsIndex.add(8);
 		int[][] results = this.listStringWithMark.getFragmentsContainIndexOptimal(containsIndex);//1, 2, 3, 4, 7, 8);
 		for (int[] result : results) {
-			System.out.println(Arrays.toString(result));
+			SystemManager.logger.info(Arrays.toString(result));
 		}
 		assertEquals(2, results.length);
 		assertArrayEquals(results[0], new int[] { 1, 2, 3 });
@@ -224,6 +226,50 @@ public class ListStringWithMarkTest {
 		assertArrayEquals(expected, output);
 	}
 
+	@Test
+	public final void testResetFragment() {
+		this.listStringWithMark.setMark(0, 1, 2, 3, 4, 7, 8, 9);
+		this.listStringWithMark.resetFragment(0);
+		for (int i = 0; i <= 3; i++) {
+			assertTrue(this.listStringWithMark.isUnMark(i));
+		}
+		
+		this.listStringWithMark.reset();
+		this.listStringWithMark.setMark(0, 1, 2, 3, 4, 7, 8, 9);
+		this.listStringWithMark.resetFragment(2);
+		for (int i = 0; i <= 3; i++) {
+			assertTrue(this.listStringWithMark.isUnMark(i));
+		}
+		
+		this.listStringWithMark.reset();
+		this.listStringWithMark.setMark(0, 1, 2, 3, 4, 7, 8, 9);
+		this.listStringWithMark.resetFragment(3);
+		for (int i = 0; i <= 3; i++) {
+			assertTrue(this.listStringWithMark.isUnMark(i));
+		}
+		
+		this.listStringWithMark.reset();
+		this.listStringWithMark.setMark(0, 1, 2, 3, 4, 7, 8, 9);
+		this.listStringWithMark.resetFragment(4);
+		for (int i = 0; i <= 3; i++) {
+			assertTrue(this.listStringWithMark.isUnMark(i));
+		}
+	}
+	
+	@Test
+	public final void testRelativeMarkIndex() {
+		this.listStringWithMark.setMark(0, 1, 2, 7, 8);
+		int[] unmarksIndex = this.listStringWithMark.unMarkIndexs();//
+		int[] marksIndex = this.listStringWithMark.markIndexs();
+		assertArrayEquals(new int[] {3, 4, 5, 6, 9}, unmarksIndex);
+		assertArrayEquals(new int[] {0, 1, 2, 7, 8}, marksIndex);
+		
+		int[] relativeUnMarksIndex = new int[] {0, 1, 3};
+		this.listStringWithMark.setMarkWithRelativeIndex(relativeUnMarksIndex);
+		unmarksIndex = this.listStringWithMark.unMarkIndexs();
+		assertArrayEquals(new int[] {5, 9}, unmarksIndex);
+	}
+	
 	private ListStringWithMark listStringWithMark;
 	private String[] sample;
 }

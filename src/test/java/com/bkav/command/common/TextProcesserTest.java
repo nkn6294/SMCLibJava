@@ -13,6 +13,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.bkav.SystemManager;
+
 public class TextProcesserTest {
 
 	@BeforeClass
@@ -37,7 +39,7 @@ public class TextProcesserTest {
 	public final void testPreProccessText() {
 		String input = "đây là phòng ăn";
 		String output = "day la phong an";
-		System.out.println(this.textProcesser.preProccessText(input));
+		SystemManager.logger.info(this.textProcesser.preProccessText(input));
 		assertEquals(output, this.textProcesser.preProccessText(input));
 	}
 

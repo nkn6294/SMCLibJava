@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import com.bkav.command.data.CommonData;
+import com.bkav.struct.ResultsProcess;
 
 public abstract class CollectionModel<T extends CommonData> extends CommonModel<T>
 		implements Iterable<CommonModel<? extends CommonData>> {
@@ -14,7 +15,20 @@ public abstract class CollectionModel<T extends CommonData> extends CommonModel<
 	public void test(String[]... commands) {
 		this.models.forEach(item -> item.test(commands));
 	}
+	
+	@Override
+	public ResultsProcess process(ResultsProcess input) {
+		for (CommonModel<?> model : this.models) {
+			input = model.process(input);
+		}
+		return super.process(input);
+	}
 
+	@Override
+	protected T getDataFromStringArray(String[] datas) {
+		return null;
+	}
+	
 	@Override
 	public Iterator<CommonModel<? extends CommonData>> iterator() {
 		return this.models.iterator();
@@ -28,8 +42,6 @@ public abstract class CollectionModel<T extends CommonData> extends CommonModel<
 
 	/***
 	 * Create collection contain models.
-	 * 
-	 * @return
 	 */
 	protected Collection<CommonModel<? extends CommonData>> createCollectionModels() {
 		return new ArrayList<>();
