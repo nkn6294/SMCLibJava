@@ -15,12 +15,24 @@ import com.bkav.util.CollectionUtil;
 import com.bkav.util.StreamUtils;
 
 public class ListStringWithMark implements Iterable<String> {
+	
+	public final static byte NORMAL_MODE = 1 << 0;
+	public final static byte STRICT_MODE = 1 << 1;
+	
 	//TODO viet rieng mash ra lop khac.
 	public ListStringWithMark(String[] strings) {
 		this.init(strings);
 	}
 	public int length() {
 		return this.strings.length;
+	}
+	
+	public int minIndex() {
+		return this.minIndex;
+	}
+	
+	public int maxIndex() {
+		return this.maxIndex;
 	}
 	public String get(int index) {
 		this.checkValidIndex(index);
@@ -47,8 +59,19 @@ public class ListStringWithMark implements Iterable<String> {
 		}
 		Arrays.stream(relativeIndexs)
 			.filter(relativeIndex -> relativeIndex >= 0 && relativeIndex < unmarksIndex.length)
-			.mapToObj(relativeIndex -> relativeIndexs[relativeIndex])
+			.mapToObj(relativeIndex -> unmarksIndex[relativeIndex])
 			.forEach(this::setMark);
+	}
+	
+	public void unMarkWithRelativeIndex(int... relativeIndexs) {
+		int[] marksIndex = this.markIndexs();
+		if (marksIndex.length == 0) {
+			return;
+		}
+		Arrays.stream(relativeIndexs)
+			.filter(relativeIndex -> relativeIndex >= 0 && relativeIndex < marksIndex.length)
+			.mapToObj(relativeIndex -> marksIndex[relativeIndex])
+			.forEach(this::resetByIndex);
 	}
 	
 	public void setMark(Collection<Integer> indexs) {
@@ -329,14 +352,23 @@ public class ListStringWithMark implements Iterable<String> {
 	
 	@Override
 	public String toString() {
-		return String.format("%s [strings=%s, marks=%s, minIndex=%s, maxIndex=%s]",
-				this.getClass().getSimpleName(), Arrays.toString(strings), Arrays.toString(marks), minIndex, maxIndex);
+		return String.format("%s [strings=%s, marks=%s, minIndex=%s, maxIndex=%s, remains=%s]",
+				this.getClass().getSimpleName(), Arrays.toString(strings), Arrays.toString(marks), minIndex, maxIndex, Arrays.toString(this.unMarkString()));
 	}
 
+	public int config() {
+		return this.config;
+	}
+	
+	public void setConfig(byte check_mode) {
+		this.config = check_mode;
+	}
+	
 	private String[] strings;
 	private int[] marks;
 	private int minIndex = 0;
 	private int maxIndex = -1;
+	private byte config = NORMAL_MODE;
 	
 	private void resetMark(int index) {
 		this.marks[index] = 0;
@@ -351,10 +383,15 @@ public class ListStringWithMark implements Iterable<String> {
 	 * @param index
 	 * @throws IndexOutOfBoundsException if <i>index</i> is invalid.
 	 */
-	private final void checkValidIndex(int index) {
+	private final boolean checkValidIndex(int index) {
 		if (index < minIndex || index > maxIndex) {
-			throw new IndexOutOfBoundsException();
+			int strict_mode = this.config & STRICT_MODE;
+			if (strict_mode > 0) {
+				throw new IndexOutOfBoundsException();
+			}
+			return false;
 		}
+		return true;
 	}
 	/***
 	 * Check valid index without throw Exception.

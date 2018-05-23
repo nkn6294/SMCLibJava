@@ -6,7 +6,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -15,8 +14,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import com.bkav.SystemManager;
 
 public class ListStringWithMarkTest {
 
@@ -151,9 +148,6 @@ public class ListStringWithMarkTest {
 		containsIndex.add(7);
 		containsIndex.add(8);
 		int[][] results = this.listStringWithMark.getFragmentsContainIndexOptimal(containsIndex);//1, 2, 3, 4, 7, 8);
-		for (int[] result : results) {
-			SystemManager.logger.info(Arrays.toString(result));
-		}
 		assertEquals(2, results.length);
 		assertArrayEquals(results[0], new int[] { 1, 2, 3 });
 		assertArrayEquals(results[1], new int[] { 7, 8, 9 });

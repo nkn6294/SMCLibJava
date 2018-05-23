@@ -112,6 +112,11 @@ public class WordTrieNodeManager {
 		}
 		if (currentNode.getId() != null) {
 			results.add(currentNode.getId());
+		} else {
+			try {
+				wordsWithMark.resetFragment(words.length - 1);				
+			} catch(Exception ex) {
+			}
 		}
 		String[] remains = wordsWithMark.unMarkStream().toArray(String[]::new);
 		return new ResultsFind<>(remains, results);//? results.length = 0

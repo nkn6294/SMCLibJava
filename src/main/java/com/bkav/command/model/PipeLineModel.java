@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.stream.Stream;
 
 import com.bkav.command.common.Model;
+import com.bkav.struct.ResultsProcess;
 
 public class PipeLineModel implements Iterable<Model> {
 
@@ -34,6 +35,13 @@ public class PipeLineModel implements Iterable<Model> {
 		return this.models.stream().map(Model::getModelName).toArray(String[]::new);
 	}
 
+	public ResultsProcess process(ResultsProcess input) {
+		for (int index = 0; index < this.models.size(); index++) {
+			input = this.models.get(index).process(input);
+		}
+		return input;
+	}
+	
 	public void addFirst(Model model) {
 		this.models.addFirst(model);
 	}

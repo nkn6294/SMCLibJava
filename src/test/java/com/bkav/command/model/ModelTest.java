@@ -11,6 +11,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.bkav.SystemManager;
+import com.bkav.command.common.Model;
 import com.bkav.command.test.SampleData;
 import com.bkav.struct.ResultsProcess;
 import com.bkav.util.CollectionUtil;
@@ -45,14 +46,14 @@ public abstract class ModelTest {
 			SystemManager.logger.info("<" + commandString + ">");
 			ResultsProcess result = new ResultsProcess(command);
 			result = this.model.process(result);
-			this.model.test(command);
+//			this.model.test(command);
 			SystemManager.logger.info(result.toString());
 		});
 		assertTrue(true); // TODO TestModel model
 	}
 
-	protected CommonModel<?> model;
+	protected Model model;
 	protected String[][] commands = CollectionUtil.convert(SampleData.SampleCommands2);
 
-	protected abstract CommonModel<?> createModel();
+	protected abstract Model createModel();
 }

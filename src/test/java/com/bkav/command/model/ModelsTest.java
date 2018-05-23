@@ -13,6 +13,7 @@ import com.bkav.command.model.control.ControlModel;
 import com.bkav.command.model.entity.HomeEntityModel;
 import com.bkav.command.model.time.TimeModel;
 import com.bkav.command.test.SampleData;
+import com.bkav.struct.ResultsProcess;
 import com.bkav.util.CollectionUtil;
 
 public class ModelsTest {
@@ -43,6 +44,19 @@ public class ModelsTest {
 			pipeLineModel.stream().filter(item -> item instanceof CommonModel<?>).forEach(item -> {
 				((CommonModel<?>) item).test(command);
 			});
+		}
+		assertTrue(true);// TODO test modelsTest.
+	}
+	
+	@Test
+	public final void testProcessModels() {
+		for (String[] command : commands) {
+			SystemManager.logger.info("-------------------------");
+			String commandString = String.join(" ", command);
+			SystemManager.logger.info("<" + commandString + ">");
+			ResultsProcess result = new ResultsProcess(command);
+			result = pipeLineModel.process(result);
+			SystemManager.logger.info(result.toString());
 		}
 		assertTrue(true);// TODO test modelsTest.
 	}

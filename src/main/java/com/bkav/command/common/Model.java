@@ -13,8 +13,6 @@ public interface Model {
     	return null;
     };
     
-    public void test(String[]... datas);
-    
     default public String[] process(String[] input) {
     	return input;
     };

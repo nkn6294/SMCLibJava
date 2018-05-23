@@ -5,32 +5,34 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
+import com.bkav.command.common.Model;
 import com.bkav.command.data.CommonData;
 import com.bkav.struct.ResultsProcess;
 
 public abstract class CollectionModel<T extends CommonData> extends CommonModel<T>
-		implements Iterable<CommonModel<? extends CommonData>> {
+		implements Iterable<Model> {
 
 	@Override
 	public void test(String[]... commands) {
-		this.models.forEach(item -> item.test(commands));
+		this.models.stream().filter(model -> model instanceof CommonModel<?>)
+				.forEach(item -> ((CommonModel<?>)item).test(commands));
 	}
 	
 	@Override
 	public ResultsProcess process(ResultsProcess input) {
-		for (CommonModel<?> model : this.models) {
+		for (Model model : this.models) {
 			input = model.process(input);
 		}
-		return super.process(input);
+		return input;
 	}
-
+	
 	@Override
 	protected T getDataFromStringArray(String[] datas) {
 		return null;
 	}
 	
 	@Override
-	public Iterator<CommonModel<? extends CommonData>> iterator() {
+	public Iterator<Model> iterator() {
 		return this.models.iterator();
 	}
 
@@ -43,7 +45,7 @@ public abstract class CollectionModel<T extends CommonData> extends CommonModel<
 	/***
 	 * Create collection contain models.
 	 */
-	protected Collection<CommonModel<? extends CommonData>> createCollectionModels() {
+	protected Collection<Model> createCollectionModels() {
 		return new ArrayList<>();
 	}
 
@@ -69,5 +71,5 @@ public abstract class CollectionModel<T extends CommonData> extends CommonModel<
 		this.initModels();
 	}
 
-	private Collection<CommonModel<? extends CommonData>> models;
+	private Collection<Model> models;
 }

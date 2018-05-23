@@ -2,7 +2,6 @@ package com.bkav.struct;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -133,7 +132,11 @@ public class WordTrieNode<T> {
 	public ResultsProcess findPharases(ResultsProcess currentResult) {
 		WordTrieNode<T> currentNode = this;
 		String[] words = currentResult.remains();
+		if (words.length == 0) {
+			return currentResult;
+		}
 		ListStringWithMark wordsWithMark =  new ListStringWithMark(words);
+		wordsWithMark.setConfig(ListStringWithMark.NORMAL_MODE);
 		for (int index = 0; index < words.length;) {
 			String word = wordsWithMark.get(index);
 			WordTrieNode<T> childNode = currentNode.getChildrens().get(word);
@@ -144,8 +147,9 @@ public class WordTrieNode<T> {
 			} else {
 				if (currentNode.getId() != null) {
 					currentResult.addValue(currentNode.getId());
-				}
-				wordsWithMark.resetFragment(index);
+				} else {
+					wordsWithMark.resetFragment(index - 1);
+				}		
 				if (currentNode == this) {
 					index++;
 				} else {
@@ -155,15 +159,11 @@ public class WordTrieNode<T> {
 		}
 		if (currentNode.getId() != null) {
 			currentResult.addValue(currentNode.getId());
+		} else {
+			wordsWithMark.resetFragment(words.length - 1);
 		}
-		//TODO update stringsMark in currentResult
 		ListStringWithMark stringsMark = currentResult.stringsMark();
-		int[] unmarksIndex = stringsMark.unMarkIndexs();
-		int[] marked = wordsWithMark.markIndexs();
-		Arrays.stream(marked).forEach(relativeIndex -> {
-			int absoluteIndex = unmarksIndex[relativeIndex];
-			stringsMark.setMark(absoluteIndex);
-		});
+		stringsMark.setMarkWithRelativeIndex(wordsWithMark.markIndexs());
 		return currentResult;
 	}
 	

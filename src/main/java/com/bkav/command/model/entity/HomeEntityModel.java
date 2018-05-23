@@ -9,10 +9,15 @@ public class HomeEntityModel extends CollectionModel<CommonData> {
 	protected void init() {
 		super.init();
 		MODEL_NAME = "ENTITY";
+	}
+
+	@Override
+	protected void initModels() {
+		super.initModels();
 		this.addModels(
 				new HomeFunctionModel(), 
-				new HomeAreaModel(),
 				new HomeDeviceModel(),
+				new HomeAreaModel(),
 				new HomeDeviceTypeModel());
 	}
 
