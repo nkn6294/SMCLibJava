@@ -15,8 +15,8 @@ public class HomeEntityModel extends CollectionModel<CommonData> {
 	protected void initModels() {
 		super.initModels();
 		this.addModels(
-				new HomeFunctionModel(), 
 				new HomeDeviceModel(),
+				new HomeFunctionModel(), 
 				new HomeAreaModel(),
 				new HomeDeviceTypeModel());
 	}

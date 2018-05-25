@@ -137,19 +137,20 @@ public class WordTrieNode<T> {
 		}
 		ListStringWithMark wordsWithMark =  new ListStringWithMark(words);
 		wordsWithMark.setConfig(ListStringWithMark.NORMAL_MODE);
+		List<Integer> indexs = new ArrayList<>();
 		for (int index = 0; index < words.length;) {
 			String word = wordsWithMark.get(index);
 			WordTrieNode<T> childNode = currentNode.getChildrens().get(word);
 			if (childNode != null) {
 				currentNode = childNode;
-				wordsWithMark.setMark(index);
+				indexs.add(index);
 				index++;
 			} else {
 				if (currentNode.getId() != null) {
 					currentResult.addValue(currentNode.getId());
-				} else {
-					wordsWithMark.resetFragment(index - 1);
-				}		
+					wordsWithMark.setMark(indexs);
+				}	
+				indexs.clear();
 				if (currentNode == this) {
 					index++;
 				} else {
@@ -159,9 +160,9 @@ public class WordTrieNode<T> {
 		}
 		if (currentNode.getId() != null) {
 			currentResult.addValue(currentNode.getId());
-		} else {
-			wordsWithMark.resetFragment(words.length - 1);
+			wordsWithMark.setMark(indexs);
 		}
+		indexs.clear();
 		ListStringWithMark stringsMark = currentResult.stringsMark();
 		stringsMark.setMarkWithRelativeIndex(wordsWithMark.markIndexs());
 		return currentResult;
