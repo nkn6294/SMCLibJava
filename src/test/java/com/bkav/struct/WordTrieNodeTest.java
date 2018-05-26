@@ -11,8 +11,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.bkav.SystemManager;
+import com.bkav.command.common.Model;
 import com.bkav.command.model.entity.HomeDeviceTypeModel;
-import com.bkav.home.data.HomeDeviceType;
 
 public class WordTrieNodeTest {
 
@@ -34,13 +34,12 @@ public class WordTrieNodeTest {
 
 	@Test
 	public final void testFindPharases() {
-		WordTrieNode<HomeDeviceType> wordTrieNode = new HomeDeviceTypeModel().getWordTrieNode();
 		String[] s1 = { "phong", "khach", "phong", "an", "dieu", "hoa", "buoi", "trua", "dieu", "den", "abc"};
+		Model model = new HomeDeviceTypeModel();
 		SystemManager.logger.info(Arrays.toString(s1));
-		ResultsProcess results = wordTrieNode.findPharases(new ResultsProcess(s1));
+		ResultsProcess results = model.process(new ResultsProcess(s1));
 		assertTrue(results.size() == 2);
 		results.stream().map(Object::toString).forEach(SystemManager.logger::info);
 		SystemManager.logger.info(Arrays.toString(results.remains()));
 	}
-
 }

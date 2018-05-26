@@ -1,17 +1,11 @@
 package com.bkav.command.common;
 
-import java.util.Collection;
 import java.util.List;
 
-import com.bkav.command.data.CommonData;
 import com.bkav.struct.ResultsProcess;
 
 public interface Model {
     public String getModelName();
-    
-    default public Collection<CommonData> getModelValue() {
-    	return null;
-    };
     
     default public String[] process(String[] input) {
     	return input;

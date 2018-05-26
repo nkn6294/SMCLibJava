@@ -1,9 +1,8 @@
 package com.bkav.command.model.control;
 
-import com.bkav.command.data.Control;
 import com.bkav.command.model.CollectionModel;
 
-public class SimpleControlModel extends CollectionModel<Control> {
+public class SimpleControlModel extends CollectionModel {
 	
     public final static String[] MIN_CONTROL = {
     		"tat",
@@ -25,18 +24,10 @@ public class SimpleControlModel extends CollectionModel<Control> {
 		MODEL_NAME = "SIMPLE_CONTROL";
 	}
 
-	
 	@Override
 	protected void initModels() {
 		super.initModels();
 		this.addModels(new MinControlModel(), new MaxControlModel());
 	}
-
-
-	@Override
-	protected Control getDataFromStringArray(String[] datas) {
-		return Control.createFromStringArray(datas, TypeControl.NONE, 0);
-	}
-	
 	
 }

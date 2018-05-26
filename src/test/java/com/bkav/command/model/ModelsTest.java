@@ -41,8 +41,8 @@ public class ModelsTest {
 			SystemManager.logger.info("-------------------------");
 			String commandString = String.join(" ", command);
 			SystemManager.logger.info("<" + commandString + ">");
-			pipeLineModel.stream().filter(item -> item instanceof CommonModel<?>).forEach(item -> {
-				((CommonModel<?>) item).test(command);
+			pipeLineModel.stream().filter(item -> item instanceof InputWordsModel<?>).forEach(item -> {
+				((InputWordsModel<?>) item).test(command);
 			});
 		}
 		assertTrue(true);// TODO test modelsTest.

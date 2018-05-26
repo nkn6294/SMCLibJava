@@ -2,7 +2,7 @@ package com.bkav.command.model.time;
 
 import org.junit.Before;
 
-import com.bkav.command.model.CommonModel;
+import com.bkav.command.common.Model;
 import com.bkav.command.model.ModelTest;
 import com.bkav.command.test.SampleData;
 import com.bkav.util.CollectionUtil;
@@ -15,7 +15,7 @@ public class TimeModelTest extends ModelTest {
 		this.commands = CollectionUtil.convert(SampleData.SampleSchedule);
 	}
 	@Override
-	protected CommonModel<?> createModel() {
+	protected Model createModel() {
 		return new TimeModel();
 	}
 }

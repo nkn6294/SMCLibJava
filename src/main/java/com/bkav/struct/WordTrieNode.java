@@ -139,32 +139,30 @@ public class WordTrieNode<T> {
 		wordsWithMark.setConfig(ListStringWithMark.NORMAL_MODE);
 		List<Integer> indexs = new ArrayList<>();
 		for (int index = 0; index < words.length;) {
-			String word = wordsWithMark.get(index);
-			WordTrieNode<T> childNode = currentNode.getChildrens().get(word);
+			WordTrieNode<T> childNode = currentNode.getChildrens().get(words[index]);
 			if (childNode != null) {
 				currentNode = childNode;
 				indexs.add(index);
 				index++;
-			} else {
-				if (currentNode.getId() != null) {
-					currentResult.addValue(currentNode.getId());
-					wordsWithMark.setMark(indexs);
-				}	
-				indexs.clear();
-				if (currentNode == this) {
-					index++;
-				} else {
-					currentNode = this;
-				}
+				continue;
 			}
+			if (currentNode.getId() != null) {
+				currentResult.addValue(currentNode.getId());
+				wordsWithMark.setMark(indexs);
+			}	
+			if (currentNode == this) {
+				index++;
+			} else {
+				currentNode = this;
+			}
+			indexs.clear();
 		}
 		if (currentNode.getId() != null) {
 			currentResult.addValue(currentNode.getId());
 			wordsWithMark.setMark(indexs);
 		}
 		indexs.clear();
-		ListStringWithMark stringsMark = currentResult.stringsMark();
-		stringsMark.setMarkWithRelativeIndex(wordsWithMark.markIndexs());
+		currentResult.stringsMark().setMarkWithRelativeIndex(wordsWithMark.markIndexs());
 		return currentResult;
 	}
 	
@@ -186,17 +184,16 @@ public class WordTrieNode<T> {
 			if (childNode != null) {
 				node = childNode;
 				word = words.next();
-			} else {
-				if (node.getId() != null) {
-					foundPharases.add(node.getId());
-				}
-				if (node == this) {
-					word = words.next();
-				} else {
-					node = this;
-				}
+				continue;
+			} 
+			if (node.getId() != null) {
+				foundPharases.add(node.getId());
 			}
-
+			if (node == this) {
+				word = words.next();
+			} else {
+				node = this;
+			}
 		}
 		if (node.getId() != null) {
 			foundPharases.add(node.getId());
@@ -205,7 +202,7 @@ public class WordTrieNode<T> {
 	}
 	
 	public Collection<T> findPharases(Iterator<String> words) {
-		return findPharases(words, null);
+		return this.findPharases(words, null);
 	}
 
 	@Override

@@ -3,10 +3,10 @@ package com.bkav.command.model.control;
 import java.util.Arrays;
 
 import com.bkav.command.data.Control;
-import com.bkav.command.model.CommonModel;
+import com.bkav.command.model.StaticInputWordsModel;
 import com.bkav.util.CollectionUtil;
 
-public class ValueControlModel extends CommonModel<Control> {
+public class ValueControlModel extends StaticInputWordsModel<Control> {
 
 	@Override
 	protected void init() {

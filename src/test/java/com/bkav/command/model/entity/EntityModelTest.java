@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.bkav.SystemManager;
-import com.bkav.command.model.CommonModel;
+import com.bkav.command.common.Model;
 import com.bkav.command.model.ModelTest;
 import com.bkav.command.test.SampleData;
 import com.bkav.struct.ResultsProcess;
@@ -19,7 +19,7 @@ public class EntityModelTest extends ModelTest {
 	}
 	
 	@Override
-	protected CommonModel<?> createModel() {
+	protected Model createModel() {
 		return new HomeEntityModel(); 
 	}
 	

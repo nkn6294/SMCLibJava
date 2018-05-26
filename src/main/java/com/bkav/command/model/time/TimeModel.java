@@ -1,9 +1,8 @@
 package com.bkav.command.model.time;
 
-import com.bkav.command.data.CommonData;
 import com.bkav.command.model.CollectionModel;
 
-public class TimeModel extends CollectionModel<CommonData> {
+public class TimeModel extends CollectionModel { 
 
 	@Override
 	protected void init() {
@@ -19,9 +18,4 @@ public class TimeModel extends CollectionModel<CommonData> {
 				new TimeUnitModel());
 	}
 
-	@Override
-	protected CommonData getDataFromStringArray(String[] datas) {
-		String id = CommonData.getSimpleName(datas);
-		return new CommonData(id);
-	}
 }

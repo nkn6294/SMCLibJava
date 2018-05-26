@@ -3,11 +3,11 @@ package com.bkav.command.model.time;
 import java.util.Arrays;
 
 import com.bkav.command.data.TimeRepeat;
-import com.bkav.command.model.CommonModel;
+import com.bkav.command.model.StaticInputWordsModel;
 import com.bkav.command.test.ModelData;
 import com.bkav.util.CollectionUtil;
 
-public class TimeRepeatModel extends CommonModel<TimeRepeat> {
+public class TimeRepeatModel extends StaticInputWordsModel<TimeRepeat> {
 
 	@Override
 	protected void init() {

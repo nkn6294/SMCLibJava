@@ -2,12 +2,12 @@ package com.bkav.command.model.entity;
 
 import java.util.Arrays;
 
-import com.bkav.command.model.CommonModel;
+import com.bkav.command.model.StaticInputWordsModel;
 import com.bkav.command.test.SampleData;
 import com.bkav.home.data.HomeArea;
 import com.bkav.util.CollectionUtil;
 
-public class HomeAreaModel extends CommonModel<HomeArea> {
+public class HomeAreaModel extends StaticInputWordsModel<HomeArea> {
 
 	@Override
 	protected HomeArea getDataFromStringArray(String[] datas) {

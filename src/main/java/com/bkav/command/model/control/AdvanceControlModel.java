@@ -1,9 +1,8 @@
 package com.bkav.command.model.control;
 
-import com.bkav.command.data.Control;
 import com.bkav.command.model.CollectionModel;
 
-public class AdvanceControlModel extends CollectionModel<Control> {
+public class AdvanceControlModel extends CollectionModel {
 	public final static String[] LOWER_CONTROL = { 
 			"giam", 
 			"bot", };
@@ -29,10 +28,5 @@ public class AdvanceControlModel extends CollectionModel<Control> {
 	protected void initModels() {
 		super.initModels();
 		this.addModels(new LowerControlModel(), new UpperControlModel(), new ValueControlModel());
-	}
-
-	@Override
-	protected Control getDataFromStringArray(String[] datas) {
-		return Control.createFromStringArray(datas, TypeControl.NONE, 0);
 	}
 }

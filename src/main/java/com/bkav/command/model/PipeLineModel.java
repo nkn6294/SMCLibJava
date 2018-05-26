@@ -8,6 +8,10 @@ import java.util.stream.Stream;
 import com.bkav.command.common.Model;
 import com.bkav.struct.ResultsProcess;
 
+/***
+ * Collection with order using for model process.
+ *
+ */
 public class PipeLineModel implements Iterable<Model> {
 
 	public PipeLineModel() {

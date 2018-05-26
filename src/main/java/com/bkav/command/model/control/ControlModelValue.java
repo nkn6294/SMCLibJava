@@ -7,10 +7,10 @@ public class ControlModelValue {
 	}
 	
 	public int getValue() {
-		return value;
+		return this.value;
 	}
 	public TypeControl getTypeControl() {
-		return typeControl;
+		return this.typeControl;
 	}
 	
 	private int value;
