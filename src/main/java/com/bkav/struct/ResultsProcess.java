@@ -6,7 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
+/***
+ * Wrapper String array input with value.
+ */
 public class ResultsProcess implements Iterable<Object> {
 
 	@SafeVarargs

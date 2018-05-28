@@ -3,6 +3,7 @@ package com.bkav.command.model;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.stream.Stream;
 
 import com.bkav.struct.ResultsProcess;
 import com.bkav.struct.WordTrieNode;
@@ -12,6 +13,7 @@ import com.bkav.struct.WordTrieNode;
  * @param <T> type of value map for each words input.
  */
 public abstract class DynamicInputWordsModel<T> extends InputWordsModel<T> {
+
 	public void test(String[]... commands) {
 		Arrays.stream(commands).forEach(command -> 
 		this.wordTrieNode.findPharases(command).stream().forEach(System.out::println));
@@ -30,8 +32,8 @@ public abstract class DynamicInputWordsModel<T> extends InputWordsModel<T> {
 		return 0;
 	};
 
-	public DynamicInputWordsModel() {
-		super();
+	public DynamicInputWordsModel(Stream<? extends Object> stream) {
+		super(stream);
 	}
 
 	@Override
@@ -59,9 +61,8 @@ public abstract class DynamicInputWordsModel<T> extends InputWordsModel<T> {
 		this.updateTrieNode(null);
 	}
 	@Override
-	protected void normalInputData(Object data) {
-		// TODO normalInputData.
-		
+	protected void normalInputData(Stream<? extends Object> stream) {
+			
 	}
 	private final WordTrieNode<T> updateTrieNode(Collection<T> collection) {
 		this.wordTrieNode = new WordTrieNode<>();

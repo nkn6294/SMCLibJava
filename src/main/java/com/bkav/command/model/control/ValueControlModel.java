@@ -1,19 +1,13 @@
 package com.bkav.command.model.control;
 
-import java.util.Arrays;
-
 import com.bkav.command.data.Control;
 import com.bkav.command.model.StaticInputWordsModel;
-import com.bkav.util.CollectionUtil;
 
 public class ValueControlModel extends StaticInputWordsModel<Control> {
 
-	@Override
-	protected void init() {
-		super.init();
-		MODEL_NAME = "VALUE_ADVANCE_CONTROL";
-		DATA_PROCESSED = CollectionUtil.convert(AdvanceControlModel.VALUE_CONTROL);
-		Arrays.sort(DATA_PROCESSED, DEFAULT_STRING_ARRAY_COMPARATOR);
+	public ValueControlModel() {
+		super(AdvanceControlModel.VALUE_CONTROL);
+		this.MODEL_NAME = "VALUE_ADVANCE_CONTROL";
 	}
 
 	@Override

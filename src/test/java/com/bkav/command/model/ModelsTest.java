@@ -28,7 +28,10 @@ public class ModelsTest {
 
 	@Before
 	public void setUp() throws Exception {
-		this.pipeLineModel = new PipeLineModel(new HomeEntityModel(), new ControlModel(), new TimeModel());
+		this.pipeLineModel = new PipeLineModel(
+				new HomeEntityModel(), 
+				new ControlModel(), 
+				new TimeModel());
 	}
 
 	@After
@@ -41,8 +44,9 @@ public class ModelsTest {
 			SystemManager.logger.info("-------------------------");
 			String commandString = String.join(" ", command);
 			SystemManager.logger.info("<" + commandString + ">");
-			pipeLineModel.stream().filter(item -> item instanceof InputWordsModel<?>).forEach(item -> {
-				((InputWordsModel<?>) item).test(command);
+			pipeLineModel.stream().filter(item -> item instanceof CollectionModel)
+			.forEach(item -> {
+				((CollectionModel) item).test(command);
 			});
 		}
 		assertTrue(true);// TODO test modelsTest.

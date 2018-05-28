@@ -7,7 +7,7 @@ public class HomeEntityModel extends CollectionModel {
 	@Override
 	protected void init() {
 		super.init();
-		MODEL_NAME = "ENTITY";
+		this.MODEL_NAME = "ENTITY";
 	}
 
 	@Override

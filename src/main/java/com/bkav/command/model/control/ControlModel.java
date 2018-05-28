@@ -7,13 +7,15 @@ public class ControlModel extends CollectionModel {
 	@Override
 	protected void init() {
 		super.init();
-		MODEL_NAME = "CONTROL";
+		this.MODEL_NAME = "CONTROL";
 	}
 
 	@Override
 	protected void initModels() {
 		super.initModels();
-		this.addModels(new SimpleControlModel(), new AdvanceControlModel());
+		this.addModels(
+				new SimpleControlModel(), 
+				new AdvanceControlModel());
 	}
 
 }

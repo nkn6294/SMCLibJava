@@ -11,8 +11,7 @@ import com.bkav.struct.ResultsProcess;
 public abstract class CollectionModel extends AbstractModel implements Iterable<Model> {
 
 	public void test(String[]... commands) {
-		this.models.stream().filter(model -> model instanceof InputWordsModel<?>)
-		.forEach(item -> ((InputWordsModel<?>)item).test(commands));
+		this.models.stream().forEach(item -> item.test(commands));
 	}
 	public CollectionModel() {
 		super();
@@ -32,7 +31,7 @@ public abstract class CollectionModel extends AbstractModel implements Iterable<
 	}
 
 	/***
-	 * Init collection models.
+	 * Init collection models and add to collection models.
 	 */
 	protected void initModels() {
 	}
@@ -61,7 +60,7 @@ public abstract class CollectionModel extends AbstractModel implements Iterable<
 	@Override
 	protected void init() {
 		super.init();
-		MODEL_NAME = "COLLECTION_MODEL";
+		this.MODEL_NAME = "COLLECTION_MODEL";
 		this.models = this.createCollectionModels();
 		this.initModels();
 	}

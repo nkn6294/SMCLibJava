@@ -21,13 +21,14 @@ public class SimpleControlModel extends CollectionModel {
 	@Override
 	protected void init() {
 		super.init();
-		MODEL_NAME = "SIMPLE_CONTROL";
+		this.MODEL_NAME = "SIMPLE_CONTROL";
 	}
 
 	@Override
 	protected void initModels() {
 		super.initModels();
-		this.addModels(new MinControlModel(), new MaxControlModel());
+		this.addModels(new MinControlModel(), 
+				new MaxControlModel());
 	}
 	
 }
