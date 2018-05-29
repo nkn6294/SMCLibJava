@@ -123,7 +123,7 @@ public abstract class CommonMash implements Mash {
 		for (int index = 0; index <= this.maxIndex; index++) {
 			if (this.isMark(index)) {
 				item.add(index);
-			} else if (item.size() > 0) {
+			} else if (!item.isEmpty()) {
 				result.add(item.toArray(new Integer[item.size()]));
 				item.clear();
 			}
@@ -138,7 +138,7 @@ public abstract class CommonMash implements Mash {
 		for (int index = 0; index <= this.maxIndex; index++) {
 			if (!this.isMark(index)) {
 				item.add(index);
-			} else if (item.size() > 0) {
+			} else if (!item.isEmpty()) {
 				result.add(item.toArray(new Integer[item.size()]));
 				item.clear();
 			}
@@ -180,10 +180,7 @@ public abstract class CommonMash implements Mash {
 
 	@Override
 	public int[] getFragmentIndex(int containIndex) {
-		return this.getFragmentIndex(containIndex, new Consumer<Integer>() {
-			@Override
-			public void accept(Integer t) {
-			}
+		return this.getFragmentIndex(containIndex, t -> {
 		});
 	}
 
@@ -288,6 +285,7 @@ public abstract class CommonMash implements Mash {
 		this.minIndex = 0;
 		this.maxIndex = length - 1;
 		this.createMarkArray(length);
+		this.config = mode;
 	}
 
 	protected abstract void createMarkArray(int length);
@@ -304,8 +302,8 @@ public abstract class CommonMash implements Mash {
 	 */
 	protected final boolean checkValidIndex(int index) {
 		if (index < minIndex || index > maxIndex) {
-			int strict_mode = this.config & STRICT_MODE;
-			if (strict_mode > 0) {
+			int strictMode = this.config & STRICT_MODE;
+			if (strictMode > 0) {
 				throw new IndexOutOfBoundsException();
 			}
 			return false;

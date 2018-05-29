@@ -14,9 +14,10 @@ import com.bkav.struct.ResultsProcess;
  * @param <T> type of value map for each words input.
  */
 public abstract class StaticInputWordsModel<T> extends InputWordsModel<T> {
+	@Override
 	public void test(String[]... commands) {
 		Arrays.stream(commands)
-				.forEach(command -> this.wordTrieNode.findPharases(command).stream().forEach(System.out::println));
+				.forEach(command -> this.wordTrieNode.findPharases(command).stream().forEach(SystemManager.logger::info));
 	}
 
 	public StaticInputWordsModel(Collection<String> dataInput) {
@@ -50,7 +51,7 @@ public abstract class StaticInputWordsModel<T> extends InputWordsModel<T> {
 
 	@Override
 	protected void createModelTree() {
-		Function<String[], T> makeValue = data -> this.getDataFromStringArray(data);
+		Function<String[], T> makeValue = this::getDataFromStringArray;
 		this.wordTrieNode = updateTrieNode(Arrays.stream(this.DATA_PROCESSED), makeValue);
 	}
 

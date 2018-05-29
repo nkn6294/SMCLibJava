@@ -38,10 +38,6 @@ public class HomeDevice extends CommonData {
 		return this.setValue(this.value - value);
 	}
 	
-	public String getName() {
-		return this.name;
-	}
-	
 	public int getValue() {
 		return this.value;
 	}

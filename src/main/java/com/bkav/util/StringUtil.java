@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import com.bkav.command.SystemManager;
+
 public final class StringUtil {
 	
     public static String deAccentConvert(String input){
@@ -22,7 +24,7 @@ public final class StringUtil {
     	return input;
     }
 	
-	public static float CheckSame(String[] sources, String[] dests) {
+	public static float checkSame(String[] sources, String[] dests) {
 		if (sources == null || dests == null || sources.length == 0 || dests.length == 0) {
 			return 0f;
 		}
@@ -37,20 +39,20 @@ public final class StringUtil {
         }
         return 1.0f * count / dests.length;
 	}
-	public static float CheckSame(String source, String dest) {//source: dau vao->dest can so sanh
+	public static float checkSame(String source, String dest) {//source: dau vao->dest can so sanh
 		if (source == null || dest == null) {
 			return 0f;
 		}
 		if (source.equals(dest)) {
 			return 1f;
 		}
-		return CheckSame(splitString(source), splitString(dest));
+		return checkSame(splitString(source), splitString(dest));
 	}
-	public static float CheckSame(String source, String[] dest) {//source: dau vao->dest can so sanh
+	public static float checkSame(String source, String[] dest) {//source: dau vao->dest can so sanh
 		if (source == null || dest == null || dest.length == 0) {
 			return 0f;
 		}
-		return CheckSame(splitString(source), dest);
+		return checkSame(splitString(source), dest);
 	}
     public static String[] splitString(String key) {
         return splitStringToList(key).stream().toArray(String[]::new);
@@ -66,12 +68,13 @@ public final class StringUtil {
                 word = reader.nextWord();
             }
         } catch (IOException ex) {
+        	SystemManager.logger.info(ex.getMessage());
         }
         return list;
     }
     public static int search(String key, String source) {
         String[] keys = splitString(key);
-        String[] sources = splitString(key);
+        String[] sources = splitString(source);
         int count = 0;
         for (String element : sources) {
             if (count >= keys.length) {
@@ -102,4 +105,6 @@ public final class StringUtil {
         }
         return strings;
     }
+    
+    private StringUtil() {}
 }

@@ -9,11 +9,11 @@ public interface Mash {
 	/***
 	 * Normal mode ignore invalid index.
 	 */
-	public final static byte NORMAL_MODE = 1 << 0;
+	public static final byte NORMAL_MODE = 1 << 0;
 	/***
 	 * Strict mode throw Except when passing invalid index.
 	 */
-	public final static byte STRICT_MODE = 1 << 1;
+	public static final byte STRICT_MODE = 1 << 1;
 	
 	public static int MAX_INDEX = 100;
 	

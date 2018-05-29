@@ -8,7 +8,7 @@ public class TrieSearch {
 	public void addPhrase(TrieNode root, String[] words, int phraseID) {
 		TrieNode node = root;
 		for (int index = 0; index < words.length; index++) {
-			if (node.getChildren().containsKey(words[index]) == false) {
+			if (!node.getChildren().containsKey(words[index])) {
 				node.getChildren().put(words[index], new TrieNode());
 			}
 			node = node.getChildren().get(words[index]);

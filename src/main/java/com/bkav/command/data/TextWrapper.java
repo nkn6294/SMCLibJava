@@ -15,7 +15,8 @@ public class TextWrapper {
 		String[] words = text.words();
 		int currentLength = words.length;
 		for (Model model : pipeLineModel) {
-			if ((words = model.process(words)).length >= currentLength) {
+			words = model.process(words);
+			if (words.length >= currentLength) {
 				continue;
 			}
 			currentLength = words.length;
@@ -85,7 +86,7 @@ public class TextWrapper {
 		protected Model model;
 	}
 	
-	private final static TextProcesser DefaultTextProcesser = new TextProcesser() {};
+	public static final TextProcesser DefaultTextProcesser = new TextProcesser() {};
 	private final String text;
 	private final String textProccessed;
 	private final String[] words;

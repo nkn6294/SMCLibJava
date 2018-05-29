@@ -2,11 +2,11 @@ package com.bkav.command.test;
 
 public class SampleData {
 	
-	public final static String[] ENTITYS = {
+	public static final String[] ENTITYS = {
 			
 	};
 	
-	public final static String[] AREAS = {
+	public static final String[] AREAS = {
 		"phong khach",
 		"phong ngu",
 		"phong tam",
@@ -18,7 +18,7 @@ public class SampleData {
 		"phong trung tam"
 	};
 	
-	public final static String[] FUNCTION = {
+	public static final String[] FUNCTION = {
 		"buoi sang",
 		"buoi trua",
 		"buoi chieu",
@@ -42,7 +42,7 @@ public class SampleData {
 		
 	};
 	
-	public final static String[] DEVICES = {
+	public static final String[] DEVICES = {
 		"rem 1",
         "rem 2",
         "den 1",
@@ -69,7 +69,7 @@ public class SampleData {
             "quat hut 1",
 	};
 	
-	public final static String[] SampleCommands = {
+	public static final String[] SampleCommands = {
 			
 			// thiet bi cu the, nhom thiet bi, noi suy qua loai thiet bi (1/n thiet bi), trang thai hien tai
 			
@@ -89,7 +89,6 @@ public class SampleData {
 			
 			"Dat dieu hoa 1 24 do",
 			"Tang dieu hoa 1 10 do",
-			"Tang dieu hoa 1 10 do",
 			"Dieu chinh dieu hoa 1 giam 10 do", //need status current
 			"Dieu chinh dieu hoa 1 nho nhat",
 			
@@ -98,7 +97,7 @@ public class SampleData {
 			
 	};
 	
-	public final static String[] SampleCommands2 = {
+	public static final String[] SampleCommands2 = {
 			
 			// thiet bi cu the, nhom thiet bi, noi suy qua loai thiet bi (1/n thiet bi), trang thai hien tai
 			
@@ -118,7 +117,6 @@ public class SampleData {
 			
 			"Dat dieu hoa 1 24 do",
 			"Tang dieu hoa 1 10 do",
-			"Tang dieu hoa 1 10 do",
 			"Dieu chinh dieu hoa 1 tang 10 do", //need status current
 			"Dieu chinh dieu hoa 1 nho nhat",
 			
@@ -127,7 +125,7 @@ public class SampleData {
 			
 	};
 	
-	public final static String[] SampleSchedule = {
+	public static final String[] SampleSchedule = {
 			// chu y AM, PM, thoi gian hien tai, ngay trong thang..., gio,phut,giay -> h,m,s, hh:ss
 			"luc 2 gio 10 phut",
 			"luc 2 gio sang",
@@ -139,4 +137,5 @@ public class SampleData {
 			"2 gio 10 phut thu 6 tuan nay",
 			"2 gio 10 phut thu 6 tuan sau"
 	};
+	private SampleData() {}
 }

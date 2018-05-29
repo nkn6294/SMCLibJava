@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Stream;
 
+import com.bkav.command.SystemManager;
 import com.bkav.struct.ResultsProcess;
 
 /***
@@ -12,9 +13,10 @@ import com.bkav.struct.ResultsProcess;
  */
 public abstract class DynamicInputWordsModel<T> extends InputWordsModel<T> {
 
+	@Override
 	public void test(String[]... commands) {
 		Arrays.stream(commands).forEach(command -> 
-		this.wordTrieNode.findPharases(command).stream().forEach(System.out::println));
+		this.wordTrieNode.findPharases(command).stream().forEach(SystemManager.logger::info));
 	}
 
 	public DynamicInputWordsModel(Stream<? extends Object> stream) {
@@ -39,7 +41,7 @@ public abstract class DynamicInputWordsModel<T> extends InputWordsModel<T> {
 	protected void init() {
 		super.init();
 		this.MODEL_NAME = "DYNAMIC_INPUT_WORDS";
-	};
+	}
 
 	@Override
 	protected void createModelTree() {

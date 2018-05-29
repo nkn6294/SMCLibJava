@@ -19,4 +19,5 @@ public class StreamUtils {
 		return StreamSupport.stream(spliterator, false);
 	}
 	
+	private StreamUtils() {}
 }

@@ -52,13 +52,17 @@ public class Control extends CommonData {
 		default:
 			break;
 		}
-		this.value = this.value < this.minValue ? this.minValue
-				: this.value > this.maxValue ? this.maxValue : this.value;
+		if (this.value < this.minValue) {
+			this.value = this.minValue;
+		} else if (this.value > this.maxValue) {
+			this.value = this.maxValue;
+		}
 		return this.value;
 	}
 
 	public TypeControl setTypeControl(TypeControl typeControl) {
-		return this.typeControl = typeControl;
+		this.typeControl = typeControl;
+		return this.typeControl;
 	}
 
 	public int getValue() {

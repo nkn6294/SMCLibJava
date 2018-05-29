@@ -14,13 +14,13 @@ public interface Model {
     
     default public String[] process(String[] input) {
     	return this.process(new ResultsProcess(input)).remains();
-    };
+    }
     
     default public List<String> process(List<String> input) {
     	String[] inputArray = input.toArray(new String[input.size()]);
     	String[] outputArray = this.process(inputArray);
     	return Arrays.stream(outputArray).collect(Collectors.toList());
-    };
+    }
     /***
      * Process input with model and return new or update input model after process with this model.
      * @param input data input need process.
@@ -28,11 +28,11 @@ public interface Model {
      */
     default public ResultsProcess process(ResultsProcess input) {
     	return input;
-    };
+    }
     
     default public void test(String[]... commands) {
     	Arrays.stream(commands)
-    		.map(command -> new ResultsProcess(command))
+    		.map(ResultsProcess::new)
     		.map(this::process)
     		.forEach(Object::toString);
     }

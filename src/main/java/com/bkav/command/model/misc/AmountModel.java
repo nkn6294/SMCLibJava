@@ -4,15 +4,15 @@ import com.bkav.command.model.CollectionModel;
 
 public class AmountModel extends CollectionModel {
 
-	public final static String[] ALL_AMOUNT = {
+	public static final String[] ALL_AMOUNT = {
 			"tat ca",
 			"toan bo",
 		};
-	public final static String[] SOME_AMOUNT = {
+	public static final String[] SOME_AMOUNT = {
 		"mot vai",	
 	};
 	
-	public final static String[] ONLY_AMOUNT = {
+	public static final String[] ONLY_AMOUNT = {
 		"duy nhat",
 		"chi"
 	};

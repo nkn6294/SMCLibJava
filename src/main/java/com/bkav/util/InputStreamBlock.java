@@ -11,7 +11,7 @@ import java.util.function.Predicate;
 
 public class InputStreamBlock {
 
-	public final Character[] DELIMETER_WORD = { ' ', '\n', '\t', (char) 13, (char) 65279 };
+	public static final Character[] DELIMETER_WORD = { ' ', '\n', '\t', (char) 13, (char) 65279 };
 
 	public InputStreamBlock(Reader reader) {
 		this.reader = reader;
@@ -50,13 +50,13 @@ public class InputStreamBlock {
 	}
 
 	public String nextElement(final Character[] delimeterChar) throws IOException {
-		return this.nextElement(value -> !CollectionUtil.Contains(delimeterChar, value));
+		return this.nextElement(value -> !CollectionUtil.contains(delimeterChar, value));
 	}
 
 	public String nextElementAdvance(final Character[] delimeterChar, final Consumer<Character> consumer)
 			throws IOException {
 		return this.nextElement(value -> {
-			if (CollectionUtil.Contains(delimeterChar, value)) {
+			if (CollectionUtil.contains(delimeterChar, value)) {
 				if (consumer != null) {
 					consumer.accept(value);
 				}
@@ -72,7 +72,7 @@ public class InputStreamBlock {
 
 	private final Reader reader;
 
-	public void close() throws Exception {
+	public void close() throws IOException {
 		this.reader.close();
 	}
 

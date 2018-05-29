@@ -2,7 +2,7 @@ package com.bkav.command.data;
 
 public class CommonData {
 	public static String getSimpleName(String[] datas) {
-		return String.join("_", datas);//Arrays.stream(datas).reduce((result, element) -> result += "_" + element).orElse("NULL");
+		return String.join("_", datas);
 	}
 	
 	public CommonData(String name) {

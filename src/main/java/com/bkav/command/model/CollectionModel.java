@@ -11,6 +11,7 @@ import com.bkav.struct.ResultsProcess;
 
 public abstract class CollectionModel extends AbstractModel implements Iterable<Model> {
 
+	@Override
 	public void test(String[]... commands) {
 		this.pipeLineModel.stream().forEach(item -> item.test(commands));
 	}

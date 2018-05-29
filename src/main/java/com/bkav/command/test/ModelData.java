@@ -5,7 +5,7 @@ package com.bkav.command.test;
  */
 public class ModelData {
 
-	public final static String[] DEVICE_TYPE = {
+	public static final String[] DEVICE_TYPE = {
 		"den", // LIGHT
 		"rem",//CURTAIN
 		"dieu hoa", //air conditioner // dieu hoa trong phong...(1 type /room)
@@ -14,7 +14,7 @@ public class ModelData {
 		"tv",
 	};
 	
-	public final static String[] CONTROLS = {
+	public static final String[] CONTROLS = {
 		"bat",
 		"tat",
 		"tang",
@@ -36,13 +36,13 @@ public class ModelData {
 	};
 
 	
-	public final static String[] CONTEXTS = {
+	public static final String[] CONTEXTS = {
 		"thoi gian",
 		"vi tri",
 		"thiet bi",
 	};
 	
-	public final static String[] REPEATES = {
+	public static final String[] REPEATES = {
 		"mot lan",//"gio nay ngay mai/tuan sau/...
 		"hang ngay",
 		"hang tuan",
@@ -50,12 +50,12 @@ public class ModelData {
 		"hang nam",
 	};
 	
-	public final static String[] TIMES = {
+	public static final String[] TIMES = {
 		"bay gio",
 		"ngay mai",
 	};
 	
-	public final static String[] TIMES_CONTEXT = {
+	public static final String[] TIMES_CONTEXT = {
 		"luc",
 		"sau",
 		"truoc",
@@ -65,7 +65,7 @@ public class ModelData {
 		"...",
 	};
 	
-	public final static String[] UNITS = {
+	public static final String[] UNITS = {
 		"phan tram",
 		"bat",
 		"tat",
@@ -74,7 +74,7 @@ public class ModelData {
 		"trong khoang",
 	};
 	
-	public final static String[] TIME_UNITS = {
+	public static final String[] TIME_UNITS = {
 		"giay",
 		"phut",
 		"gio",
@@ -84,7 +84,7 @@ public class ModelData {
 		"nam"
 	};
 	
-	public final static String[] TIME_IN_DAY = {
+	public static final String[] TIME_IN_DAY = {
 		"sang", // 10 GIO SANG
 		"trua",
 		"chieu",
@@ -97,7 +97,7 @@ public class ModelData {
 		"buoi dem"
 	};
 	
-	public final static String[] DAY_IN_WEEK = {
+	public static final String[] DAY_IN_WEEK = {
 		"thu hai",
 		"thu ba",
 		"thu tu",
@@ -107,24 +107,24 @@ public class ModelData {
 		"chu nhat"
 	};
 	
-	public final static String[] NUMBERIC = {
+	public static final String[] NUMBERIC = {
 		"tat ca",
 		"mot"
 	};
 	
-	public final static String[] NUMBERS = {
+	public static final String[] NUMBERS = {
 		"khong", "mot", "hai", "ba", "bon", "nam", "sau", "bay", "tam", "chin", "muoi",
 		"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", 
 	};
 	/***************************** RULES ******************************/
-	public final static String[] NUMBERS_RULES = {
+	public static final String[] NUMBERS_RULES = {
 		"[NUMBERS]",
 		"[NUMBERS] muoi",//20, 30...
 		"[NUMBERS] mot", //21, 31
 		"[NUMBERS][NUMBERS]",		
 	};
 	
-	public final static String[] TIME_RULES = {
+	public static final String[] TIME_RULES = {
 			//00:00, 10 gio kem 20 -> 9:40
 		"<NUMBERS_RULES><TIME_UNITS>(TOI)",
 		"<DAY_IN_WEEK>(TOI)",
@@ -134,11 +134,13 @@ public class ModelData {
 	};
 	
 	
-	public final static String[] COMMAND_RULES = {
+	public static final String[] COMMAND_RULES = {
 		"[CONTEXT]<CONTROL><ENTITY>[<TIME>]",
 		"<CONTROL><ENTITY>[<VALUE>][<TIME>]",
 		""
 	};
+	
+	private ModelData() {}
 }
 
 

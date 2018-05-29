@@ -50,6 +50,7 @@ public class PipeLineModel implements Iterable<Model> {
 	}
 	public Collection<Iterator<Model>> getPermutation() {
 		List<Iterator<Model>> list = new ArrayList<>();
+		list.add(this.models.iterator());
 		//TODO getPermutation collection;
 		return list;
 	}

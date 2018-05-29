@@ -16,10 +16,9 @@ import com.bkav.util.StreamUtils;
 
 public class ListStringWithMark implements Iterable<String> {
 	
-	public final static byte NORMAL_MODE = 1 << 0;
-	public final static byte STRICT_MODE = 1 << 1;
+	public static final byte NORMAL_MODE = 1 << 0;
+	public static final byte STRICT_MODE = 1 << 1;
 	
-	//TODO viet rieng mash ra lop khac.
 	public ListStringWithMark(String[] strings) {
 		this.init(strings);
 	}
@@ -108,7 +107,7 @@ public class ListStringWithMark implements Iterable<String> {
 		for (int index = 0; index <= this.maxIndex; index++) {
 			if (this.isMark(index)) {
 				item.add(this.strings[index]);
-			} else if (item.size() > 0) {
+			} else if (!item.isEmpty()) {
 				result.add(item.toArray(new String[item.size()]));
 				item.clear();
 			}
@@ -122,7 +121,7 @@ public class ListStringWithMark implements Iterable<String> {
 		for (int index = 0; index <= this.maxIndex; index++) {
 			if (this.isMark(index)) {
 				item.add(index);
-			} else if (item.size() > 0) {
+			} else if (!item.isEmpty()) {
 				result.add(item.toArray(new Integer[item.size()]));
 				item.clear();
 			}
@@ -136,7 +135,7 @@ public class ListStringWithMark implements Iterable<String> {
 		for (int index = 0; index <= this.maxIndex; index++) {
 			if (!this.isMark(index)) {
 				item.add(this.strings[index]);
-			} else if (item.size() > 0) {
+			} else if (!item.isEmpty()) {
 				result.add(item.toArray(new String[item.size()]));
 				item.clear();
 			}
@@ -150,7 +149,7 @@ public class ListStringWithMark implements Iterable<String> {
 		for (int index = 0; index <= this.maxIndex; index++) {
 			if (!this.isMark(index)) {
 				item.add(index);
-			} else if (item.size() > 0) {
+			} else if (!item.isEmpty()) {
 				result.add(item.toArray(new Integer[item.size()]));
 				item.clear();
 			}
@@ -198,11 +197,7 @@ public class ListStringWithMark implements Iterable<String> {
 		return this.getFragmentIndex(containIndex, consumer::accept);
 	}
 	public int[] getFragmentIndex(int containIndex) {
-		return this.getFragmentIndex(containIndex, new  Consumer<Integer>() {
-			@Override
-			public void accept(Integer t) {
-			}
-		});
+		return this.getFragmentIndex(containIndex, t -> {});
 	}
 
 	public int[][] getFragmentsContainIndex(int... containIndexs) {
@@ -360,8 +355,8 @@ public class ListStringWithMark implements Iterable<String> {
 		return this.config;
 	}
 	
-	public void setConfig(byte check_mode) {
-		this.config = check_mode;
+	public void setConfig(byte config) {
+		this.config = config;
 	}
 	
 	private String[] strings;
@@ -385,8 +380,8 @@ public class ListStringWithMark implements Iterable<String> {
 	 */
 	private final boolean checkValidIndex(int index) {
 		if (index < minIndex || index > maxIndex) {
-			int strict_mode = this.config & STRICT_MODE;
-			if (strict_mode > 0) {
+			int strictMode = this.config & STRICT_MODE;
+			if (strictMode > 0) {
 				throw new IndexOutOfBoundsException();
 			}
 			return false;

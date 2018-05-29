@@ -4,14 +4,14 @@ import com.bkav.command.model.CollectionModel;
 
 public class SimpleControlModel extends CollectionModel {
 	
-    public final static String[] MIN_CONTROL = {
+	public static final String[] MIN_CONTROL = {
     		"tat",
     		"nho hon",
     		"dong",
     		"nho nhat",    		
     };
     
-    public final static String[] MAX_CONTROL = {
+    public static final String[] MAX_CONTROL = {
     		"bat",
     		"mo",
     		"kich hoat",

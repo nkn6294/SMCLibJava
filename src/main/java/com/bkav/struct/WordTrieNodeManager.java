@@ -7,13 +7,15 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import com.bkav.command.SystemManager;
+
 public class WordTrieNodeManager {
 
 	public WordTrieNodeManager() {
 		this.wordTrieNodes = new ArrayList<>();
 	}
 
-	public final static ResultTreeNode<?> processNodes(ResultTreeNode<?> parent, WordTrieNode<?> wordTrieNode,
+	public static final ResultTreeNode<?> processNodes(ResultTreeNode<?> parent, WordTrieNode<?> wordTrieNode,
 			Iterator<WordTrieNode<?>> iterator) {
 		// TODO processNodes not complete
 		WordTrieNode<?> currentTrieNode = wordTrieNode;
@@ -24,7 +26,7 @@ public class WordTrieNodeManager {
 			currentTrieNode = iterator.next();
 		}
 		Collection<ResultTreeNode<?>> childNodes = null;
-		while ((childNodes = makeChildNodes(parent, currentTrieNode)).size() <= 0) {
+		while ((childNodes = makeChildNodes(parent, currentTrieNode)).isEmpty()) {
 			if (!iterator.hasNext()) {
 				return parent;
 			}
@@ -39,7 +41,7 @@ public class WordTrieNodeManager {
 		return parent;
 	}
 
-	public final static List<ResultTreeNode<?>> makeChildNodes(ResultTreeNode<?> parent, WordTrieNode<?> wordTrieNode) {
+	public static final List<ResultTreeNode<?>> makeChildNodes(ResultTreeNode<?> parent, WordTrieNode<?> wordTrieNode) {
 		findPharasesWithReset(parent.getValue(), wordTrieNode).stream()
 				.map(result -> new ResultTreeNode<>(parent, result)).forEach(parent::addChild);
 		return parent.getChilds();
@@ -116,13 +118,14 @@ public class WordTrieNodeManager {
 			try {
 				wordsWithMark.resetFragment(words.length - 1);				
 			} catch(Exception ex) {
+				SystemManager.logger.info(ex.getMessage());
 			}
 		}
 		String[] remains = wordsWithMark.unMarkStream().toArray(String[]::new);
 		return new ResultsFind<>(remains, results);//? results.length = 0
 	}
 
-	public final static ResultNode<?> processNode(ResultNode<?> parent, Iterator<WordTrieNode<?>> iterator) {
+	public static final ResultNode<?> processNode(ResultNode<?> parent, Iterator<WordTrieNode<?>> iterator) {
 		if (!iterator.hasNext()) {
 			return parent;
 		}
@@ -131,7 +134,7 @@ public class WordTrieNodeManager {
 		return parent;
 	}
 
-	public final static ResultNode<?> makeNextNode(ResultNode<?> parent, WordTrieNode<?> wordTrieNode) {
+	public static final ResultNode<?> makeNextNode(ResultNode<?> parent, WordTrieNode<?> wordTrieNode) {
 		ResultFind<?> resultFind = findPharase(parent.getValue(), wordTrieNode);
 		if (resultFind == parent.getValue()) {
 			return parent;
@@ -145,7 +148,7 @@ public class WordTrieNodeManager {
 		List<ResultFind<?>> listResult = findPharasesWithReset(currentResult, rootNode);
 		Collections.sort(listResult,
 				(result1, result2) -> Integer.compare(result1.getRemains().length, result2.getRemains().length));
-		if (listResult.size() > 0) {
+		if (!listResult.isEmpty()) {
 			return listResult.get(0);
 		}
 		return currentResult;
@@ -157,13 +160,13 @@ public class WordTrieNodeManager {
 	}
 
 	public final ResultNode<?> find(String[] commands) {
-		ResultFind<Object> resultFind = new ResultFind<Object>(null, new String[] {}, commands);
+		ResultFind<Object> resultFind = new ResultFind<>(null, new String[] {}, commands);
 		ResultNode<?> rootNode = new ResultNode<>(null, resultFind);
 		return processNode(rootNode, this.wordTrieNodes.iterator());
 	}
 
 	public final ResultTreeNode<?> findAdvance(String[] commands) {
-		ResultFind<Object> resultFind = new ResultFind<Object>(null, new String[] {}, commands);
+		ResultFind<Object> resultFind = new ResultFind<>(null, new String[] {}, commands);
 		ResultTreeNode<?> rootNode = new ResultTreeNode<>(null, resultFind);
 		return processNodes(rootNode, null, this.wordTrieNodes.iterator());
 	}
