@@ -59,8 +59,7 @@ public abstract class StaticInputWordsModel<T> extends InputWordsModel<T> {
 	}
 
 	/***
-	 * Static array input words, array[commands] -> array[command[]], created in
-	 * {@link StaticInputWordsModel#normalInputData(Stream)}
+	 * data[commands] -> data[command[]], created in {@link #normalInputData(Stream)}
 	 */
 	protected String[][] DATA_PROCESSED;
 

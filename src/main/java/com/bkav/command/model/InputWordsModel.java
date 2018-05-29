@@ -40,8 +40,8 @@ public abstract class InputWordsModel<T> extends AbstractModel {
 	}
 
 	/***
-	 * Normal input data with {@link InputWordsModel#normalInputData(Object)} and
-	 * reset Tree Model with {@link InputWordsModel#createModelTree()}.
+	 * Normal input data with {@link #normalInputData(Object)} and
+	 * reset Tree Model with {@link #createModelTree()}.
 	 */
 	public void reloadModel(Collection<Object> data) {
 		this.normalInputData(data.stream());

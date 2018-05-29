@@ -45,6 +45,7 @@ public class SampleData {
 	public final static String[] DEVICES = {
 		"rem 1",
         "rem 2",
+        "den 1",
         "den chum 1",
         "den chum bep",
         "den tranh",

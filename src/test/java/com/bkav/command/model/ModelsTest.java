@@ -11,6 +11,7 @@ import org.junit.Test;
 import com.bkav.SystemManager;
 import com.bkav.command.model.control.ControlModel;
 import com.bkav.command.model.entity.HomeEntityModel;
+import com.bkav.command.model.misc.AmountModel;
 import com.bkav.command.model.time.TimeModel;
 import com.bkav.command.test.SampleData;
 import com.bkav.struct.ResultsProcess;
@@ -30,6 +31,7 @@ public class ModelsTest {
 	public void setUp() throws Exception {
 		this.pipeLineModel = new PipeLineModel(
 				new HomeEntityModel(), 
+				new AmountModel(),
 				new ControlModel(), 
 				new TimeModel());
 	}
