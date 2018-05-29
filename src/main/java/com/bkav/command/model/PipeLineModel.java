@@ -1,8 +1,11 @@
 package com.bkav.command.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Stream;
 
 import com.bkav.command.common.Model;
@@ -45,7 +48,11 @@ public class PipeLineModel implements Iterable<Model> {
 		}
 		return input;
 	}
-	
+	public Collection<Iterator<Model>> getPermutation() {
+		List<Iterator<Model>> list = new ArrayList<>();
+		//TODO getPermutation collection;
+		return list;
+	}
 	public void addFirst(Model model) {
 		this.models.addFirst(model);
 	}

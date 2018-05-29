@@ -1,4 +1,4 @@
-package com.bkav;
+package com.bkav.command;
 
 import com.bkav.command.common.TextProcesser;
 

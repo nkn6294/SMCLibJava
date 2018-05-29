@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.bkav.SystemManager;
+import com.bkav.command.SystemManager;
 import com.bkav.command.model.control.ControlModel;
 import com.bkav.command.model.entity.HomeEntityModel;
 import com.bkav.command.model.misc.AmountModel;

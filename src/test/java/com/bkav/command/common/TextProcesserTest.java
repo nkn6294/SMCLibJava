@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.bkav.SystemManager;
+import com.bkav.command.SystemManager;
 
 public class TextProcesserTest {
 

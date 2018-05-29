@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import com.bkav.SystemManager;
+import com.bkav.command.SystemManager;
 import com.bkav.command.common.TextProcesser;
 
 public class CollectionUtil {

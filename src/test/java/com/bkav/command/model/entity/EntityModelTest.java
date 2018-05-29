@@ -3,7 +3,7 @@ package com.bkav.command.model.entity;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.bkav.SystemManager;
+import com.bkav.command.SystemManager;
 import com.bkav.command.common.Model;
 import com.bkav.command.model.ModelTest;
 import com.bkav.command.test.SampleData;

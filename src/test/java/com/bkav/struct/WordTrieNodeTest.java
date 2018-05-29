@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.bkav.SystemManager;
+import com.bkav.command.SystemManager;
 import com.bkav.command.common.Model;
 import com.bkav.command.model.entity.HomeDeviceTypeModel;
 
