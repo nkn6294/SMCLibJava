@@ -63,4 +63,10 @@ public interface Mash {
 	public int[] getFragmentIndexStartAt(int startIndexInclusive);
 	public int getFragmenStartIndextEndAt(int endIndexInclusive);
 	public int[] getFragmenIndextEndAt(int endIndexInclusive);
+
+	public boolean checkValidIndex(int index);
+	public boolean isValidIndex(int index);
+	
+	public void setConfig(byte config);
+	public byte config();
 }

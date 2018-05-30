@@ -1,44 +1,17 @@
 package com.bkav.struct;
 
-public class IntMash extends CommonMash {
+public class IntMash extends CommonMashWithMarkAction<Integer> {
 
 	public IntMash(int length) {
-		super(length);
+		super(length, new IntMarkAction());
 	}
 
 	public IntMash(int length, byte config) {
-		super(length, config);
+		super(length, config, new IntMarkAction());
 	}
 
 	@Override
-	protected void createMarkArray(int length) {
-		this.marks = new int[length];
+	protected Integer[] createMarkMarkArrayValue(int length) {
+		return new Integer[length];
 	}
-
-	@Override
-	protected void resetMark(int index) {
-		this.marks[index] = 0;
-	}
-
-	@Override
-	protected void markByIndex(int index) {
-		if (this.marks[index] >= 0) {
-			this.marks[index] += 1;
-		} else {
-			this.marks[index] = 1;
-		}
-	}
-
-	@Override
-	protected boolean isMarkByIndex(int index) {
-		return this.marks[index] > 0;
-	}
-
-	@Override
-	protected boolean isUnmarkByIndex(int index) {
-		return this.marks[index] <= 0;
-	}
-	
-	
-	private int[] marks;
 }

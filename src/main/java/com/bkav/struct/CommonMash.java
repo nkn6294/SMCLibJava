@@ -11,6 +11,9 @@ import java.util.stream.IntStream;
 
 import com.bkav.util.CollectionUtil;
 
+/***
+ * {@link CommonMash} implement basic method of {@link Mash}
+ */
 public abstract class CommonMash implements Mash {
 
 	public CommonMash(int length, byte mode) {
@@ -37,16 +40,6 @@ public abstract class CommonMash implements Mash {
 	@Override
 	public int minIndex() {
 		return this.minIndex;
-	}
-
-	public final boolean isMark(int index) {
-		this.checkValidIndex(index);
-		return this.isMarkByIndex(index);
-	}
-
-	public final boolean isUnMark(int index) {
-		this.checkValidIndex(index);
-		return this.isUnmarkByIndex(index);
 	}
 
 	@Override
@@ -280,35 +273,29 @@ public abstract class CommonMash implements Mash {
 		return startIndexInclusive < this.minIndex ? new int[0]
 				: IntStream.range(startIndexInclusive, endIndexInclusive).toArray();
 	}
-
-	protected void init(int length, byte mode) {
-		this.minIndex = 0;
-		this.maxIndex = length - 1;
-		this.createMarkArray(length);
-		this.config = mode;
+	public void setConfig(byte config) {
+		this.config = config;
 	}
-
-	protected abstract void createMarkArray(int length);
+	@Override
+	public byte config() {
+		return this.config();
+	}
 	
-	protected abstract void resetMark(int index); 
-
-	protected abstract void markByIndex(int index) ;
 	/***
 	 * Check valid <i>index</i>
 	 * 
 	 * @param index
-	 * @throws IndexOutOfBoundsException
-	 *             if <i>index</i> is invalid.
+	 * @throws IndexOutOfBoundsException if <i>index</i> is invalid when config mode in {@link Mash#STRICT_MODE}.
 	 */
-	protected final boolean checkValidIndex(int index) {
-		if (index < minIndex || index > maxIndex) {
-			int strictMode = this.config & STRICT_MODE;
-			if (strictMode > 0) {
-				throw new IndexOutOfBoundsException();
-			}
-			return false;
+	public final boolean checkValidIndex(int index) {
+		if (this.isValidIndex(index)) {
+			return true;
+		}			
+		boolean strictMode = (this.config & STRICT_MODE) > 0;
+		if (strictMode) {
+			throw new IndexOutOfBoundsException();
 		}
-		return true;
+		return false;
 	}
 	
 	/***
@@ -317,20 +304,21 @@ public abstract class CommonMash implements Mash {
 	 * @param index
 	 * @return true if index valid or false if otherise
 	 */
-	protected final boolean isValidIndex(int index) {
-		try {
-			this.checkValidIndex(index);
-		} catch (Exception ex) {
-			return false;
-		}
-		return true;
+	public final boolean isValidIndex(int index) {
+		return index >= this.minIndex && index <= this.maxIndex;
 	}
+	protected abstract void createMarkArray(int length);	
+	protected abstract void resetMark(int index);
+	protected abstract void markByIndex(int index) ;
 	
-	protected abstract boolean isMarkByIndex(int index);
-	protected abstract boolean isUnmarkByIndex(int index);
+	protected int minIndex;
+	protected int maxIndex;
+	protected byte config = NORMAL_MODE;
 	
-	private int minIndex;
-	private int maxIndex;
-	private byte config;
-
+	protected void init(int length, byte mode) {
+		this.minIndex = 0;
+		this.maxIndex = length - 1;
+		this.config = mode;
+		this.createMarkArray(length);
+	}
 }

@@ -1,8 +1,10 @@
 package com.bkav.struct;
 
-public interface MarkAble<T> {
-	public T mark(T value);
-	public T unmark(T value);
-	public boolean isMark(T value);
-	public boolean isUnmark(T value);
+public interface MarkAble {
+	public void createMarkArray(int length);	
+	public void resetMark(int index);
+	public void markByIndex(int index) ;
+	
+	public boolean isMarkByIndex(int index);
+	public boolean isUnmarkByIndex(int index);
 }
