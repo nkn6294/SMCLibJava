@@ -14,12 +14,12 @@ import java.util.stream.Stream;
 import com.bkav.util.CollectionUtil;
 import com.bkav.util.StreamUtils;
 
-public class ListStringWithMark implements Iterable<String> {
+public class ListStringWithMask2 implements Iterable<String> {
 	
 	public static final byte NORMAL_MODE = 1 << 0;
 	public static final byte STRICT_MODE = 1 << 1;
 	
-	public ListStringWithMark(String[] strings) {
+	public ListStringWithMask2(String[] strings) {
 		this.init(strings);
 	}
 	public int length() {
@@ -435,7 +435,7 @@ public class ListStringWithMark implements Iterable<String> {
 			}
 			this.currentIndex = this.nextIndex;
 			this.nextIndex = this.findNext(this.nextIndex);
-			return ListStringWithMark.this.strings[this.currentIndex];
+			return strings[this.currentIndex];
 		}
 
 		private int currentIndex;
@@ -443,8 +443,8 @@ public class ListStringWithMark implements Iterable<String> {
 
 		private int findNext(int startIndex) {
 			int next = startIndex;
-			while (++next <= ListStringWithMark.this.maxIndex) {
-				if (!ListStringWithMark.this.isMark(next)) {
+			while (++next <= maxIndex) {
+				if (!isMark(next)) {
 					return next;
 				}
 			}

@@ -14,12 +14,12 @@ public class ResultsProcess implements Iterable<Object> {
 	@SafeVarargs
 	public ResultsProcess(String[] remains, Object... values) {
 		this.values = Arrays.stream(values).collect(Collectors.toList());
-		this.stringsMark = new ListStringWithMark(remains);
+		this.stringsMark = new ListStringWithMask(remains);
 	}
 
 	public ResultsProcess(String[] remains, Collection<Object> values) {
 		this.values = values.stream().collect(Collectors.toList());
-		this.stringsMark = new ListStringWithMark(remains);
+		this.stringsMark = new ListStringWithMask(remains);
 	}
 	
 	public int size() {
@@ -47,14 +47,14 @@ public class ResultsProcess implements Iterable<Object> {
 	}
 	
 	public String[] strings() {
-		return this.stringsMark.strings();
+		return this.stringsMark.datas();
 	}
 	
 	public Stream<Object> stream() {
 		return this.values.stream();
 	}
 
-	public ListStringWithMark stringsMark() {
+	public ListStringWithMask stringsMark() {
 		return this.stringsMark;
 	}
 	
@@ -69,5 +69,5 @@ public class ResultsProcess implements Iterable<Object> {
 	}
 
 	private List<Object> values;
-	private ListStringWithMark stringsMark;
+	private ListStringWithMask stringsMark;
 }

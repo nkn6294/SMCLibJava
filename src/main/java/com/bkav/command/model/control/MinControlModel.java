@@ -7,7 +7,7 @@ public class MinControlModel extends StaticInputWordsModel<Control> {
 
 	public MinControlModel() {
 		super(SimpleControlModel.MIN_CONTROL);
-		this.MODEL_NAME = "MIN_SIMPLE_CONTROL";		
+		this.modelName = "MIN_SIMPLE_CONTROL";		
 	}
 
 	@Override

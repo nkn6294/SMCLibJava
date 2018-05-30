@@ -83,7 +83,7 @@ public abstract class CollectionModel extends AbstractModel implements Iterable<
 	@Override
 	protected void init() {
 		super.init();
-		this.MODEL_NAME = "COLLECTION_MODEL";
+		this.modelName = "COLLECTION_MODEL";
 		this.pipeLineModel = new PipeLineModel();
 		this.initModels();
 	}

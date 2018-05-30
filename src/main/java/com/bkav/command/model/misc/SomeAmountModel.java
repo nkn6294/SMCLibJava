@@ -7,7 +7,7 @@ public class SomeAmountModel extends StaticInputWordsModel<AmountData> {
 
 	public SomeAmountModel() {
 		super(AmountModel.SOME_AMOUNT);
-		this.MODEL_NAME = "SOME_AMOUNT";
+		this.modelName = "SOME_AMOUNT";
 	}
 
 	@Override

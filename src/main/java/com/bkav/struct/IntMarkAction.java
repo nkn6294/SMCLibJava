@@ -37,4 +37,9 @@ public class IntMarkAction extends AbstractMarkAction<Integer> {
 		return object.intValue() <= 0;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("%s", this.getClass().getSimpleName());
+	}
+
 }

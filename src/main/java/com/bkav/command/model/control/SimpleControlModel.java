@@ -21,7 +21,7 @@ public class SimpleControlModel extends CollectionModel {
 	@Override
 	protected void init() {
 		super.init();
-		this.MODEL_NAME = "SIMPLE_CONTROL";
+		this.modelName = "SIMPLE_CONTROL";
 	}
 
 	@Override

@@ -8,7 +8,7 @@ public class HomeFunctionModel extends StaticInputWordsModel<HomeFunction> {
 
 	public HomeFunctionModel() {
 		super(SampleData.FUNCTION);
-		this.MODEL_NAME = "FUNCTION";
+		this.modelName = "FUNCTION";
 	}
 	
 	@Override

@@ -7,7 +7,7 @@ public class TimeModel extends CollectionModel {
 	@Override
 	protected void init() {
 		super.init();
-		this.MODEL_NAME = "TIME_MODEL";
+		this.modelName = "TIME_MODEL";
 	}
 
 	@Override

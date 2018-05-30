@@ -8,7 +8,7 @@ public class TimeInDayModel extends StaticInputWordsModel<TimeInDay> {
 
 	public TimeInDayModel() {
 		super(ModelData.TIME_IN_DAY);
-		this.MODEL_NAME = "TIME_IN_DAY";
+		this.modelName = "TIME_IN_DAY";
 	}
 	
 	@Override

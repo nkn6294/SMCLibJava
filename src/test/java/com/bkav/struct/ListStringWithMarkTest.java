@@ -28,7 +28,7 @@ public class ListStringWithMarkTest {
 	@Before
 	public void setUp() throws Exception {
 		this.sample = "0,1,2,3,4,5,6,7,8,9".split(",");
-		this.listStringWithMark = new ListStringWithMark(this.sample);
+		this.listStringWithMark = new ListStringWithMask(this.sample);
 	}
 
 	@After
@@ -58,16 +58,16 @@ public class ListStringWithMarkTest {
 	@Test
 	public final void testMarkStream() {
 		this.listStringWithMark.setMark(1, 3, 5, 7, 9);
-		String[] output = this.listStringWithMark.unMarkStream().toArray(String[]::new);
-		String[] expected = { "0", "2", "4", "6", "8" };
+		String[] output = this.listStringWithMark.markStream().toArray(String[]::new);
+		String[] expected = { "1", "3", "5", "7", "9" };
 		assertArrayEquals(expected, output);
 	}
 
 	@Test
 	public final void testUnMarkStream() {
 		this.listStringWithMark.setMark(1, 3, 5, 7, 9);
-		String[] output = this.listStringWithMark.markStream().toArray(String[]::new);
-		String[] expected = { "1", "3", "5", "7", "9" };
+		String[] output = this.listStringWithMark.unMarkStream().toArray(String[]::new);
+		String[] expected = { "0", "2", "4", "6", "8" };
 		assertArrayEquals(expected, output);
 	}
 
@@ -85,7 +85,7 @@ public class ListStringWithMarkTest {
 		List<String> outputList = new ArrayList<>();
 		this.listStringWithMark.forEach(outputList::add);
 		String[] output = outputList.toArray(new String[outputList.size()]);
-		assertArrayEquals(this.listStringWithMark.strings(), output);
+		assertArrayEquals(this.listStringWithMark.datas(), output);
 	}
 
 	@Test
@@ -99,18 +99,18 @@ public class ListStringWithMarkTest {
 	}
 
 	@Test
-	public final void testGetFragments() {
+	public final void testGetStringFragments() {
 		this.listStringWithMark.setMark(1, 2, 6, 7, 8);
-		String[][] marks = this.listStringWithMark.getFragments();
+		String[][] marks = this.listStringWithMark.getStringFragments();
 		assertEquals(2, marks.length);
 		assertArrayEquals(marks[0], new String[] { "1", "2" });
 		assertArrayEquals(marks[1], new String[] { "6", "7", "8" });
 	}
 
 	@Test
-	public final void testGetUnMarks() {
+	public final void testGetStringUnMarks() {
 		this.listStringWithMark.setMark(0, 3, 4, 5, 9);
-		String[][] marks = this.listStringWithMark.getUnMarks();
+		String[][] marks = this.listStringWithMark.getStringUnMarks();
 		assertEquals(2, marks.length);
 		assertArrayEquals(marks[0], new String[] { "1", "2" });
 		assertArrayEquals(marks[1], new String[] { "6", "7", "8" });
@@ -264,6 +264,6 @@ public class ListStringWithMarkTest {
 		assertArrayEquals(new int[] {5, 9}, unmarksIndex);
 	}
 	
-	private ListStringWithMark listStringWithMark;
+	private ListStringWithMask listStringWithMark;
 	private String[] sample;
 }

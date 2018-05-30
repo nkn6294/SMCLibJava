@@ -192,6 +192,15 @@ public class CollectionUtil {
 				.collect(Collectors.toList());
     }
     
+    public static final String[][] toArray(List<List<String>> input) {
+    	String[][] output = new String[input.size()][];
+		IntStream.range(0, input.size()).forEach(index -> {
+			List<String> item = input.get(index);
+			output[index] = item.toArray(new String[item.size()]);
+		});
+		return output;
+    }
+    
     public static boolean[] toArray(Boolean[] input) {	
 		boolean[] output = new boolean[input.length];
 		IntStream.range(0, input.length).forEach(index -> output[index] = input[index]);

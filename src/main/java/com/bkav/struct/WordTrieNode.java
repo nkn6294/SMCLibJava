@@ -135,8 +135,8 @@ public class WordTrieNode<T> {
 		if (words.length == 0) {
 			return currentResult;
 		}
-		ListStringWithMark wordsWithMark =  new ListStringWithMark(words);
-		wordsWithMark.setConfig(ListStringWithMark.NORMAL_MODE);
+		ListStringWithMask wordsWithMark =  new ListStringWithMask(words);
+		wordsWithMark.setConfig(MaskConfig.getDefaultConfig());
 		List<Integer> indexs = new ArrayList<>();
 		for (int index = 0; index < words.length;) {
 			WordTrieNode<T> childNode = currentNode.getChildrens().get(words[index]);

@@ -12,19 +12,19 @@ import java.util.stream.IntStream;
 import com.bkav.util.CollectionUtil;
 
 /***
- * {@link CommonMash} implement basic method of {@link Mash}
+ * {@link CommonMask} implement basic method of {@link Mask}
  */
-public abstract class CommonMash implements Mash {
-
-	public CommonMash(int length, byte mode) {
-		if (length < 0 || length > MAX_INDEX) {
+public abstract class CommonMask implements Mask {
+	
+	public CommonMask(int length, MaskConfig config) {
+		if (length < 0 || length > MaskConfig.MAX_INDEX) {
 			throw new InvalidParameterException("Length must greater zero");
 		}
-		this.init(length, mode);
+		this.init(length, config);
 	}
 
-	public CommonMash(int length) {
-		this(length, NORMAL_MODE);
+	public CommonMask(int length) {
+		this(length, MaskConfig.getDefaultConfig());
 	}
 
 	@Override
@@ -44,9 +44,11 @@ public abstract class CommonMash implements Mash {
 
 	@Override
 	public boolean[] markValue() {
-		Boolean[] output = IntStream.rangeClosed(this.minIndex, this.maxIndex).mapToObj(this::isMark)
-				.toArray(Boolean[]::new);
-		return CollectionUtil.toArray(output);
+		boolean[] output = new boolean[this.maxIndex - this.minIndex + 1];
+		for (int index = this.minIndex; index <= this.maxIndex; index++) {
+			output[index - this.minIndex] = this.isMark(index);
+		}
+		return output;
 	}
 
 	@Override
@@ -273,26 +275,25 @@ public abstract class CommonMash implements Mash {
 		return startIndexInclusive < this.minIndex ? new int[0]
 				: IntStream.range(startIndexInclusive, endIndexInclusive).toArray();
 	}
-	public void setConfig(byte config) {
+	
+	public void setConfig(MaskConfig config) {
 		this.config = config;
 	}
-	@Override
-	public byte config() {
-		return this.config();
+	public MaskConfig config() {
+		return this.config;
 	}
 	
 	/***
 	 * Check valid <i>index</i>
 	 * 
 	 * @param index
-	 * @throws IndexOutOfBoundsException if <i>index</i> is invalid when config mode in {@link Mash#STRICT_MODE}.
+	 * @throws IndexOutOfBoundsException if <i>index</i> is invalid when config mode in {@link Mask#STRICT_MODE}.
 	 */
 	public final boolean checkValidIndex(int index) {
 		if (this.isValidIndex(index)) {
 			return true;
-		}			
-		boolean strictMode = (this.config & STRICT_MODE) > 0;
-		if (strictMode) {
+		}
+		if (this.config.isStrictMode()) {
 			throw new IndexOutOfBoundsException();
 		}
 		return false;
@@ -307,18 +308,24 @@ public abstract class CommonMash implements Mash {
 	public final boolean isValidIndex(int index) {
 		return index >= this.minIndex && index <= this.maxIndex;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("%s [minIndex=%s, maxIndex=%s, config=%s]", this.getClass().getSimpleName(), this.minIndex, this.maxIndex, this.config);
+	}
+
 	protected abstract void createMarkArray(int length);	
 	protected abstract void resetMark(int index);
 	protected abstract void markByIndex(int index) ;
 	
 	protected int minIndex;
 	protected int maxIndex;
-	protected byte config = NORMAL_MODE;
+	protected MaskConfig config;
 	
-	protected void init(int length, byte mode) {
+	protected void init(int length, MaskConfig config) {
 		this.minIndex = 0;
 		this.maxIndex = length - 1;
-		this.config = mode;
+		this.config = config;
 		this.createMarkArray(length);
 	}
 }

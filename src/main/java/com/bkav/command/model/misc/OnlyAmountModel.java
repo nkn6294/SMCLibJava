@@ -7,7 +7,7 @@ public class OnlyAmountModel extends StaticInputWordsModel<AmountData> {
 
 	public OnlyAmountModel() {
 		super(AmountModel.ONLY_AMOUNT);
-		this.MODEL_NAME = "ONLY_AMOUNT";
+		this.modelName = "ONLY_AMOUNT";
 	}
 
 	@Override

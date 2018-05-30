@@ -31,7 +31,7 @@ public abstract class DynamicInputWordsModel<T> extends InputWordsModel<T> {
 	/***
 	 * Dynamic array input words, array[commands] -> array[command[]], created in <i>init</i> method.
 	 */
-	protected Collection<T> DATA_PROCESSED;
+	protected Collection<T> dataProcessed;
 	/***
 	 * Create data for node
 	 */
@@ -40,7 +40,7 @@ public abstract class DynamicInputWordsModel<T> extends InputWordsModel<T> {
 	@Override
 	protected void init() {
 		super.init();
-		this.MODEL_NAME = "DYNAMIC_INPUT_WORDS";
+		this.modelName = "DYNAMIC_INPUT_WORDS";
 	}
 
 	@Override

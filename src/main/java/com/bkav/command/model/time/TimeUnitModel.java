@@ -8,7 +8,7 @@ public class TimeUnitModel extends StaticInputWordsModel<TimeUnit> {
 
 	public TimeUnitModel() {
 		super(ModelData.TIME_UNITS);
-		this.MODEL_NAME = "TIME_UNIT";
+		this.modelName = "TIME_UNIT";
 	}
 
 	@Override

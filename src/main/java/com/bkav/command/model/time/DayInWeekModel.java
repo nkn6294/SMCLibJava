@@ -8,7 +8,7 @@ public class DayInWeekModel extends StaticInputWordsModel<DayInWeek> {
 
 	public DayInWeekModel() {
 		super(ModelData.DAY_IN_WEEK);
-		this.MODEL_NAME = "DAY_IN_WEEK";
+		this.modelName = "DAY_IN_WEEK";
 	}
 
 	@Override

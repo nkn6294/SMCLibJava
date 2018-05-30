@@ -5,6 +5,8 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.bkav.command.SystemManager;
+
 public class TimeProcess {
 	public TimeProcess() {
 	}
@@ -13,18 +15,18 @@ public class TimeProcess {
 		this();
 		this.data = data;
 		this.after = after;
-		this.time = "00:00";
+		this.stringTime = "00:00";
 		this.process();
 		this.validTime();
 	}
 
 	private void process() {
 		if (this.processNormal()) {
-			System.out.println("processnormal");
+			SystemManager.logger.info("processnormal");
 		} else if (this.processMore()) {
-			System.out.println("processmore");
+			SystemManager.logger.info("processmore");
 		} else {
-			System.out.println("Not found");
+			SystemManager.logger.info("Not found");
 		}
 	}
 	
@@ -43,7 +45,7 @@ public class TimeProcess {
 	}
 
 	private boolean processNormal() {
-		Pattern pattern = Pattern.compile(TIME);
+		Pattern pattern = Pattern.compile(TIME_REGEX_PATTERN);
 		Matcher matcher = pattern.matcher(this.data);
 		if (matcher.find()) {
 			this.setTime(matcher.group(0));
@@ -53,7 +55,7 @@ public class TimeProcess {
 	}
 
 	private boolean processMore() {
-		Pattern pattern = Pattern.compile(TIME_AFTER);
+		Pattern pattern = Pattern.compile(TIME_AFTER_REGEXT_PATTERN);
 		Matcher matcher = pattern.matcher(this.data);
 		String hour = "00";
 		String minute = "00";
@@ -73,11 +75,11 @@ public class TimeProcess {
 	}
 
 	public String getTime() {
-		return time;
+		return stringTime;
 	}
 
 	public void setTime(String time) {
-		this.time = time;
+		this.stringTime = time;
 	}
 
 	public static String validTime(String time) {
@@ -95,9 +97,10 @@ public class TimeProcess {
 		return "00:00";
 	}
 	
-	public static final String TIME = "([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]";
-	public static final String TIME_AFTER = "(\\d+ giờ)(.*) (\\d+ phút)|(\\d+ giờ)|(\\d+ phút)";
-	private String time;
+	public static final String TIME_REGEX_PATTERN = "([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]";
+	public static final String TIME_AFTER_REGEXT_PATTERN = "(\\d+ giờ)(.*) (\\d+ phút)|(\\d+ giờ)|(\\d+ phút)";
+	
+	private String stringTime;
 	private String data;
 	private boolean after;
 

@@ -13,15 +13,15 @@ public abstract class AbstractModel implements Model {
 	
 	public AbstractModel(String modelName) {
 		this.init();
-		this.MODEL_NAME = modelName;
+		this.modelName = modelName;
 	}
 	
 	@Override
 	public String getModelName() {
-		return this.MODEL_NAME;
+		return this.modelName;
 	}
 	
-	protected String MODEL_NAME = "MODEL";
+	protected String modelName = "MODEL";
 	/***
 	 * Init model name, model, data other.
 	 */

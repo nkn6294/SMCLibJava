@@ -22,22 +22,22 @@ public abstract class StaticInputWordsModel<T> extends InputWordsModel<T> {
 
 	public StaticInputWordsModel(Collection<String> dataInput) {
 		super(dataInput.stream());
-		Arrays.sort(this.DATA_PROCESSED, DEFAULT_STRING_ARRAY_COMPARATOR);
+		Arrays.sort(this.dataProcessed, DEFAULT_STRING_ARRAY_COMPARATOR);
 	}
 
 	public StaticInputWordsModel(String[] dataInput) {
 		super(Arrays.stream(dataInput));
-		Arrays.sort(this.DATA_PROCESSED, DEFAULT_STRING_ARRAY_COMPARATOR);
+		Arrays.sort(this.dataProcessed, DEFAULT_STRING_ARRAY_COMPARATOR);
 	}
 	
 	public StaticInputWordsModel(String[] dataInput, Function<Object, String> convert) {
 		super(Arrays.stream(dataInput).map(convert::apply));
-		Arrays.sort(this.DATA_PROCESSED, DEFAULT_STRING_ARRAY_COMPARATOR);
+		Arrays.sort(this.dataProcessed, DEFAULT_STRING_ARRAY_COMPARATOR);
 	}
 
 	public StaticInputWordsModel(Collection<Object> dataInput, Function<Object, String> convert) {
 		super(dataInput.stream().map(convert::apply));
-		Arrays.sort(this.DATA_PROCESSED, DEFAULT_STRING_ARRAY_COMPARATOR);
+		Arrays.sort(this.dataProcessed, DEFAULT_STRING_ARRAY_COMPARATOR);
 	}
 	@Override
 	public ResultsProcess process(ResultsProcess input) {
@@ -47,17 +47,17 @@ public abstract class StaticInputWordsModel<T> extends InputWordsModel<T> {
 	/***
 	 * data[commands] -> data[command[]], created in {@link #normalInputData(Stream)}
 	 */
-	protected String[][] DATA_PROCESSED;
+	protected String[][] dataProcessed;
 
 	@Override
 	protected void createModelTree() {
 		Function<String[], T> makeValue = this::getDataFromStringArray;
-		this.wordTrieNode = updateTrieNode(Arrays.stream(this.DATA_PROCESSED), makeValue);
+		this.wordTrieNode = updateTrieNode(Arrays.stream(this.dataProcessed), makeValue);
 	}
 
 	@Override
 	protected void normalInputData(Stream<? extends Object> stream) {
-		this.DATA_PROCESSED = stream.map(Object::toString)
+		this.dataProcessed = stream.map(Object::toString)
 				.map(SystemManager.textProcesser::textToWords).toArray(String[][]::new);
 	}
 

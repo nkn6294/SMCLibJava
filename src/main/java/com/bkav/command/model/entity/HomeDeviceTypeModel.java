@@ -8,7 +8,7 @@ public class HomeDeviceTypeModel extends StaticInputWordsModel<HomeDeviceType> {
 
 	public HomeDeviceTypeModel() {
 		super(ModelData.DEVICE_TYPE);
-		this.MODEL_NAME = "DEVICE_TYPE";
+		this.modelName = "DEVICE_TYPE";
 	}
 
 	@Override

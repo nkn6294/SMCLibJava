@@ -7,7 +7,7 @@ public class ValueControlModel extends StaticInputWordsModel<Control> {
 
 	public ValueControlModel() {
 		super(AdvanceControlModel.VALUE_CONTROL);
-		this.MODEL_NAME = "VALUE_ADVANCE_CONTROL";
+		this.modelName = "VALUE_ADVANCE_CONTROL";
 	}
 
 	@Override

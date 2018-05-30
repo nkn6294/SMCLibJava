@@ -5,18 +5,8 @@ import java.util.Iterator;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
-public interface Mash {
-	/***
-	 * Normal mode ignore invalid index.
-	 */
-	public static final byte NORMAL_MODE = 1 << 0;
-	/***
-	 * Strict mode throw Except when passing invalid index.
-	 */
-	public static final byte STRICT_MODE = 1 << 1;
-	
-	public static int MAX_INDEX = 100;
-	
+public interface Mask {
+
 	public int length();
 	public int maxIndex();
 	public int minIndex();
@@ -24,6 +14,8 @@ public interface Mash {
 	public boolean isMark(int index);
 	public boolean isUnMark(int index);
 	public boolean[] markValue();
+	public Object[] maskValues();
+	public Object maskValueAt(int index);
 	
 	public void setMark(int... indexs);
 	public void setMark(Collection<Integer> indexs);
@@ -50,14 +42,10 @@ public interface Mash {
 	public int[] getFragmentIndex(int containIndex);
 	public int[][] getFragmentsContainIndex(int... containIndexs);
 	public int[][] getFragmentsContainIndex(Collection<Integer> containIndexs);
-	public int[][] getFragmentsContainIndexOptimal(int... containIndexs);	
-	public int[][] getFragmentsContainIndexOptimal(Collection<Integer> containIndexs);
 	
 	public void resetFragment(int containIndex);
 	public void resetFragments(int... containIndexs);
 	public void resetFragments(Collection<Integer> containIndexs);
-	public void resetFragmentsOptimal(int... containIndexs);
-	public void resetFragmentsOptimal(Collection<Integer> containIndexs);
 	
 	public int getFragmentEndIndexStartAt(int startIndexInclusive);
 	public int[] getFragmentIndexStartAt(int startIndexInclusive);
@@ -67,6 +55,12 @@ public interface Mash {
 	public boolean checkValidIndex(int index);
 	public boolean isValidIndex(int index);
 	
-	public void setConfig(byte config);
-	public byte config();
+	public void setConfig(MaskConfig config);
+	public MaskConfig config();
+	
+	public void resetFragmentsOptimal(int... containIndexs);
+	public int[][] getFragmentsContainIndexOptimal(int... containIndexs);
+	
+	public void resetFragmentsOptimal(Collection<Integer> containIndexs);
+	public int[][] getFragmentsContainIndexOptimal(Collection<Integer> containIndexs);
 }

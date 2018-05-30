@@ -2,6 +2,10 @@ package com.bkav.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertArrayEquals;
+
+import java.util.List;
+import java.util.ArrayList;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -41,7 +45,28 @@ public class CollectionUtilTest {
 			}
 		}
 	}
-
+	@Test
+	public void testListToArray() {
+		ArrayList<String> item0 = new ArrayList<>();
+		item0.add("00");
+		item0.add("01");
+		item0.add("02");
+		ArrayList<String> item1 = new ArrayList<>();
+		item1.add("10");
+		item1.add("11");
+		item1.add("12");
+		
+		List<List<String>> input = new ArrayList<>();
+		input.add(item0);
+		input.add(item1);
+		
+		String[][] output = CollectionUtil.toArray(input);
+		
+		assertEquals(2, output.length);
+		assertArrayEquals(new String[] {"00", "01", "02"}, output[0]);
+		assertArrayEquals(new String[] {"10", "11", "12"}, output[1]);
+	}
+	
 	@Test
 	public final void testConvertStringArrayTextProcesser() {
 		assertTrue(true); //TODO testConvertStringArrayTextProcesser

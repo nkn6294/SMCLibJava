@@ -49,7 +49,7 @@ public class WordTrieNodeManager {
 	public static List<ResultFind<?>> findPharasesWithReset(ResultFind<?> currentResult, WordTrieNode<?> rootNode) {
 		WordTrieNode<?> currentNode = rootNode;
 		String[] words = currentResult.getRemains();
-		ListStringWithMark wordsWithMark = new ListStringWithMark(words);
+		ListStringWithMask wordsWithMark = new ListStringWithMask(words);
 		List<ResultFind<?>> results = new ArrayList<>();
 		for (int index = 0; index < words.length;) {
 			String word = wordsWithMark.get(index);
@@ -61,7 +61,7 @@ public class WordTrieNodeManager {
 			} else {
 				Object valueNode = currentNode.getId();
 				if (valueNode != null) {
-					String[][] marks = wordsWithMark.getFragments();
+					String[][] marks = wordsWithMark.getStringFragments();
 					if (marks.length > 0) {
 						ResultFind<?> resultFind = new ResultFind<>(valueNode, marks[0],
 								wordsWithMark.unMarkStream().toArray(String[]::new));
@@ -77,7 +77,7 @@ public class WordTrieNodeManager {
 			}
 		}
 		if (currentNode.getId() != null) {
-			String[][] marks = wordsWithMark.getFragments();
+			String[][] marks = wordsWithMark.getStringFragments();
 			if (marks.length > 0) {
 				ResultFind<?> resultFind = new ResultFind<>(currentNode.getId(), marks[0],
 						wordsWithMark.unMarkStream().toArray(String[]::new));
@@ -91,7 +91,7 @@ public class WordTrieNodeManager {
 	public static <T> ResultsFind<T> findPharases(ResultsFind<?> currentResult, WordTrieNode<T> rootNode) {
 		WordTrieNode<T> currentNode = rootNode;
 		String[] words = currentResult.remains();
-		ListStringWithMark wordsWithMark = new ListStringWithMark(words);
+		ListStringWithMask wordsWithMark = new ListStringWithMask(words);
 		List<T> results = new ArrayList<>();
 		for (int index = 0; index < words.length;) {
 			String word = wordsWithMark.get(index);

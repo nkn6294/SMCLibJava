@@ -20,7 +20,7 @@ public class AmountModel extends CollectionModel {
 	@Override
 	protected void init() {
 		super.init();
-		this.MODEL_NAME = "CONTROL";
+		this.modelName = "CONTROL";
 	}
 
 	@Override

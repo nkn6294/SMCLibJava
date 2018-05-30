@@ -7,7 +7,7 @@ public class LowerControlModel extends StaticInputWordsModel<Control> {
 
 	public LowerControlModel() {
 		super(AdvanceControlModel.LOWER_CONTROL);
-		this.MODEL_NAME = "LOWER_ADVANCE_CONTROL";
+		this.modelName = "LOWER_ADVANCE_CONTROL";
 	}
 	
 	@Override

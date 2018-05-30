@@ -8,7 +8,7 @@ public class HomeAreaModel extends StaticInputWordsModel<HomeArea> {
 
 	public HomeAreaModel() {
 		super(SampleData.AREAS);
-		this.MODEL_NAME = "AREA";
+		this.modelName = "AREA";
 	}
 	
 	@Override

@@ -7,7 +7,7 @@ public class UpperControlModel extends StaticInputWordsModel<Control> {
 
 	public UpperControlModel() {
 		super(AdvanceControlModel.UPPER_CONTROL);
-		this.MODEL_NAME = "UPPER_ADVANCE_CONTROL";		
+		this.modelName = "UPPER_ADVANCE_CONTROL";		
 	}
 
 	@Override

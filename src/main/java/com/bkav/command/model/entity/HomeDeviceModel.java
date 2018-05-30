@@ -8,7 +8,7 @@ public class HomeDeviceModel extends StaticInputWordsModel<HomeDevice> {
 	
 	public HomeDeviceModel() {
 		super(SampleData.DEVICES);
-		this.MODEL_NAME = "DEVICE";			
+		this.modelName = "DEVICE";			
 	}
 	
 	@Override

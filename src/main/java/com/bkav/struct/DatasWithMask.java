@@ -13,15 +13,15 @@ import java.util.stream.Stream;
 
 import com.bkav.util.StreamUtils;
 
-public abstract class DatasWithMash<T> extends MashWrapper implements Iterable<T> {
+public abstract class DatasWithMask<T> extends MaskWrapper implements Iterable<T> {
 	
-	public DatasWithMash(T[] strings, byte config) {
-		super(config);
-		this.init(strings, config);
+	public DatasWithMask(T[] datas, MaskConfig config) {
+		super(datas.length, config);
+		this.init(datas, config);
 	}
-	public DatasWithMash(T[] strings) {
-		super();
-		this.init(strings, Mash.NORMAL_MODE);
+	public DatasWithMask(T[] strings) {
+		super(strings.length);
+		this.init(strings, MaskConfig.getDefaultConfig());
 	}
 	
 	public T get(int index) {
@@ -29,24 +29,17 @@ public abstract class DatasWithMash<T> extends MashWrapper implements Iterable<T
 		return this.datas[index];
 	}
 
-//	public int[] marks() {
-//		return this.marks;
-//	}
-//
-//	public int getMark(int index) {
-//		this.checkValidIndex(index);
-//		return this.marks[index];
-//	}
-
 	public List<List<T>> getFragments() {
 		List<List<T>> result = new ArrayList<>();
-		List<T> item = new ArrayList<>();
+		List<T> temp = new ArrayList<>();
 		for (int index = 0; index <= maxIndex(); index++) {
 			if (this.isMark(index)) {
-				item.add(this.datas[index]);
-			} else if (!item.isEmpty()) {
+				temp.add(this.datas[index]);
+			} else if (!temp.isEmpty()) {
+				List<T> item = new ArrayList<>();
+				temp.forEach(item::add);
 				result.add(item);
-				item.clear();
+				temp.clear();
 			}
 		}
 		return result;
@@ -54,13 +47,15 @@ public abstract class DatasWithMash<T> extends MashWrapper implements Iterable<T
 
 	public List<List<T>> getUnMarks() {
 		List<List<T>> result = new ArrayList<>();
-		List<T> item = new ArrayList<>();
+		List<T> temp = new ArrayList<>();
 		for (int index = 0; index <= this.maxIndex(); index++) {
 			if (!this.isMark(index)) {
-				item.add(this.datas[index]);
-			} else if (!item.isEmpty()) {
+				temp.add(this.datas[index]);
+			} else if (!temp.isEmpty()) {
+				List<T> item = new ArrayList<>();
+				temp.forEach(item::add);
 				result.add(item);
-				item.clear();
+				temp.clear();
 			}
 		}
 		return result;
@@ -107,6 +102,7 @@ public abstract class DatasWithMash<T> extends MashWrapper implements Iterable<T
 
 	@Override
 	public Iterator<T> iterator() {
+//		return new InnerIterator();
 		return this.unMarkStream().iterator();
 	}
 
@@ -125,21 +121,18 @@ public abstract class DatasWithMash<T> extends MashWrapper implements Iterable<T
 	
 	@Override
 	public String toString() {
-		return String.format("%s [strings=%s, marks=%s, minIndex=%s, maxIndex=%s, remains=%s]",
-				this.getClass().getSimpleName(), Arrays.toString(datas), Arrays.toString(this.datas), this.minIndex(), this.maxIndex(), Arrays.toString(this.unMarkString()));
+		return String.format("%s [datas=%s, mash=%s, remains=%s]", this.getClass().getSimpleName(), Arrays.toString(datas), mash.toString(), Arrays.toString(this.unMarkString()));
 	}
 
-	protected abstract Mash createMash(byte config);
-	
 	protected T[] datas;
 	
 	/***
 	 * Init with word array, mash
 	 * @param datas Input data
 	 */
-	protected final void init(T[] datas, byte config) {
+	protected final void init(T[] datas, MaskConfig config) {
 		this.datas = datas;
-		this.createMash(config);
+		this.createMash(datas.length, config);
 	}
 
 	/***

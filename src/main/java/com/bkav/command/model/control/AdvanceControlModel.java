@@ -21,7 +21,7 @@ public class AdvanceControlModel extends CollectionModel {
 	@Override
 	protected void init() {
 		super.init();
-		this.MODEL_NAME = "ADVANCE_CONTROL";
+		this.modelName = "ADVANCE_CONTROL";
 	}
 
 	@Override

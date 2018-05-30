@@ -8,7 +8,7 @@ public class TimeRepeatModel extends StaticInputWordsModel<TimeRepeat> {
 	
 	public TimeRepeatModel() {
 		super(ModelData.REPEATES);
-		this.MODEL_NAME = "TIME_REPEAT";
+		this.modelName = "TIME_REPEAT";
 	}
 
 	@Override

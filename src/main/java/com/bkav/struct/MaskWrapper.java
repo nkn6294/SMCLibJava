@@ -5,17 +5,17 @@ import java.util.Iterator;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
-public abstract class MashWrapper implements Mash {
+public abstract class MaskWrapper implements Mask {
 
-	public MashWrapper(Mash mash) {
+	public MaskWrapper(Mask mash) {
 		this.mash = mash;
 	}
 	
-	public MashWrapper(byte config) {
-		this.mash = this.createMash(config);
+	public MaskWrapper(int length, MaskConfig config) {
+		this.mash = this.createMash(length, config);
 	}
-	public MashWrapper() {
-		this.mash = this.createMash(Mash.NORMAL_MODE);
+	public MaskWrapper(int length) {
+		this.mash = this.createMash(length, MaskConfig.getDefaultConfig());
 	}
 	@Override
 	public int length() {
@@ -198,12 +198,12 @@ public abstract class MashWrapper implements Mash {
 	}
 	
 	@Override
-	public void setConfig(byte config) {
+	public void setConfig(MaskConfig config) {
 		this.mash.setConfig(config);
 	}
 	
 	@Override
-	public byte config() {
+	public MaskConfig config() {
 		return this.mash.config();
 	}
 	
@@ -217,11 +217,25 @@ public abstract class MashWrapper implements Mash {
 		return this.mash.isValidIndex(index);
 	}
 	
-	public Mash mash() {
+	public Mask mash() {
 		return this.mash;
 	}
 	
-	protected Mash mash;
+	@Override
+	public String toString() {
+		return String.format("%s [mash=%s]", this.getClass().getSimpleName(), mash);
+	}
+
+	@Override
+	public Object[] maskValues() {
+		return this.mash.maskValues();
+	}
+
+	@Override
+	public Object maskValueAt(int index) {
+		return this.mash.maskValueAt(index);
+	}
+	protected Mask mash;
 	
-	protected abstract Mash createMash(byte config);
+	protected abstract Mask createMash(int length, MaskConfig config);
 }

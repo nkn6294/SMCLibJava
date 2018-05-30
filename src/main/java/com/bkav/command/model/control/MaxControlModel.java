@@ -7,7 +7,7 @@ public class MaxControlModel extends StaticInputWordsModel<Control> {
 
 	public MaxControlModel() {
 		super(SimpleControlModel.MAX_CONTROL);
-		this.MODEL_NAME = "MAX_SIMPLE_CONTROL";		
+		this.modelName = "MAX_SIMPLE_CONTROL";		
 	}
 
 	@Override

@@ -1,17 +1,24 @@
 package com.bkav.struct;
 
 /***
- * Fragment: <b><i>Continuity</i></b> words marked in string arrays with
+ * Fragment: <b><i>Continuity</i></b> words marked in data arrays with
  * <i>startIndex</i>, <i>endIndex</i> and origin data <i>datas</i>
  */
-public class Fragment {
-	public int startIndex;
-	public int endIndex;
-	public String[] datas;
+public class Fragment<T, R extends Object> {
 
-	public Fragment(String[] datas, int startIndex, int endIndex) {
+	public Fragment(T[] datas, int startIndex, int endIndex) {
 		this.startIndex = startIndex;
 		this.endIndex = endIndex;
 		this.datas = datas;
 	}
+	
+	public R getValue() {
+		return getValue();
+	}
+	
+	protected R value;
+	protected int startIndex;
+	protected int endIndex;
+	protected final T[] datas;
+	
 }
