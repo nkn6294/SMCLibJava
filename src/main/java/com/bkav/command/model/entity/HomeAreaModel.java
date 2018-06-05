@@ -1,13 +1,12 @@
 package com.bkav.command.model.entity;
 
 import com.bkav.command.model.StaticInputWordsModel;
-import com.bkav.command.test.SampleData;
 import com.bkav.home.data.HomeArea;
 
 public class HomeAreaModel extends StaticInputWordsModel<HomeArea> {
 
-	public HomeAreaModel() {
-		super(SampleData.AREAS);
+	public HomeAreaModel(String[] datas) {
+		super(datas);
 		this.modelName = "AREA";
 	}
 	

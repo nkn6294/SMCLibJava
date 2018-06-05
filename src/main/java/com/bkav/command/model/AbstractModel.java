@@ -11,9 +11,9 @@ public abstract class AbstractModel implements Model {
 		this.init();
 	}
 	
-	public AbstractModel(String modelName) {
-		this.init();
+	public AbstractModel(String modelName, Object...objects) {
 		this.modelName = modelName;
+		this.init();
 	}
 	
 	@Override
@@ -22,6 +22,8 @@ public abstract class AbstractModel implements Model {
 	}
 	
 	protected String modelName = "MODEL";
+	
+	
 	/***
 	 * Init model name, model, data other.
 	 */

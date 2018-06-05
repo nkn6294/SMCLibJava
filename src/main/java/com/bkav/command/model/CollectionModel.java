@@ -11,6 +11,12 @@ import com.bkav.struct.ResultsProcess;
 
 public abstract class CollectionModel extends AbstractModel implements Iterable<Model> {
 
+	public static final int SEQUENTIAL_OPTIONAL = 1;
+	public static final int PARALLEL_OPTIONAL = 2;
+	/***
+	 * Custom process mode with {@link PipeLineModelSupplier} generate next model from before result.
+	 */
+	public static final int CUSTOM_OPTIONAL = 3;
 	@Override
 	public void test(String[]... commands) {
 		this.pipeLineModel.stream().forEach(item -> item.test(commands));
@@ -18,12 +24,26 @@ public abstract class CollectionModel extends AbstractModel implements Iterable<
 	public CollectionModel() {
 		super();
 	}
-	
+	public CollectionModel(int processOptional) {
+		super();
+		this.processOptional(processOptional);
+	}
 	@Override
 	public ResultsProcess process(ResultsProcess input) {
-		//order
-		for (Model model : this.pipeLineModel) {
-			input = model.process(input);
+		if (this.processOptional != CUSTOM_OPTIONAL) {
+			for (Model model : this.pipeLineModel) {
+				input = model.process(input);
+			}			
+		} else {
+			PipeLineModelSupplier models = this.createPipeLineModelSupplier(this.pipeLineModel);
+			if (models == null) {
+				return input;
+			}
+			Model model = models.get(input);
+			while (model != null) {
+				input = model.process(input);
+				model = models.get(input);
+			}
 		}
 		return input;
 	}
@@ -53,6 +73,25 @@ public abstract class CollectionModel extends AbstractModel implements Iterable<
 		return this.pipeLineModel;
 	}
 	
+	public int processOptional() {
+		return this.processOptional;
+	}
+	
+	protected PipeLineModel pipeLineModel;
+	protected int processOptional = SEQUENTIAL_OPTIONAL;
+	
+	protected void processOptional(int processOptional) {
+		this.processOptional = processOptional;
+	}
+	/***
+	 * Create instance {@link PipeLineModelSupplier} from {@link CollectionModel#pipeLineModel} using in 
+	 * {@link CollectionModel#CUSTOM_OPTIONAL} mode. 
+	 * Override and return new instance of {@link PipeLineModelSupplier} if need.
+	 */
+	protected PipeLineModelSupplier createPipeLineModelSupplier(PipeLineModel pipeLineModel) {
+		return new PipeLineModelSupplier(pipeLineModel);
+	}
+	
 	/***
 	 * Init collection models and add to collection models.
 	 */
@@ -79,7 +118,7 @@ public abstract class CollectionModel extends AbstractModel implements Iterable<
 	protected final void cleanAllModel() {
 		this.pipeLineModel.clear();
 	}
-
+	
 	@Override
 	protected void init() {
 		super.init();
@@ -87,6 +126,4 @@ public abstract class CollectionModel extends AbstractModel implements Iterable<
 		this.pipeLineModel = new PipeLineModel();
 		this.initModels();
 	}
-
-	protected PipeLineModel pipeLineModel;
 }

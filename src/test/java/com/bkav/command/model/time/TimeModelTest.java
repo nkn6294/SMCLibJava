@@ -3,8 +3,8 @@ package com.bkav.command.model.time;
 import org.junit.Before;
 
 import com.bkav.command.common.Model;
+import com.bkav.command.data.SampleData;
 import com.bkav.command.model.ModelTest;
-import com.bkav.command.test.SampleData;
 import com.bkav.util.CollectionUtil;
 
 public class TimeModelTest extends ModelTest {

@@ -14,7 +14,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.bkav.command.SystemManager;
+import com.bkav.command.data.SampleData;
 import com.bkav.command.data.TimeInDay;
+import com.bkav.command.model.ModelData;
 import com.bkav.command.model.entity.HomeAreaModel;
 import com.bkav.command.model.entity.HomeDeviceModel;
 import com.bkav.command.model.entity.HomeDeviceTypeModel;
@@ -36,9 +38,9 @@ public class WordTrieNodeManagerTest {
 	@Before
 	public void setUp() throws Exception {
 		this.wordTrieNodes = new WordTrieNodeManager();
-		WordTrieNode<HomeDeviceType> deviceTypeNode = new HomeDeviceTypeModel().getWordTrieNode();
-		WordTrieNode<HomeDevice> deviceNode = new HomeDeviceModel().getWordTrieNode();
-		WordTrieNode<HomeArea> areaNode = new HomeAreaModel().getWordTrieNode();
+		WordTrieNode<HomeDeviceType> deviceTypeNode = new HomeDeviceTypeModel(ModelData.DEVICE_TYPE).getWordTrieNode();
+		WordTrieNode<HomeDevice> deviceNode = new HomeDeviceModel(SampleData.DEVICES).getWordTrieNode();
+		WordTrieNode<HomeArea> areaNode = new HomeAreaModel(SampleData.AREAS).getWordTrieNode();
 		WordTrieNode<TimeInDay> timeInDayNode = new TimeInDayModel().getWordTrieNode();
 		this.wordTrieNodes.addWordTrieNode(areaNode, deviceTypeNode, deviceNode, timeInDayNode);
 	}
@@ -65,7 +67,7 @@ public class WordTrieNodeManagerTest {
 
 	@Test
 	public final void testFindPharasesWithReset() {
-		WordTrieNode<HomeDeviceType> wordTrieNode = new HomeDeviceTypeModel().getWordTrieNode();
+		WordTrieNode<HomeDeviceType> wordTrieNode = new HomeDeviceTypeModel(ModelData.DEVICE_TYPE).getWordTrieNode();
 		String[] s1 = { "phong", "khach", "phong", "an", "dieu", "hoa", "buoi", "den", "trua" };
 		SystemManager.logger.info(Arrays.toString(s1));
 		WordTrieNodeManager.findPharasesWithReset(new ResultFind<Object>(null, new String[] {}, s1), wordTrieNode)
@@ -81,7 +83,7 @@ public class WordTrieNodeManagerTest {
 	}
 	@Test
 	public final void testFindPharases() {
-		WordTrieNode<HomeDeviceType> wordTrieNode = new HomeDeviceTypeModel().getWordTrieNode();
+		WordTrieNode<HomeDeviceType> wordTrieNode = new HomeDeviceTypeModel(ModelData.DEVICE_TYPE).getWordTrieNode();
 		String[] s1 = { "phong", "khach", "phong", "an", "dieu", "hoa", "buoi", "trua", "dieu", "den", "abc"};
 		SystemManager.logger.info(Arrays.toString(s1));
 		ResultsFind<HomeDeviceType> results = WordTrieNodeManager.findPharases(new ResultsFind<>(s1), wordTrieNode);

@@ -75,7 +75,9 @@ public class Control extends CommonData {
 
 	@Override
 	public String toString() {
-		return String.format("Control [value=%s, typeControl=%s, minValue=%s, maxValue=%s, id=%s, name=%s]", value,
+		return String.format("%s [value=%s, typeControl=%s, minValue=%s, maxValue=%s, id=%s, name=%s]",
+				this.getClass().getSimpleName(),
+				value,
 				typeControl, minValue, maxValue, id, name);
 	}
 

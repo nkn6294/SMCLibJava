@@ -1,4 +1,4 @@
-package com.bkav.command.test;
+package com.bkav.command.data;
 
 public class SampleData {
 	

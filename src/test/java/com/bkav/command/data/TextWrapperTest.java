@@ -15,7 +15,6 @@ import com.bkav.command.model.PipeLineModel;
 import com.bkav.command.model.control.ControlModel;
 import com.bkav.command.model.entity.HomeEntityModel;
 import com.bkav.command.model.time.TimeModel;
-import com.bkav.command.test.SampleData;
 
 public class TextWrapperTest {
 
@@ -29,7 +28,7 @@ public class TextWrapperTest {
 
 	@Before
 	public void setUp() throws Exception {
-		this.pipeLineModel = new PipeLineModel(new HomeEntityModel(), new ControlModel(), new TimeModel());
+		this.pipeLineModel = new PipeLineModel(new HomeEntityModel(HomeTest.getHomeTest()), new ControlModel(), new TimeModel());
 		this.commands = SampleData.SampleCommands;
 	}
 
@@ -45,6 +44,6 @@ public class TextWrapperTest {
 		assertTrue(true);// TODO test TextWrapper.process
 	}
 
-	private PipeLineModel pipeLineModel = new PipeLineModel(new HomeEntityModel(), new ControlModel(), new TimeModel());
+	private PipeLineModel pipeLineModel;
 	private String[] commands;
 }

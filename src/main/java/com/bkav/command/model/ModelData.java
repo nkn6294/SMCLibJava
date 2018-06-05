@@ -1,10 +1,18 @@
-package com.bkav.command.test;
+package com.bkav.command.model;
 
 /***
  * 
  */
 public class ModelData {
-
+	public static final String[] DEVICE_ENTITY_TYPE = {
+		"thiet bi",
+	};
+	
+	public static final String[] FUNCTION_ENTITY_TYPE = {
+		"kich ban",
+		"che do", 
+		"chuc nang"
+	};
 	public static final String[] DEVICE_TYPE = {
 		"den", // LIGHT
 		"rem",//CURTAIN

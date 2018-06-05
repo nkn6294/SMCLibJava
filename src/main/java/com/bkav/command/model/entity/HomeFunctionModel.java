@@ -1,13 +1,12 @@
 package com.bkav.command.model.entity;
 
 import com.bkav.command.model.StaticInputWordsModel;
-import com.bkav.command.test.SampleData;
 import com.bkav.home.data.HomeFunction;
 
 public class HomeFunctionModel extends StaticInputWordsModel<HomeFunction> {
 
-	public HomeFunctionModel() {
-		super(SampleData.FUNCTION);
+	public HomeFunctionModel(String[] datas) {
+		super(datas);
 		this.modelName = "FUNCTION";
 	}
 	

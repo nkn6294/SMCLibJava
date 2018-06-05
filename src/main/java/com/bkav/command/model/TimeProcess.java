@@ -1,4 +1,4 @@
-package com.bkav.command.test;
+package com.bkav.command.model;
 
 import java.util.Calendar;
 import java.util.Locale;

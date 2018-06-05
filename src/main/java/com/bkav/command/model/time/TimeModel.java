@@ -13,7 +13,9 @@ public class TimeModel extends CollectionModel {
 	@Override
 	protected void initModels() {
 		super.initModels();
-		this.addModels(new DayInWeekModel(),
+		this.addModels(
+				new ShortTimeModel(),
+				new DayInWeekModel(),
 				new TimeInDayModel(),
 				new TimeRepeatModel(),
 				new TimeUnitModel());
