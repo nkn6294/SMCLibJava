@@ -2,13 +2,25 @@ package com.bkav.command;
 
 import java.util.Arrays;
 
-import com.bkav.command.common.TextProcesser;
+import com.bkav.command.common.CommandTextProcesser;
+import com.bkav.command.common.CommonCommandTextProcesser;
+import com.bkav.command.common.TextProcesserAdvance;
+import com.bkav.util.StringUtil;
 
 public class SystemManager {
+	
+	static {
+		TextProcesserAdvance textProcesserAdvance = new TextProcesserAdvance();
+		textProcesserAdvance.addTextProcesser(String::toLowerCase);
+		textProcesserAdvance.addTextProcesser(StringUtil::deAccentConvert);
+		textProcesserAdvance.addTextProcesser(text -> text.replaceAll("đ", "d"));
+		textProcesserAdvance.addTextProcesser(StringUtil::textToNumber);
+		textProcesser = new CommonCommandTextProcesser(textProcesserAdvance);
+	}
+	
 	public static final Logger logger = new Logger();
 	public static final java.util.logging.Logger logger2 = java.util.logging.Logger.getLogger(System.class.getSimpleName());
-	public static final TextProcesser textProcesser = new TextProcesser() {
-	};
+	public static final CommandTextProcesser textProcesser;
 	
 	public static class Logger {
 		public void info(String o) {

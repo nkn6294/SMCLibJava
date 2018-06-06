@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.bkav.command.SystemManager;
+import com.bkav.command.common.CommandTextProcesser;
 import com.bkav.command.common.Model;
-import com.bkav.command.common.TextProcesser;
 import com.bkav.command.model.PipeLineModel;
 
 public class TextWrapper {
@@ -25,13 +26,13 @@ public class TextWrapper {
 		return models;
 	}
 	
-	public TextWrapper(String text, TextProcesser textProcesser) {
+	public TextWrapper(String text, CommandTextProcesser textProcesser) {
 		if (text == null || textProcesser == null) {
 			throw new NullPointerException();
 		}
 		this.text = text;
 		this.textProcesser = textProcesser;
-		this.textProccessed = this.textProcesser.preProccessText(this.text);
+		this.textProccessed = this.textProcesser.apply(this.text);
 		this.words = this.textProcesser.textToWords(this.text);
 	}
 	
@@ -86,9 +87,9 @@ public class TextWrapper {
 		protected Model model;
 	}
 	
-	public static final TextProcesser DefaultTextProcesser = new TextProcesser() {};
+	public static final CommandTextProcesser DefaultTextProcesser = SystemManager.textProcesser;
 	private final String text;
 	private final String textProccessed;
 	private final String[] words;
-	private final TextProcesser textProcesser;
+	private final CommandTextProcesser textProcesser;
 }

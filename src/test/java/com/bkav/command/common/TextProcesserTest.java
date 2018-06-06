@@ -27,8 +27,7 @@ public class TextProcesserTest {
 
 	@Before
 	public void setUp() throws Exception {
-		this.textProcesser = new TextProcesser() {
-		};
+		this.textProcesser = SystemManager.textProcesser;
 	}
 
 	@After
@@ -39,8 +38,8 @@ public class TextProcesserTest {
 	public final void testPreProccessText() {
 		String input = "đây là phòng ăn";
 		String output = "day la phong an";
-		SystemManager.logger.info(this.textProcesser.preProccessText(input));
-		assertEquals(output, this.textProcesser.preProccessText(input));
+		SystemManager.logger.info(this.textProcesser.apply(input));
+		assertEquals(output, this.textProcesser.apply(input));
 	}
 
 	@Test
@@ -58,5 +57,5 @@ public class TextProcesserTest {
 		assertTrue(output.size() == 0);
 	}
 
-	private TextProcesser textProcesser;
+	private CommandTextProcesser textProcesser;
 }

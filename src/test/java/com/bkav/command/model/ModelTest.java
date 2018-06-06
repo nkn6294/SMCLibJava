@@ -29,6 +29,7 @@ public abstract class ModelTest {
 	@Before
 	public void setUp() throws Exception {
 		this.model = this.createModel();
+		this.commands = this.createCommands();
 	}
 
 	@After
@@ -53,7 +54,13 @@ public abstract class ModelTest {
 	}
 
 	protected Model model;
-	protected String[][] commands = CollectionUtil.convert(SampleData.SampleCommands2);
+	protected String[][] commands;
 
 	protected abstract Model createModel();
+	protected String[][] createCommands() {
+		return CollectionUtil.convert(this.getTestCommands(), SystemManager.textProcesser);
+	}
+	protected String[] getTestCommands() {
+		return SampleData.SampleCommands2;
+	}
 }

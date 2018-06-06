@@ -124,7 +124,20 @@ public class SampleData {
 			"Tang dieu hoa phong ngu",
 			
 	};
-	
+	public static final String[] SampleShortSchedule = {
+		"luc 10:22",
+		"luc 22:30",
+		"luc 10:00 am",
+		"luc 6am",
+		"sau 10:00 nua"
+	};
+	public static final String[] SampleLongSchedule = {
+			"luc 10 gio 10 phut",
+			"luc 22 gio 30 phut",
+			"luc 10 gio 30 phut sang",
+			"luc 12 gio dem",
+			"luc 12 gio trua",
+	};
 	public static final String[] SampleSchedule = {
 			// chu y AM, PM, thoi gian hien tai, ngay trong thang..., gio,phut,giay -> h,m,s, hh:ss
 			"luc 2 gio 10 phut",

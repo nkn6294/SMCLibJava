@@ -67,6 +67,7 @@ public class ModelsTest {
 		}
 		assertTrue(true);// TODO test modelsTest.
 	}
+	
 	protected PipeLineModel pipeLineModel;
 	protected String[][] commands = CollectionUtil.convert(SampleData.SampleCommands2);
 }

@@ -67,6 +67,7 @@ public class ModelData {
 		"luc",
 		"sau",
 		"truoc",
+		"nua",
 		"bat dau khi",
 		"ket thuc khi",
 		"cho toi khi",

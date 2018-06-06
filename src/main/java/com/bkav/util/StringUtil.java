@@ -6,10 +6,12 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import com.bkav.command.SystemManager;
+import com.bkav.command.common.Function2;
 
 public final class StringUtil {
 	
@@ -19,11 +21,25 @@ public final class StringUtil {
         return pattern.matcher(nfdNormalizedString).replaceAll("");
     }
     
-    public static String numberToText(String input) {
-    	// TODO number to text -> 0 -> 9, 10 -> 100, ....
-    	return input;
+    public static String textToNumber(String input) {
+    	String output = input;
+    	String[] inputNumbers = {
+    		"không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"	
+    	};
+    	for (int index = 1; index < inputNumbers.length; index++) {
+    		output = output.replaceAll(inputNumbers[index], "" + index);
+    	}
+    	output = text1xToNumber(output);
+    	output = textx1ToNumber2(output);
+    	output = textx4ToNumber2(output);
+    	output = textx1ToNumber(output);
+    	output = textx4ToNumber(output);
+    	output = textx0ToNumber(output);
+    	output = textxxToNumber(output);
+    	output = textx00ToNumber(output);
+    	output = textxxxToNumber(output);
+    	return output;
     }
-	
 	public static float checkSame(String[] sources, String[] dests) {
 		if (sources == null || dests == null || sources.length == 0 || dests.length == 0) {
 			return 0f;
@@ -105,6 +121,68 @@ public final class StringUtil {
         }
         return strings;
     }
+    protected static String textToNumber2(String input) {
+		String patternString = "((\\d)\\s*trăm\\s*(\\d))+";
+		return textProcessByRegex(input, patternString, (matcher, builder) -> 
+			builder.append(matcher.group(2)).append(matcher.group(3)));
+	}
+    
+    
+    protected static String textxxxToNumber(String input) {
+		String patternString = "((\\d)00\\s*(\\d\\d))+";
+		return textProcessByRegex(input, patternString, (matcher, builder) -> 
+			builder.append(matcher.group(2)).append(matcher.group(3)));
+	}
+    protected static String textxxToNumber(String input) {
+		String patternString = "((\\d)\\s*(\\d))+";
+		return textProcessByRegex(input, patternString, (matcher, builder) -> 
+			builder.append(matcher.group(2)).append(matcher.group(3)));
+	}
+    protected static String text1xToNumber(String input) {
+		String patternString = "(mười\\s*(\\d))+";
+		return textProcessByRegex(input, patternString, (matcher, builder) -> builder.append(1).append(matcher.group(2)));
+	}
+    protected static String textx0ToNumber(String input) {
+		String patternString = "((\\d)\\s*mươi)+";
+		return textProcessByRegex(input, patternString, (matcher, builder) -> builder.append(matcher.group(2)).append(0));
+	}
+	protected static String textx00ToNumber(String input) {
+		String patternString = "((\\d)\\s*trăm)+";
+    	return textProcessByRegex(input, patternString, (matcher, builder) -> builder.append(matcher.group(2)).append("00"));
+	}
+	protected static String textx1ToNumber(String input) {
+		String patternString = "((\\d)\\s*mốt)+";		
+		return textProcessByRegex(input, patternString, (matcher, builder) -> builder.append(matcher.group(2)).append(1));
+	}
+	protected static String textx4ToNumber(String input) {
+		String patternString = "((\\d)\\s*tư)+";		
+		return textProcessByRegex(input, patternString, (matcher, builder) -> builder.append(matcher.group(2)).append(4));
+	}
+	protected static String textx1ToNumber2(String input) {
+		String patternString = "((\\d)\\s*mươi\\s*mốt)+";
+		return textProcessByRegex(input, patternString, (matcher, builder) -> builder.append(matcher.group(2)).append(1));
+	}
+	protected static String textx4ToNumber2(String input) {
+		String patternString = "((\\d)\\s*mươi\\s*tư)+";
+		return textProcessByRegex(input, patternString, (matcher, builder) -> builder.append(matcher.group(2)).append(4));
+	}
+	protected static String textProcessByRegex(String input, String patternString, Function2<Matcher, StringBuilder, StringBuilder> stringBuilder) {
+		return textProcessByRegex(input, Pattern.compile(patternString), stringBuilder);
+	}
+	protected static String textProcessByRegex(String input, Pattern pattern, Function2<Matcher, StringBuilder, StringBuilder> stringBuilder) {
+    	Matcher matcher = pattern.matcher(input);
+    	StringBuilder builder = new StringBuilder();
+    	int start = 0;
+    	while (matcher.find()) {
+	    	builder.append(input.substring(start, matcher.start()));
+	    	start = matcher.end();
+	    	stringBuilder.apply(matcher, builder);
+    	}
+    	if (start < input.length()) {
+    		builder.append(input.substring(start));    		
+    	}
+    	return builder.toString();
+	}
     
     private StringUtil() {}
 }

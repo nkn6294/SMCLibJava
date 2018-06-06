@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import com.bkav.command.SystemManager;
-import com.bkav.command.common.TextProcesser;
+import com.bkav.command.common.CommandTextProcesser;
 
 public class CollectionUtil {
 	
@@ -172,9 +172,9 @@ public class CollectionUtil {
     			.filter(item -> item.length > 0)
     			.toArray(String[][]::new);
     }
-    public static final String[][] convert(String[] inputs, TextProcesser textProcesser) {
+    public static final String[][] convert(String[] inputs, CommandTextProcesser textProcesser) {
     	return Arrays.stream(inputs)
-	    		.map(textProcesser::preProccessText)
+	    		.map(textProcesser::apply)
 	    		.map(textProcesser::textToWords)
 	    		.filter(item -> item.length > 0)
 	    		.toArray(String[][]::new);
@@ -184,9 +184,9 @@ public class CollectionUtil {
 				.map(StringUtil::splitStringToList).filter(item -> !item.isEmpty())
 				.collect(Collectors.toList());
     }
-    public static final List<List<String>> convert(List<String> inputs, TextProcesser textProcesser) {
+    public static final List<List<String>> convert(List<String> inputs, CommandTextProcesser textProcesser) {
     	return inputs.stream()
-		    	.map(textProcesser::preProccessText)
+		    	.map(textProcesser::apply)
 				.map(textProcesser::textToListWords)
 				.filter(item -> !item.isEmpty())
 				.collect(Collectors.toList());
