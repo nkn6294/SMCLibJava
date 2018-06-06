@@ -175,6 +175,7 @@ public class CollectionUtil {
     public static final String[][] convert(String[] inputs, CommandTextProcesser textProcesser) {
     	return Arrays.stream(inputs)
 	    		.map(textProcesser::apply)
+	    		.peek(SystemManager.logger::info)
 	    		.map(textProcesser::textToWords)
 	    		.filter(item -> item.length > 0)
 	    		.toArray(String[][]::new);

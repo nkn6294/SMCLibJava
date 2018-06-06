@@ -47,51 +47,6 @@ public class StringUtilTest {
 			assertEquals(expecteds[index], output);//TODO testDeAccentConvert more case
 		}
 	}
-
-	@Test
-	public final void testTextx1ToNumber2() {
-		String input = "2 mươi mốt";
-		String output = StringUtil.textx1ToNumber2(input);
-		assertEquals("21", output);
-	}
-	@Test
-	public final void testText1xToNumber() {
-		String input = "mười 1";
-		String output = StringUtil.text1xToNumber(input);
-		assertEquals("11", output);
-	}
-	@Test
-	public final void testTextx1ToNumber() {
-		String input = "2 mốt";
-		String output = StringUtil.textx1ToNumber(input);
-		assertEquals("21", output);
-	}
-	@Test
-	public final void testTextx0ToNumber2() {
-		String input = "2 mươi nho hon 3 mươi";
-		String output = StringUtil.textx0ToNumber(input);
-		assertEquals("20 nho hon 30", output);
-	}
-	@Test
-	public final void testTextx00ToNumber2() {
-		String input = "day la 2 trăm lon hon";
-		String output = StringUtil.textx00ToNumber(input);
-		assertEquals("day la 200 lon hon", output);
-	}
-	@Test
-	public final void testTextxxxToNumber2() {
-		String input = "day la 200 30 lon hon";
-		String output = StringUtil.textxxxToNumber(input);
-		SystemManager.logger.info(output);
-		assertEquals("day la 230 lon hon", output);
-	}
-	@Test
-	public final void testTextxxToNumber() {
-		String input = "day la 2 3 lon hon";
-		String output = StringUtil.textxxToNumber(input);
-		SystemManager.logger.info(output);
-		assertEquals("day la 23 lon hon", output);
-	}
 	@Test
 	public final void testTextToNumber() {
 		String[] inputs = new String[] { 
@@ -100,6 +55,8 @@ public class StringUtilTest {
 				"một trăm hai mươi",
 				"tám tư cộng một trăm tám mốt bằng hai trăm sáu năm",
 				"hai mươi tư",
+				"mười day",
+				"10 một"
 				};
 		String[] expecteds = new String[] { 
 				"5 nhân 4 cộng 1 bằng 21", 
@@ -107,9 +64,39 @@ public class StringUtilTest {
 				"120",
 				"84 cộng 181 bằng 265",
 				"24",
+				"10 day",
+				"11"
 		};
 		for (int index = 0; index < inputs.length; index++) {
 			String output = StringUtil.textToNumber(inputs[index]);
+//			SystemManager.logger.info(output);
+			assertEquals(expecteds[index], output);
+		}
+	}
+	@Test
+	public final void testTimeToNormal() {
+		String[] inputs = new String[] { 
+				"6 am",
+				"6am",
+				"12 a. m",
+				"01 a . m",
+				"2 giờ",
+				"2 giờ pm",
+				"2 giờ 10 phút",
+				"2 giờ 10 phút",
+				};
+		String[] expecteds = new String[] { 
+				"6:00",
+				"6:00",
+				"12:00",
+				"01:00",
+				"2:00",
+				"14:00",
+				"2:10",
+				"2:10",
+		};
+		for (int index = 0; index < inputs.length; index++) {
+			String output = StringUtil.timeToNormal(inputs[index]);
 			SystemManager.logger.info(output);
 			assertEquals(expecteds[index], output);
 		}

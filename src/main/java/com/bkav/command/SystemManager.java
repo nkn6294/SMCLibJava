@@ -12,9 +12,10 @@ public class SystemManager {
 	static {
 		TextProcesserAdvance textProcesserAdvance = new TextProcesserAdvance();
 		textProcesserAdvance.addTextProcesser(String::toLowerCase);
-		textProcesserAdvance.addTextProcesser(StringUtil::deAccentConvert);
-		textProcesserAdvance.addTextProcesser(text -> text.replaceAll("đ", "d"));
 		textProcesserAdvance.addTextProcesser(StringUtil::textToNumber);
+		textProcesserAdvance.addTextProcesser(StringUtil::timeToNormal);
+		textProcesserAdvance.addTextProcesser(StringUtil::textToUnit);
+		textProcesserAdvance.addTextProcesser(StringUtil::deAccentConvert);
 		textProcesser = new CommonCommandTextProcesser(textProcesserAdvance);
 	}
 	
