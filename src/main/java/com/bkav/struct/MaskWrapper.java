@@ -61,9 +61,17 @@ public abstract class MaskWrapper implements Mask {
 	public void setMarkWithRelativeIndex(int... relativeIndexs) {
 		this.mash.setMarkWithRelativeIndex(relativeIndexs);
 	}
-
+	@Override
+	public void setMarkWithRelativeIndex(Collection<Integer> relativeIndexs) {
+		this.mash.setMarkWithRelativeIndex(relativeIndexs);
+	}
 	@Override
 	public void unMarkWithRelativeIndex(int... relativeIndexs) {
+		this.mash.unMarkWithRelativeIndex(relativeIndexs);
+	}
+	
+	@Override
+	public void unMarkWithRelativeIndex(Collection<Integer> relativeIndexs) {
 		this.mash.unMarkWithRelativeIndex(relativeIndexs);
 	}
 

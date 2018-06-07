@@ -174,6 +174,7 @@ public class CollectionUtil {
     }
     public static final String[][] convert(String[] inputs, CommandTextProcesser textProcesser) {
     	return Arrays.stream(inputs)
+    			.peek(SystemManager.logger::info)
 	    		.map(textProcesser::apply)
 	    		.peek(SystemManager.logger::info)
 	    		.map(textProcesser::textToWords)
@@ -187,7 +188,9 @@ public class CollectionUtil {
     }
     public static final List<List<String>> convert(List<String> inputs, CommandTextProcesser textProcesser) {
     	return inputs.stream()
+    			.peek(SystemManager.logger::info)
 		    	.map(textProcesser::apply)
+		    	.peek(SystemManager.logger::info)
 				.map(textProcesser::textToListWords)
 				.filter(item -> !item.isEmpty())
 				.collect(Collectors.toList());

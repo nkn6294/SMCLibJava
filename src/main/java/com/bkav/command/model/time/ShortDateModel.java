@@ -1,6 +1,6 @@
 package com.bkav.command.model.time;
 
-import java.time.LocalTime;
+import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,11 +9,11 @@ import com.bkav.struct.ListStringWithMask;
 import com.bkav.struct.MaskConfig;
 import com.bkav.struct.ResultsProcess;
 
-public class LongTimeModel implements Model {
+public class ShortDateModel implements Model {
 
 	@Override
 	public String getModelName() {
-		return "SHORT_TIME_MODEL";
+		return "SHORT_DATE_MODEL";
 	}
 	
 	@Override
@@ -26,7 +26,7 @@ public class LongTimeModel implements Model {
 		wordsWithMark.setConfig(MaskConfig.getDefaultConfig());
 		for (int index = 0; index < words.length; index++) {
 			String word = words[index];
-			LocalTime localTime = this.processTime(word);
+			LocalDate localTime = this.processDate(word);
 			if (localTime != null) {
 				currentResult.stringsMark().setMarkWithRelativeIndex(index);
 				currentResult.addValue(localTime);
@@ -36,19 +36,20 @@ public class LongTimeModel implements Model {
 		return currentResult;
 	}
 	
-	protected LocalTime processTime(String data) {
+	protected LocalDate processDate(String data) {
 		try {
-			Matcher matcher = timePattern.matcher(data);
+			Matcher matcher = datePattern.matcher(data);
 			if (!matcher.find()) {
 				throw new Exception();
 			}
-			int hour = Integer.parseInt(matcher.group(1));
-			int minute = Integer.parseInt(matcher.group(2));
-			return LocalTime.of(hour, minute);
+			int year = Integer.parseInt(matcher.group(1));
+			int month = Integer.parseInt(matcher.group(2));
+			int dayOfMonth = Integer.parseInt(matcher.group(3));
+			return LocalDate.of(year, month, dayOfMonth);
 		} catch (Exception ex) {
 			return null;
 		}
 	}
-	public static final String TIME_REGEX_PATTERN = "(\\d+ giờ)(.*) (\\d+ phút)|(\\d+ giờ)|(\\d+ phút)";
-	protected static Pattern timePattern = Pattern.compile(TIME_REGEX_PATTERN);
+	public static final String DATE_REGEX_PATTERN = "((\\d{1,2})-(\\d{1,2})-(\\d{1,2})";
+	protected static Pattern datePattern = Pattern.compile(DATE_REGEX_PATTERN);
 }

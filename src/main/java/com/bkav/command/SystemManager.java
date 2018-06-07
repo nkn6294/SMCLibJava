@@ -5,17 +5,20 @@ import java.util.Arrays;
 import com.bkav.command.common.CommandTextProcesser;
 import com.bkav.command.common.CommonCommandTextProcesser;
 import com.bkav.command.common.TextProcesserAdvance;
-import com.bkav.util.StringUtil;
+import com.bkav.command.data.NormalInputUtils;
+import com.bkav.command.model.time.TimeUtils;
 
 public class SystemManager {
 	
 	static {
 		TextProcesserAdvance textProcesserAdvance = new TextProcesserAdvance();
+		textProcesserAdvance.addTextProcesser(NormalInputUtils::normalInputSplitChar);
 		textProcesserAdvance.addTextProcesser(String::toLowerCase);
-		textProcesserAdvance.addTextProcesser(StringUtil::textToNumber);
-		textProcesserAdvance.addTextProcesser(StringUtil::timeToNormal);
-		textProcesserAdvance.addTextProcesser(StringUtil::textToUnit);
-		textProcesserAdvance.addTextProcesser(StringUtil::deAccentConvert);
+		textProcesserAdvance.addTextProcesser(NormalInputUtils::textToNumber);
+		textProcesserAdvance.addTextProcesser(TimeUtils::timeToNormal);
+		textProcesserAdvance.addTextProcesser(NormalInputUtils::textToUnit);
+		textProcesserAdvance.addTextProcesser(NormalInputUtils::deAccentConvert);
+		
 		textProcesser = new CommonCommandTextProcesser(textProcesserAdvance);
 	}
 	

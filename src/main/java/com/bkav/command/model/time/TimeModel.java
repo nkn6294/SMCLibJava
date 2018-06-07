@@ -15,6 +15,7 @@ public class TimeModel extends CollectionModel {
 		super.initModels();
 		this.addModels(
 				new ShortTimeModel(),
+				new ShortDateModel(),
 				new DayInWeekModel(),
 				new TimeInDayModel(),
 				new TimeRepeatModel(),

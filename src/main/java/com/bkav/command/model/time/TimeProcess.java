@@ -1,4 +1,4 @@
-package com.bkav.command.model;
+package com.bkav.command.model.time;
 
 import java.util.Calendar;
 import java.util.Locale;

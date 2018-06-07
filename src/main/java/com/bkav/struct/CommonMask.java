@@ -70,6 +70,15 @@ public abstract class CommonMask implements Mask {
 		Arrays.stream(relativeIndexs).filter(relativeIndex -> relativeIndex >= 0 && relativeIndex < unmarksIndex.length)
 				.mapToObj(relativeIndex -> unmarksIndex[relativeIndex]).forEach(this::setMark);
 	}
+	@Override
+	public void setMarkWithRelativeIndex(Collection<Integer> relativeIndexs) {
+		int[] unmarksIndex = this.unMarkIndexs();
+		if (unmarksIndex.length == 0) {
+			return;
+		}
+		relativeIndexs.stream().filter(relativeIndex -> relativeIndex >= 0 && relativeIndex < unmarksIndex.length)
+				.map(relativeIndex -> unmarksIndex[relativeIndex]).forEach(this::setMark);
+	}
 
 	@Override
 	public void unMarkWithRelativeIndex(int... relativeIndexs) {
@@ -79,6 +88,15 @@ public abstract class CommonMask implements Mask {
 		}
 		Arrays.stream(relativeIndexs).filter(relativeIndex -> relativeIndex >= 0 && relativeIndex < marksIndex.length)
 				.mapToObj(relativeIndex -> marksIndex[relativeIndex]).forEach(this::resetByIndex);
+	}
+	@Override
+	public void unMarkWithRelativeIndex(Collection<Integer> relativeIndexs) {
+		int[] marksIndex = this.markIndexs();
+		if (marksIndex.length == 0) {
+			return;
+		}
+		relativeIndexs.stream().filter(relativeIndex -> relativeIndex >= 0 && relativeIndex < marksIndex.length)
+				.map(relativeIndex -> marksIndex[relativeIndex]).forEach(this::resetByIndex);
 	}
 
 	@Override

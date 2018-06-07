@@ -1,6 +1,8 @@
 package com.bkav.command.model.time;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,15 +26,19 @@ public class ShortTimeModel implements Model {
 		}
 		ListStringWithMask wordsWithMark =  new ListStringWithMask(words);
 		wordsWithMark.setConfig(MaskConfig.getDefaultConfig());
+		List<Integer> indexs = new ArrayList<>();
 		for (int index = 0; index < words.length; index++) {
 			String word = words[index];
-			LocalTime localTime = this.processTime(word);
+			if (!word.startsWith("_t_(")) {
+				continue;
+			}
+			LocalTime localTime = this.processTime(word.replaceFirst("_t_\\((.+)\\)", "$1"));
 			if (localTime != null) {
-				currentResult.stringsMark().setMarkWithRelativeIndex(index);
+				indexs.add(index);
 				currentResult.addValue(localTime);
-				break;
 			}
 		}
+		currentResult.stringsMark().setMarkWithRelativeIndex(indexs);
 		return currentResult;
 	}
 	
@@ -42,13 +48,22 @@ public class ShortTimeModel implements Model {
 			if (!matcher.find()) {
 				throw new Exception();
 			}
-			int hour = Integer.parseInt(matcher.group(1));
-			int minute = Integer.parseInt(matcher.group(2));
+			String param = matcher.group(2);
+			int hour = Integer.parseInt(matcher.group(3));
+			int minute = Integer.parseInt(matcher.group(4));
+			if ("+".equals(param)) {
+				LocalTime now = LocalTime.now();
+				now = LocalTime.of(now.getHour(), now.getMinute());
+				now = now.plusHours(hour);
+				now = now.plusMinutes(minute);
+				return now;
+			}
 			return LocalTime.of(hour, minute);
 		} catch (Exception ex) {
 			return null;
 		}
 	}
-	protected static final String TIME_REGEX_PATTERN = "([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])";
+//	protected static final String TIME_REGEX_PATTERN = "_t_\\(((\\D)?(\\d{1,2}):(\\d{1,2})?\\))";
+	protected static final String TIME_REGEX_PATTERN = "((\\D)?(\\d{1,2}):(\\d{1,2})?)";
 	protected static Pattern timePattern = Pattern.compile(TIME_REGEX_PATTERN);
 }

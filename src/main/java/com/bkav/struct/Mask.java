@@ -20,7 +20,9 @@ public interface Mask {
 	public void setMark(int... indexs);
 	public void setMark(Collection<Integer> indexs);
 	
+	public void setMarkWithRelativeIndex(Collection<Integer> relativeIndexs);
 	public void setMarkWithRelativeIndex(int... relativeIndexs);
+	public void unMarkWithRelativeIndex(Collection<Integer> relativeIndexs);
 	public void unMarkWithRelativeIndex(int... relativeIndexs);
 	
 	public int[] markIndexs();
