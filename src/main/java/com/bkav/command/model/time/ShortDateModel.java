@@ -50,6 +50,6 @@ public class ShortDateModel implements Model {
 			return null;
 		}
 	}
-	public static final String DATE_REGEX_PATTERN = "((\\d{1,2})-(\\d{1,2})-(\\d{1,2})";
+	public static final String DATE_REGEX_PATTERN = "((\\d{1,2})-(\\d{1,2})-(\\d{1,2}))";
 	protected static Pattern datePattern = Pattern.compile(DATE_REGEX_PATTERN);
 }

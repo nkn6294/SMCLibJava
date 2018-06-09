@@ -6,6 +6,7 @@ import com.bkav.command.common.CommandTextProcesser;
 import com.bkav.command.common.CommonCommandTextProcesser;
 import com.bkav.command.common.TextProcesserAdvance;
 import com.bkav.command.data.NormalInputUtils;
+import com.bkav.command.model.time.DateUtils;
 import com.bkav.command.model.time.TimeUtils;
 
 public class SystemManager {
@@ -16,6 +17,7 @@ public class SystemManager {
 		textProcesserAdvance.addTextProcesser(String::toLowerCase);
 		textProcesserAdvance.addTextProcesser(NormalInputUtils::textToNumber);
 		textProcesserAdvance.addTextProcesser(TimeUtils::timeToNormal);
+		textProcesserAdvance.addTextProcesser(DateUtils::dateToNormal);
 		textProcesserAdvance.addTextProcesser(NormalInputUtils::textToUnit);
 		textProcesserAdvance.addTextProcesser(NormalInputUtils::deAccentConvert);
 		

@@ -6,6 +6,6 @@ public class DayInWeekModelTest extends TimeModelTest {
 
 	@Override
 	protected Model createModel() {
-		return new DayInWeekModel();
+		return new DayOfWeekModel();
 	}
 }
