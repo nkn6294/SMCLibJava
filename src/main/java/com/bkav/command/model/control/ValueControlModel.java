@@ -1,12 +1,13 @@
 package com.bkav.command.model.control;
 
 import com.bkav.command.data.Control;
+import com.bkav.command.model.ModelData;
 import com.bkav.command.model.StaticInputWordsModel;
 
 public class ValueControlModel extends StaticInputWordsModel<Control> {
 
 	public ValueControlModel() {
-		super(AdvanceControlModel.VALUE_CONTROL);
+		super(ModelData.VALUE_CONTROL);
 		this.modelName = "VALUE_ADVANCE_CONTROL";
 	}
 

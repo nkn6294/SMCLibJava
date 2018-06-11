@@ -16,7 +16,7 @@ public class EntityModelTest extends ModelTest {
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
-		this.commands = CollectionUtil.convert(SampleData.SampleCommands2);
+		this.commands = CollectionUtil.convert(SampleData.SampleCommands);
 	}
 	
 	@Override

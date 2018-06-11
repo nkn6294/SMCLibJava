@@ -1,7 +1,5 @@
 package com.bkav.util;
 
-import java.io.IOException;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,7 +7,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import com.bkav.command.SystemManager;
 import com.bkav.command.common.Function2;
 
 public final class StringUtil {
@@ -64,22 +61,24 @@ public final class StringUtil {
 		return checkSame(splitString(source), dest);
 	}
     public static String[] splitString(String key) {
-        return splitStringToList(key).stream().toArray(String[]::new);
+    	return key.split("\\s+");
+//        return splitStringToList(key).stream().toArray(String[]::new);
     }
     
     public static List<String> splitStringToList(String key) {
-        List<String> list = new ArrayList<>();
-        try {
-            final InputStreamBlock reader = new InputStreamBlock(new StringReader(key));
-            String word = reader.nextWord();
-            while (word != null) {
-                list.add(word.toLowerCase());
-                word = reader.nextWord();
-            }
-        } catch (IOException ex) {
-        	SystemManager.logger.info(ex.getMessage());
-        }
-        return list;
+    	return Arrays.stream(splitString(key)).collect(Collectors.toList());
+//        List<String> list = new ArrayList<>();
+//        try {
+//            final InputStreamBlock reader = new InputStreamBlock(new StringReader(key));
+//            String word = reader.nextWord();
+//            while (word != null) {
+//                list.add(word.toLowerCase());
+//                word = reader.nextWord();
+//            }
+//        } catch (IOException ex) {
+//        	SystemManager.logger.info(ex.getMessage());
+//        }
+//        return list;
     }
     public static int search(String key, String source) {
         String[] keys = splitString(key);

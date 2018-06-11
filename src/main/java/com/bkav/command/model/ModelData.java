@@ -5,131 +5,172 @@ package com.bkav.command.model;
  */
 public class ModelData {
 	public static final String[] DEVICE_ENTITY_TYPE = {
-		"thiet bi",
+		"thiết bị",
 	};
 	
 	public static final String[] FUNCTION_ENTITY_TYPE = {
-		"kich ban",
-		"che do", 
-		"chuc nang"
+		"kịch bản",
+		"chế độ", 
+		"chức năng"
 	};
 	public static final String[] DEVICE_TYPE = {
-		"den", // LIGHT
-		"rem",//CURTAIN
-		"dieu hoa", //air conditioner // dieu hoa trong phong...(1 type /room)
-		"cong tac", // SWITCH, 
-		"binh nong lanh",
+		"đèn", // LIGHT
+		"rèm",//CURTAIN
+		"điều hòa", //air conditioner // dieu hoa trong phong...(1 type /room)
+		"công tác", // SWITCH, 
+		"bình nóng lạnh",
 		"tv",
+		"tivi",
 	};
 	
 	public static final String[] CONTROLS = {
-		"bat",
-		"tat",
-		"tang",
-		"tang len",
-		"len",
-		"giam",
-		"giam xuong",
-		"xuong",
-		"mo",
-		"dong",
-		"kich hoat",
-		"them",
-		"bot",
-		"lon hon",
-		"nho hon",
-		"lon nhat",
-		"nho nhat",
-		"dat",
+		"bật",
+		"tắt",
+		"tăng",
+		"tăng lên",
+		"lên",
+		"giảm",
+		"giảm xuống",
+		"xuống",
+		"mở",
+		"đóng",
+		"kích họat",
+		"thêm",
+		"bớt",
+		"lớn hơn",
+		"nhỏ hơn",
+		"lớn nhất",
+		"nhỏ nhất",
+		"đặt",
 	};
 
-	
+	public static final String[] MIN_CONTROL = {
+    		"tắt",
+    		"nhỏ hơn",
+    		"đóng",
+    		"nhỏ nhất",    		
+    };
+    
+    public static final String[] MAX_CONTROL = {
+    		"bật",
+    		"mở",
+    		"kích hoạt",
+    		"lớn nhất",
+    };
+    
+	public static final String[] LOWER_CONTROL = { 
+			"giảm", 
+			"bớt", };
+
+	public static final  String[] UPPER_CONTROL = { 
+			"tăng", 
+			"thêm", 
+			"lớn hơn", };
+
+	public static final String[] VALUE_CONTROL = {
+			"đặt",
+			"điều chỉnh",
+			"thay đổi"
+	};
 	public static final String[] CONTEXTS = {
-		"thoi gian",
-		"vi tri",
-		"thiet bi",
+		"thời gian",
+		"vị trí",
+		"thiết bị",
 	};
 	
 	public static final String[] REPEATES = {
-		"mot lan",//"gio nay ngay mai/tuan sau/...
-		"hang ngay",
-		"hang tuan",
-		"hang thang",
-		"hang nam",
+		"một lần",//"gio nay ngay mai/tuan sau/...
+		"hàng ngày",
+		"hàng tuần",
+		"hàng tháng",
+		"hàng năm",
 	};
 	
 	public static final String[] TIMES = {
-		"bay gio",
-		"ngay mai",
+		"bây giờ",
+		"ngày mai",
 	};
 	
 	public static final String[] TIMES_CONTEXT = {
-		"luc",
+		"lúc",
 		"sau",
-		"truoc",
-		"nua",
-		"bat dau khi",
-		"ket thuc khi",
-		"cho toi khi",
-		"...",
+		"trước",
+		"nữa",
+		"bắt đầu khi",
+		"kết thúc khi",
+		"cho tới khi",
 	};
 	
 	public static final String[] UNITS = {
-		"phan tram",
-		"bat",
-		"tat",
-		"lon nhat",
-		"nho nhat",
-		"trong khoang",
+		"phần trăm",
+		"bật",
+		"tắt",
+		"lớn nhất",
+		"nhỏ nhất",
+		"trong khoảng",
 	};
 	
 	public static final String[] TIME_UNITS = {
-		"giay",
-		"phut",
-		"gio",
-		"ngay",
-		"tuan",
-		"thang",
-		"nam"
+		"giây",
+		"phút",
+		"giờ",
+		"ngày",
+		"tuần",
+		"tháng",
+		"năm"
 	};
 	
 	public static final String[] TIME_IN_DAY = {
-		"sang", // 10 GIO SANG
-		"trua",
-		"chieu",
-		"toi",
-		"buoi dem",
-		"buoi sang",
-		"buoi trua",
-		"buoi chieu",
-		"buoi toi", 
-		"buoi dem"
+		"sáng", // 10 GIO SANG
+		"trưa",
+		"chiều",
+		"tối",
+		"buổi đêm",
+		"buổi sáng",
+		"buổi trưa",
+		"buổi chiều",
+		"buổi tối", 
+		"buổi đêm"
 	};
 	
 	public static final String[] DAY_IN_WEEK = {
-		"thu hai",
-		"thu ba",
-		"thu tu",
-		"thu nam",
-		"thu sau",
-		"thu bay",
-		"chu nhat"
+		"thứ hai",
+		"thứ ba",
+		"thứ tư",
+		"thứ năm",
+		"thứ sáu",
+		"thứ bảy",
+		"chủ nhật"
 	};
 	
 	public static final String[] NUMBERIC = {
-		"tat ca",
-		"mot"
+		"tất cả",
+		"một"
 	};
 	
 	public static final String[] NUMBERS = {
-		"khong", "mot", "hai", "ba", "bon", "nam", "sau", "bay", "tam", "chin", "muoi",
+		"không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín", "mười",
 		"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", 
 	};
+	
+	public static final String[] ALL_AMOUNT = {
+			"tất cả",
+			"toàn bộ",
+		};
+	public static final String[] SOME_AMOUNT = {
+		"một vài",	
+	};
+	
+	public static final String[] ONLY_AMOUNT = {
+		"duy nhất",
+		"chỉ"
+	};
+	
 	/***************************** RULES ******************************/
 	public static final String[] NUMBERS_RULES = {
 		"[NUMBERS]",
-		"[NUMBERS] muoi",//20, 30...
-		"[NUMBERS] mot", //21, 31
+		"[NUMBERS] mươi",//20, 30...
+		"[NUMBERS] một", //21, 31
 		"[NUMBERS][NUMBERS]",		
 	};
 	

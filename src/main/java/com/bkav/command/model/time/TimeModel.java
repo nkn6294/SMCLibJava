@@ -17,9 +17,10 @@ public class TimeModel extends CollectionModel {
 				new ShortTimeModel(),
 				new ShortDateModel(),
 				new DayOfWeekModel(),
-				new TimeInDayModel(),
-				new TimeRepeatModel(),
-				new TimeUnitModel());
+//				new TimeInDayModel(),
+				new TimeRepeatModel()
+//				new TimeUnitModel()
+				);
 	}
 
 }

@@ -61,6 +61,6 @@ public abstract class ModelTest {
 		return CollectionUtil.convert(this.getTestCommands(), SystemManager.textProcesser);
 	}
 	protected String[] getTestCommands() {
-		return SampleData.SampleCommands2;
+		return SampleData.SampleCommands;
 	}
 }

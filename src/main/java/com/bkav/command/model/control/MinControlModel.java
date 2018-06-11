@@ -1,12 +1,13 @@
 package com.bkav.command.model.control;
 
 import com.bkav.command.data.Control;
+import com.bkav.command.model.ModelData;
 import com.bkav.command.model.StaticInputWordsModel;
 
 public class MinControlModel extends StaticInputWordsModel<Control> {
 
 	public MinControlModel() {
-		super(SimpleControlModel.MIN_CONTROL);
+		super(ModelData.MIN_CONTROL);
 		this.modelName = "MIN_SIMPLE_CONTROL";		
 	}
 

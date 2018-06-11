@@ -31,6 +31,6 @@ public class ShortTimeModelTest extends ModelTest {
 
 	@Override
 	protected String[] getTestCommands() {
-		return SampleData.SampleSchedule2;
+		return SampleData.SampleSchedule;
 	}
 }

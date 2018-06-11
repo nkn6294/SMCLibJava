@@ -11,6 +11,6 @@ public class TimeModelTest extends ModelTest {
 		return new TimeModel();
 	}
 	protected String[] getTestCommands() {
-		return SampleData.SampleSchedule2;
+		return SampleData.SampleSchedule;
 	}
 }

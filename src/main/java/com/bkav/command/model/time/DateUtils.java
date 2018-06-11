@@ -58,13 +58,17 @@ public class DateUtils {
 		return input.replaceAll(patternString, "_y$1");
 	}
 	protected static String normalDayOfWeek(String input) {
-		String patternString = "\\b((thứ\\s+([2-7]))|(chủ\\s+nhật))\\b";
+		String patternString = "\\b((thứ\\s+([2-7]|(tư))|(chủ\\s+nhật)))\\b";
 		return textProcessByRegex(input, patternString, (matcher, builder) -> {
 			int stt = 0;
-			if (matcher.group(4) != null) {
+			if (matcher.group(5) != null) {
 				stt = 8;
 			} else {
-				stt = Integer.parseInt(matcher.group(3));
+				if ("tư".equals(matcher.group(3))) {
+					stt = 4;
+				} else {
+					stt = Integer.parseInt(matcher.group(3));					
+				}
 			}
 			return builder.append("_e").append(stt);
 		});

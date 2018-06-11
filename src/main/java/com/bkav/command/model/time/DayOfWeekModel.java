@@ -11,9 +11,6 @@ public class DayOfWeekModel extends ParseStringModel<DayOfWeek> {
 		this.modelName = "DAY_OF_WEEK";
 	}
 
-	/***
-	 * _exx
-	 */
 	@Override
 	protected DayOfWeek createData(String word) {
 		try {

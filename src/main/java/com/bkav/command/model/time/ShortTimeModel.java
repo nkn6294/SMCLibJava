@@ -52,11 +52,7 @@ public class ShortTimeModel implements Model {
 			int hour = Integer.parseInt(matcher.group(3));
 			int minute = Integer.parseInt(matcher.group(4));
 			if ("+".equals(param)) {
-				LocalTime now = LocalTime.now();
-				now = LocalTime.of(now.getHour(), now.getMinute());
-				now = now.plusHours(hour);
-				now = now.plusMinutes(minute);
-				return now;
+				return LocalTime.now().plusHours(hour).plusMinutes(minute);
 			}
 			return LocalTime.of(hour, minute);
 		} catch (Exception ex) {

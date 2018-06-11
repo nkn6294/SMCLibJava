@@ -33,16 +33,6 @@ public class TimeUtils {
 	}
 	
 	protected static String normalRelativeTime(String input) {
-//		String patternString = "(\\bsau\\s+)?((\\d{1,2})(m|(:\\d{1,2})))\\s+nữa\\b";
-//		return textProcessByRegex(input, patternString, (matcher, builder) -> {
-//			builder.append("+");
-//			if ("m".equals(matcher.group(4))) {
-//				builder.append("00:").append(matcher.group(3));
-//			} else {
-//				builder.append(matcher.group(2));
-//			}
-//			return builder;
-//		});
 		String patternString = "(\\bsau\\s+)?(\\d{1,2}:\\d{1,2})\\s+nữa\\b";
 		return input.replaceAll(patternString, "+$2");
 	}
@@ -61,14 +51,14 @@ public class TimeUtils {
 			String timeInDay = matcher.group(3);
 			if ("sáng".equals(timeInDay)) {
 				builder.append("am");
-			} if ("trưa".equals(timeInDay)) {
+			} else if ("trưa".equals(timeInDay)) {
 				int hour = Integer.parseInt(matcher.group(1));
 				if (hour >= 1 && hour <= 3) {
 					builder.append("am");
 				} else {
 					builder.append("pm");
 				} 
-			} if("đêm".equals(timeInDay)) {
+			} else if("đêm".equals(timeInDay)) {
 				int hour = Integer.parseInt(matcher.group(1));
 				if (hour >= 1 && hour <= 3) {
 					builder.append("am");

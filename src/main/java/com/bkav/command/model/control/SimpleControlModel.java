@@ -3,20 +3,6 @@ package com.bkav.command.model.control;
 import com.bkav.command.model.CollectionModel;
 
 public class SimpleControlModel extends CollectionModel {
-	
-	public static final String[] MIN_CONTROL = {
-    		"tat",
-    		"nho hon",
-    		"dong",
-    		"nho nhat",    		
-    };
-    
-    public static final String[] MAX_CONTROL = {
-    		"bat",
-    		"mo",
-    		"kich hoat",
-    		"lon nhat",
-    };
 
 	@Override
 	protected void init() {

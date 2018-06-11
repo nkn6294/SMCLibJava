@@ -69,5 +69,5 @@ public class ModelsTest {
 	}
 	
 	protected PipeLineModel pipeLineModel;
-	protected String[][] commands = CollectionUtil.convert(SampleData.SampleCommands2);
+	protected String[][] commands = CollectionUtil.convert(SampleData.SampleCommands, SystemManager.textProcesser);
 }

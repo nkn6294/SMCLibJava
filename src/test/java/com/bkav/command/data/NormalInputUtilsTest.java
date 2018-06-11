@@ -26,31 +26,4 @@ public class NormalInputUtilsTest {
 			assertEquals(expecteds[index], output);//TODO testDeAccentConvert more case
 		}
 	}
-	@Test
-	public final void testTextToNumber() {
-		String[] inputs = new String[] { 
-				"năm nhân bốn cộng một bằng hai mươi mốt", 
-				"mười hai", 
-				"một trăm hai mươi",
-				"tám tư cộng một trăm tám mốt bằng hai trăm sáu năm",
-				"hai mươi tư",
-				"mười day",
-				"10 một"
-				};
-		String[] expecteds = new String[] { 
-				"5 nhân 4 cộng 1 bằng 21", 
-				"12", 
-				"120",
-				"84 cộng 181 bằng 265",
-				"24",
-				"10 day",
-				"11"
-		};
-		for (int index = 0; index < inputs.length; index++) {
-			String output = NormalInputUtils.textToNumber(inputs[index]);
-//			SystemManager.logger.info(output);
-			assertEquals(expecteds[index], output);
-		}
-	}
-
 }
