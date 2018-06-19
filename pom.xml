@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project 
+	xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
 	<modelVersion>4.0.0</modelVersion>
-
-	<groupId>com.bkav</groupId>
+	<groupId>com.bkav.command</groupId>
 	<artifactId>SmartHomeCommand</artifactId>
 	<version>1.0.0</version>
 	<dependencies>
@@ -18,7 +20,7 @@
 			<artifactId>joda-time</artifactId>
 			<version>2.10</version>
 		</dependency>
-		<!-- REACTIVESTREAM -->
+		<!-- 
 		<dependency>
 			<groupId>org.reactivestreams</groupId>
 			<artifactId>reactive-streams</artifactId>
@@ -50,7 +52,6 @@
 			<version>1.0.2</version>
 			<scope>test</scope>
 		</dependency>
-		<!--1.3.8 -->
 		<dependency>
 			<groupId>io.reactivex</groupId>
 			<artifactId>rxjava</artifactId>
@@ -61,33 +62,41 @@
 			<artifactId>rxjava</artifactId>
 			<version>2.1.13</version>
 		</dependency>
-		<!-- REACTIVESTREAM -->
-		<!-- -->
-		<!--JAVA_WEB_SOCKET -->
 		<dependency>
 			<groupId>javax.websocket</groupId>
 			<artifactId>javax.websocket-api</artifactId>
 			<version>1.1</version>
 			<scope>provided</scope>
 		</dependency>
-		<!-- SOCKET IO CLIENT -->
 		<dependency>
 			<groupId>io.socket</groupId>
 			<artifactId>socket.io-client</artifactId>
 			<version>1.0.0</version>
 		</dependency>
-		<!-- SOCKET IO SERVER -->
 		<dependency>
 			<groupId>com.corundumstudio.socketio</groupId>
 			<artifactId>netty-socketio</artifactId>
 			<version>1.7.12</version>
 		</dependency>
-		<!-- NETTY FRAMEWORKS-->
 		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty-all</artifactId>
 			<version>5.0.0.Alpha2</version>
 		</dependency>
+		-->
 	</dependencies>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.7.0</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

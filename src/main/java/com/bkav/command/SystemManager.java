@@ -25,8 +25,8 @@ public class SystemManager {
 		textProcesser = new CommonCommandTextProcesser(textProcesserAdvance);
 	}
 	
-	public static final Logger logger = new Logger();
-	public static final java.util.logging.Logger logger2 = java.util.logging.Logger.getLogger(System.class.getSimpleName());
+	public static final Logger logger2 = new Logger();
+	public static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(System.class.getSimpleName());
 	public static final CommandTextProcesser textProcesser;
 	
 	public static class Logger {

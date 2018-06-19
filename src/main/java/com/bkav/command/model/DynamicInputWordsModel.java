@@ -16,7 +16,9 @@ public abstract class DynamicInputWordsModel<T> extends InputWordsModel<T> {
 	@Override
 	public void test(String[]... commands) {
 		Arrays.stream(commands).forEach(command -> 
-		this.wordTrieNode.findPharases(command).stream().forEach(SystemManager.logger::info));
+		this.wordTrieNode.findPharases(command).stream()
+			.map(Object::toString)
+			.forEach(SystemManager.logger::info));
 	}
 
 	public DynamicInputWordsModel(Stream<? extends Object> stream) {

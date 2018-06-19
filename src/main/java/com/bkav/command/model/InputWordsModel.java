@@ -52,6 +52,7 @@ public abstract class InputWordsModel<T> extends AbstractModel {
 	public void test(String[]... commands) {
 		Arrays.stream(commands)
 				.forEach(command -> this.wordTrieNode.findPharases(command).stream()
+						.map(Object::toString)
 						.forEach(SystemManager.logger::info));
 	}
 

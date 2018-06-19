@@ -22,6 +22,7 @@ public abstract class ParseStringModel<T> extends AbstractModel {
 	public void test(String[]... commands) {
 		Arrays.stream(commands).map(words -> new ResultsProcess(words))
 			.map(this::process)
+			.map(Object::toString)
 			.forEach(SystemManager.logger::info);
 	}
 

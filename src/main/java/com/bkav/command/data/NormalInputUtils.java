@@ -14,8 +14,8 @@ public class NormalInputUtils {
 	}
 
     public static String normalInputSplitChar(String string) {
-    	//TODO replace _,.;:...
-    	return string;
+    	//TODO replace _,.;:, 
+    	return string.replaceAll("\\s+", " ");
     }
 	public static String textToUnit(String input) {
 		String output = input;

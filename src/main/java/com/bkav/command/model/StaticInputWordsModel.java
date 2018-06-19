@@ -17,7 +17,7 @@ public abstract class StaticInputWordsModel<T> extends InputWordsModel<T> {
 	@Override
 	public void test(String[]... commands) {
 		Arrays.stream(commands)
-				.forEach(command -> this.wordTrieNode.findPharases(command).stream().forEach(SystemManager.logger::info));
+				.forEach(command -> this.wordTrieNode.findPharases(command).stream().map(Object::toString).forEach(SystemManager.logger::info));
 	}
 
 	public StaticInputWordsModel(Collection<String> dataInput) {
