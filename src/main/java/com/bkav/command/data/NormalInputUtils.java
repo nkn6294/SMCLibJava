@@ -24,12 +24,12 @@ public class NormalInputUtils {
 		return output;
 	}
 	protected static String celsiusToText(String input) {
-		String patternString = "\\b(\\d+)\\s+độ\\s+c\\b";
+		String patternString = "\\b(\\d+)\\sđộ(\\s[cC])?\\b";
 		return input.replaceAll(patternString, "$1" + CELSIUS_UNIT);
 	}
 	
 	protected static String percentToText(String input) {
-		String patternString = "\\b(\\d+)\\s+phần\\s+trăm\\b";
+		String patternString = "\\b(\\d+)\\sphần\\străm\\b";
 		return input.replaceAll(patternString, "$1" + PERCENT_UNIT);
 	}
 }

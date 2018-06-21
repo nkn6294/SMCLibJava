@@ -16,14 +16,14 @@ import org.junit.Test;
 import com.bkav.command.SystemManager;
 import com.bkav.command.data.SampleData;
 import com.bkav.command.data.TimeInDay;
+import com.bkav.command.demo.data.HomeArea;
+import com.bkav.command.demo.data.HomeDevice;
+import com.bkav.command.demo.data.HomeDeviceType;
+import com.bkav.command.demo.model.HomeAreaModel;
+import com.bkav.command.demo.model.HomeDeviceModel;
+import com.bkav.command.demo.model.HomeDeviceTypeModel;
 import com.bkav.command.model.ModelData;
-import com.bkav.command.model.entity.HomeAreaModel;
-import com.bkav.command.model.entity.HomeDeviceModel;
-import com.bkav.command.model.entity.HomeDeviceTypeModel;
 import com.bkav.command.model.time.TimeInDayModel;
-import com.bkav.home.data.HomeArea;
-import com.bkav.home.data.HomeDevice;
-import com.bkav.home.data.HomeDeviceType;
 
 public class WordTrieNodeManagerTest {
 

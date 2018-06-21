@@ -8,17 +8,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import static com.bkav.command.SystemManager.*;
+
 import com.bkav.command.SystemManager;
-import com.bkav.command.data.HomeTest;
 import com.bkav.command.data.SampleData;
-import com.bkav.command.model.control.ControlModel;
-import com.bkav.command.model.entity.HomeEntityModel;
-import com.bkav.command.model.misc.AmountModel;
-import com.bkav.command.model.time.TimeModel;
 import com.bkav.command.util.CollectionUtil;
 import com.bkav.struct.ResultsProcess;
 
-public class ModelsTest {
+public abstract class ModelsTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -30,11 +27,8 @@ public class ModelsTest {
 
 	@Before
 	public void setUp() throws Exception {
-		this.pipeLineModel = new PipeLineModel(
-				new HomeEntityModel(HomeTest.getHomeTest()), 
-				new AmountModel(),
-				new ControlModel(), 
-				new TimeModel());
+		this.pipeLineModel = this.createModels();
+		this.commands = this.createCommands();
 	}
 
 	@After
@@ -44,9 +38,8 @@ public class ModelsTest {
 	@Test
 	public final void testModels() {
 		for (String[] command : commands) {
-			SystemManager.logger.info("-------------------------");
 			String commandString = String.join(" ", command);
-			SystemManager.logger.info("<" + commandString + ">");
+			logger.info("<" + commandString + ">");
 			pipeLineModel.stream().filter(item -> item instanceof CollectionModel)
 			.forEach(item -> {
 				((CollectionModel) item).test(command);
@@ -58,16 +51,23 @@ public class ModelsTest {
 	@Test
 	public final void testProcessModels() {
 		for (String[] command : commands) {
-			SystemManager.logger.info("-------------------------");
 			String commandString = String.join(" ", command);
-			SystemManager.logger.info("<" + commandString + ">");
+			logger.info("<" + commandString + ">");
 			ResultsProcess result = new ResultsProcess(command);
 			result = pipeLineModel.process(result);
-			SystemManager.logger.info(result.toString());
+			logger.info(result.toString());
 		}
 		assertTrue(true);// TODO test modelsTest.
 	}
 	
 	protected PipeLineModel pipeLineModel;
-	protected String[][] commands = CollectionUtil.convert(SampleData.SampleCommands, SystemManager.textProcesser);
+	protected String[][] commands;
+
+	protected abstract PipeLineModel createModels();
+	protected String[][] createCommands() {
+		return CollectionUtil.convert(this.getTestCommands(), SystemManager.textProcesser);
+	}
+	protected String[] getTestCommands() {
+		return SampleData.SampleCommands;
+	}
 }

@@ -33,11 +33,11 @@ public class TimeUtils {
 	}
 	
 	protected static String normalRelativeTime(String input) {
-		String patternString = "(\\bsau\\s+)?(\\d{1,2}:\\d{1,2})\\s+nữa\\b";
+		String patternString = "(\\bsau\\s)?(\\d{1,2}:\\d{1,2})\\snữa\\b";
 		return input.replaceAll(patternString, "+$2");
 	}
 	protected static String normalAtTime(String input) {
-		String patternString = "(\\blúc\\s+)?(\\d{1,2}:\\d{1,2})\\b";
+		String patternString = "(\\blúc\\s)?(\\d{1,2}:\\d{1,2})\\b";
 		return input.replaceAll(patternString, "$2");
 	}
 	protected static String normalAMPM(String input) {
@@ -87,7 +87,7 @@ public class TimeUtils {
 	}
 
 	protected static String longTimeToShort(String input) {
-		String patternString = "\\b(\\d+)h\\s+(\\d+)m?\\b";
+		String patternString = "\\b(\\d+)h\\s(\\d+)m?\\b";
 		return input.replaceAll(patternString, "$1:$2");
 	}
 

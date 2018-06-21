@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 
 import com.bkav.command.SystemManager;
+import static com.bkav.command.SystemManager.*;
 
 public class TextProcesserTest {
 
@@ -60,7 +61,7 @@ public class TextProcesserTest {
 			String input = inputs[index];
 			String expected = expecteds[index];
 			String output = processer.apply(input);
-			SystemManager.logger.info(String.format("%s ---> %s", input, output));
+			logger.info(String.format("%s ---> %s", input, output));
 			assertEquals(expected, output);
 		}
 	}

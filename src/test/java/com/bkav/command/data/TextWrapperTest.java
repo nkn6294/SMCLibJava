@@ -11,9 +11,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.bkav.command.SystemManager;
+import com.bkav.command.demo.data.HomeTest;
+import com.bkav.command.demo.model.HomeEntityModel;
 import com.bkav.command.model.PipeLineModel;
-import com.bkav.command.model.control.ControlModel;
-import com.bkav.command.model.entity.HomeEntityModel;
 import com.bkav.command.model.time.TimeModel;
 
 public class TextWrapperTest {
@@ -28,7 +28,7 @@ public class TextWrapperTest {
 
 	@Before
 	public void setUp() throws Exception {
-		this.pipeLineModel = new PipeLineModel(new HomeEntityModel(HomeTest.getHomeTest()), new ControlModel(), new TimeModel());
+		this.pipeLineModel = new PipeLineModel(new HomeEntityModel(HomeTest.getHomeTest()), new TimeModel());
 		this.commands = SampleData.SampleCommands;
 	}
 

@@ -12,8 +12,8 @@ import org.junit.Test;
 
 import com.bkav.command.SystemManager;
 import com.bkav.command.common.Model;
+import com.bkav.command.demo.model.HomeDeviceTypeModel;
 import com.bkav.command.model.ModelData;
-import com.bkav.command.model.entity.HomeDeviceTypeModel;
 
 public class WordTrieNodeTest {
 

@@ -66,9 +66,11 @@ public class SampleData {
         "bình nóng lạnh 1",
         "quạt hút 1",
 	};
-	
 	public static final String[] SampleCommands = {
 		// thiet bi cu the, nhom thiet bi, noi suy qua loai thiet bi (1/n thiet bi), trang thai hien tai
+			
+		"Điều chỉnh điều hòa một tăng mười độ",	
+			
 		"Bật đèn một phòng khách",//device with room
 		"Bật đèn một thứ ba", // device only
 		"Bật đèn phòng khách", // all device type in room

@@ -1,5 +1,6 @@
 package com.bkav.command;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,9 +17,21 @@ import com.bkav.command.model.time.DateUtils;
 import com.bkav.command.model.time.TimeUtils;
 
 public class SystemManager {
-	
+	public static Logger logger;// = null;
+	public static CommandTextProcesser textProcesser;
+	public static final String loggingProperties = String.format("%s\r\n%s\r\n%s\r\n%s\r\n%s",
+			"handlers=java.util.logging.ConsoleHandler", 
+			".level=ALL", 
+			"java.util.logging.ConsoleHandler.level=ALL", 
+			"java.util.logging.ConsoleHandler.formatter=java.util.loggin.SimpleFormatter", 
+			"java.util.logging.SimpleFormatter.format=[%1$tF %1$tT] [%4$-7s] %5$s %n");
 	static {
-		logger = Logger.getLogger(System.class.getSimpleName());//new SimpleLogger()
+		ByteArrayInputStream stream = new ByteArrayInputStream(loggingProperties.getBytes());
+		try {
+			LogManager.getLogManager().readConfiguration(stream);
+		} catch (Exception e) {
+		}
+		logger = Logger.getLogger(SystemManager.class.getSimpleName());
 		TextProcesserAdvance textProcesserAdvance = new TextProcesserAdvance();
 		textProcesserAdvance.addTextProcesser(NormalInputUtils::normalInputSplitChar);
 		textProcesserAdvance.addTextProcesser(String::toLowerCase);
@@ -29,12 +42,11 @@ public class SystemManager {
 //		textProcesserAdvance.addTextProcesser(NormalInputUtils::deAccentConvert);
 		textProcesser = new CommonCommandTextProcesser(textProcesserAdvance);
 	}
+	
 	public static void loadLogProperties(String fileName) {//logging.properties
 		InputStream stream = null;
 		try {
 			stream = new FileInputStream(fileName);// SystemManager.class.getClassLoader().getResourceAsStream(fileName);
-//			Properties properties = new Properties();
-//			properties.load(stream);
 			LogManager.getLogManager().readConfiguration(stream);
 		} catch (IOException ex) { 
 			System.err.println(ex.getMessage());
@@ -48,8 +60,7 @@ public class SystemManager {
 		}
 		logger = Logger.getLogger(System.class.getSimpleName());//new SimpleLogger()
 	}
-	public static Logger logger = null;
-	public static CommandTextProcesser textProcesser;
+	
 	
 	public static class SimpleLogger {
 		public void info(String o) {

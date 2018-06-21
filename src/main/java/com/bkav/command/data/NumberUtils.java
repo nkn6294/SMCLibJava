@@ -25,36 +25,36 @@ public class NumberUtils {
 	}
 
 	protected static String textxxxToNumber(String input) {
-		String patternString = "(\\d)00\\s+(\\d\\d)";
+		String patternString = "(\\d)00\\s(\\d\\d)";
 		return input.replaceAll(patternString, "$1$2");
 	}
 
 	protected static String textxxToNumber(String input) {
-		String patternString = "(\\d)\\s+(\\d)$";
+		String patternString = "(\\d)\\s(\\d)$";
 		return input.replaceAll(patternString, "$1$2");
 	}
 
 	protected static String text1xToNumber(String input) {
-		String patternString = "10\\s+(\\d)";
+		String patternString = "10\\s(\\d)";
 		return input.replaceAll(patternString, "1$1");
 	}
 	protected static String textx0ToNumber(String input) {
-		String patternString = "([2-9])\\s+mươi";
+		String patternString = "([2-9])\\smươi";
 		return input.replaceAll(patternString, "$10");
 	}
 
 	protected static String textx00ToNumber(String input) {
-		String patternString = "(\\d)\\s+trăm";
+		String patternString = "(\\d)\\străm";
 		return input.replaceAll(patternString, "$100");
 	}
 
 	protected static String textx1ToNumber(String input) {
-		String patternString = "(\\d)\\s+(mươi\\s+)?mốt";
+		String patternString = "(\\d)\\s(mươi\\s+)?mốt";
 		return input.replaceAll(patternString, "$11");
 	}
 	
 	protected static String textx4ToNumber(String input) {
-		String patternString = "(\\d)\\s+(mươi\\s+)?tư";
+		String patternString = "(\\d)\\s(mươi\\s+)?tư";
 		return input.replaceAll(patternString, "$14");
 	}
 }

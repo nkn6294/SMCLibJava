@@ -91,6 +91,12 @@ public abstract class InputWordsModel<T> extends AbstractModel {
 		return wordTrieNode;
 	}
 	
+	protected static final <T> WordTrieNode<T> updateTrieNode(Function<T, String[]> makeObject, Stream<T> stream) {
+		WordTrieNode<T> wordTrieNode = new WordTrieNode<>();
+		stream.forEach(data -> wordTrieNode.addPhrase(makeObject.apply(data), data));
+		return wordTrieNode;
+	}
+	
 	/***
 	 * Normal input to type can process add to tree model.
 	 * 
