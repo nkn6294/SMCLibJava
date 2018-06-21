@@ -11,8 +11,8 @@ import java.util.function.IntConsumer;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import com.bkav.util.CollectionUtil;
-import com.bkav.util.StreamUtils;
+import com.bkav.command.util.CollectionUtil;
+import com.bkav.command.util.StreamUtils;
 
 public class ListStringWithMask2 implements Iterable<String> {
 	

@@ -1,4 +1,4 @@
-package com.bkav.util;
+package com.bkav.command.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,6 +1,11 @@
 package com.bkav.command;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 import com.bkav.command.common.CommandTextProcesser;
 import com.bkav.command.common.CommonCommandTextProcesser;
@@ -13,6 +18,7 @@ import com.bkav.command.model.time.TimeUtils;
 public class SystemManager {
 	
 	static {
+		logger = Logger.getLogger(System.class.getSimpleName());//new SimpleLogger()
 		TextProcesserAdvance textProcesserAdvance = new TextProcesserAdvance();
 		textProcesserAdvance.addTextProcesser(NormalInputUtils::normalInputSplitChar);
 		textProcesserAdvance.addTextProcesser(String::toLowerCase);
@@ -21,15 +27,31 @@ public class SystemManager {
 		textProcesserAdvance.addTextProcesser(DateUtils::dateToNormal);
 		textProcesserAdvance.addTextProcesser(NormalInputUtils::textToUnit);
 //		textProcesserAdvance.addTextProcesser(NormalInputUtils::deAccentConvert);
-		
 		textProcesser = new CommonCommandTextProcesser(textProcesserAdvance);
 	}
+	public static void loadLogProperties(String fileName) {//logging.properties
+		InputStream stream = null;
+		try {
+			stream = new FileInputStream(fileName);// SystemManager.class.getClassLoader().getResourceAsStream(fileName);
+//			Properties properties = new Properties();
+//			properties.load(stream);
+			LogManager.getLogManager().readConfiguration(stream);
+		} catch (IOException ex) { 
+			System.err.println(ex.getMessage());
+		} finally {
+			if (stream != null) {
+				try {
+					stream.close();
+				} catch (IOException e) {
+				}
+			}
+		}
+		logger = Logger.getLogger(System.class.getSimpleName());//new SimpleLogger()
+	}
+	public static Logger logger = null;
+	public static CommandTextProcesser textProcesser;
 	
-	public static final Logger logger2 = new Logger();
-	public static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(System.class.getSimpleName());
-	public static final CommandTextProcesser textProcesser;
-	
-	public static class Logger {
+	public static class SimpleLogger {
 		public void info(String o) {
 			System.out.println(o);
 		}

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import com.bkav.util.StreamUtils;
+import com.bkav.command.util.StreamUtils;
 
 public abstract class DatasWithMask<T> extends MaskWrapper implements Iterable<T> {
 	

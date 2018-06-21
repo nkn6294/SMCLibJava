@@ -1,4 +1,4 @@
-package com.bkav.util;
+package com.bkav.command.util;
 
 import java.util.Iterator;
 import java.util.Spliterator;

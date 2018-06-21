@@ -1,4 +1,4 @@
-package com.bkav.util;
+package com.bkav.command.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -95,6 +95,13 @@ public final class StringUtil {
         return count;
     }
 
+    public static boolean isNullOrEmpty(String input) {
+    	if (input == null) {
+    		return false;
+    	}
+    	return input.isEmpty();
+    }
+    
     public static List<String> search(String key, String[] sources) {
         int maxItem = splitString(key).length;
         return Arrays.stream(sources)

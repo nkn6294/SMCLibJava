@@ -1,6 +1,6 @@
 package com.bkav.command.model.time;
 
-import static com.bkav.util.StringUtil.textProcessByRegex;
+import static com.bkav.command.util.StringUtil.textProcessByRegex;
 
 public class DateUtils {
 	public static String dateToNormal(String input) {

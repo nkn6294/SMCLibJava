@@ -2,7 +2,7 @@ package com.bkav.struct;
 
 import java.util.List;
 
-import com.bkav.util.CollectionUtil;
+import com.bkav.command.util.CollectionUtil;
 
 public class ListStringWithMask extends DatasWithMask<String> implements Iterable<String> {
 	

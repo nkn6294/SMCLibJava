@@ -15,8 +15,8 @@ import com.bkav.command.model.control.ControlModel;
 import com.bkav.command.model.entity.HomeEntityModel;
 import com.bkav.command.model.misc.AmountModel;
 import com.bkav.command.model.time.TimeModel;
+import com.bkav.command.util.CollectionUtil;
 import com.bkav.struct.ResultsProcess;
-import com.bkav.util.CollectionUtil;
 
 public class ModelsTest {
 

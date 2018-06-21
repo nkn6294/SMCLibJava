@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
-import com.bkav.util.CollectionUtil;
+import com.bkav.command.util.CollectionUtil;
 
 /***
  * {@link CommonMask} implement basic method of {@link Mask}

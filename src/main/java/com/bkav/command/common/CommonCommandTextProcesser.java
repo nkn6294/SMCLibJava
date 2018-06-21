@@ -2,7 +2,7 @@ package com.bkav.command.common;
 
 import java.util.List;
 
-import com.bkav.util.StringUtil;
+import com.bkav.command.util.StringUtil;
 
 public class CommonCommandTextProcesser implements CommandTextProcesser {
 	public CommonCommandTextProcesser(TextProcesser textProcesser) {
