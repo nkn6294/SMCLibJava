@@ -19,7 +19,7 @@ public class NumberUtils {
 	protected static String textToStringToNumber(String input) {
 		String output = input;
 		for (int index = 1; index < INPUT_NUMBERS.length; index++) {
-			output = output.replaceAll(INPUT_NUMBERS[index], "" + index);
+			output = output.replaceAll("(\\s?)" + INPUT_NUMBERS[index] + "(\\s?)", "$1" + index + "$2");
 		}
 		return output;
 	}
