@@ -7,6 +7,7 @@ import com.bkav.command.model.ModelsTest;
 import com.bkav.command.model.PipeLineModel;
 import com.bkav.command.model.misc.AmountModel;
 import com.bkav.command.model.time.TimeModel;
+import com.bkav.command.model.value.ValueModel;
 
 public class HomeModelsTest extends ModelsTest {
 
@@ -16,6 +17,7 @@ public class HomeModelsTest extends ModelsTest {
 				new HomeEntityModel(HomeTest.getHomeTest()), 
 				new AmountModel(),
 				new ControlModel(), 
-				new TimeModel());
+				new TimeModel(),
+				new ValueModel());
 	}
 }

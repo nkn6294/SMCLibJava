@@ -11,7 +11,7 @@ import org.junit.Test;
 import static com.bkav.command.SystemManager.*;
 
 import com.bkav.command.SystemManager;
-import com.bkav.command.data.SampleData;
+import com.bkav.command.demo.SampleData;
 import com.bkav.command.struct.ResultsProcess;
 import com.bkav.command.util.CollectionUtil;
 
@@ -35,18 +35,18 @@ public abstract class ModelsTest {
 	public void tearDown() throws Exception {
 	}
 
-	@Test
-	public final void testModels() {
-		for (String[] command : commands) {
-			String commandString = String.join(" ", command);
-			logger.info("<" + commandString + ">");
-			pipeLineModel.stream().filter(item -> item instanceof CollectionModel)
-			.forEach(item -> {
-				((CollectionModel) item).test(command);
-			});
-		}
-		assertTrue(true);// TODO test modelsTest.
-	}
+//	@Test
+//	public final void testModels() {
+//		for (String[] command : commands) {
+//			String commandString = String.join(" ", command);
+//			logger.info("<" + commandString + ">");
+//			pipeLineModel.stream().filter(item -> item instanceof CollectionModel)
+//			.forEach(item -> {
+//				((CollectionModel) item).test(command);
+//			});
+//		}
+//		assertTrue(true);// TODO test modelsTest.
+//	}
 	
 	@Test
 	public final void testProcessModels() {

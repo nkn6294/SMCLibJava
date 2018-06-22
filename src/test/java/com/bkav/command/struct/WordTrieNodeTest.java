@@ -12,9 +12,8 @@ import org.junit.Test;
 
 import com.bkav.command.SystemManager;
 import com.bkav.command.common.Model;
+import com.bkav.command.demo.SampleData;
 import com.bkav.command.demo.model.HomeDeviceTypeModel;
-import com.bkav.command.model.ModelData;
-import com.bkav.command.struct.ResultsProcess;
 
 public class WordTrieNodeTest {
 
@@ -37,7 +36,7 @@ public class WordTrieNodeTest {
 	@Test
 	public final void testFindPharases() {
 		String[] s1 = { "phong", "khach", "phong", "an", "dieu", "hoa", "buoi", "trua", "dieu", "den", "abc"};
-		Model model = new HomeDeviceTypeModel(ModelData.DEVICE_TYPE);
+		Model model = new HomeDeviceTypeModel(SampleData.DEVICE_TYPE);
 		SystemManager.logger.info(Arrays.toString(s1));
 		ResultsProcess results = model.process(new ResultsProcess(s1));
 //		assertTrue(results.size() == 2);

@@ -4,8 +4,6 @@ import java.text.Normalizer;
 import java.util.regex.Pattern;
 
 public class NormalInputUtils {
-	public static final String CELSIUS_UNIT = "\u2103";
-	public static final String PERCENT_UNIT = "%";
 
 	public static String deAccentConvert(String input) {
 		String nfdNormalizedString = Normalizer.normalize(input, Normalizer.Form.NFD);
@@ -23,13 +21,14 @@ public class NormalInputUtils {
 		output = percentToText(output);
 		return output;
 	}
+	
 	protected static String celsiusToText(String input) {
 		String patternString = "\\b(\\d+)\\sđộ(\\s[cC])?\\b";
-		return input.replaceAll(patternString, "$1" + CELSIUS_UNIT);
+		return input.replaceAll(patternString, "_v_($1" + ValueUnit.CELSIUS_UNIT_CHAR + ")");
 	}
 	
 	protected static String percentToText(String input) {
 		String patternString = "\\b(\\d+)\\sphần\\străm\\b";
-		return input.replaceAll(patternString, "$1" + PERCENT_UNIT);
+		return input.replaceAll(patternString, "_v_($1" + ValueUnit.PERCENT_UNIT_CHAR + ")");
 	}
 }

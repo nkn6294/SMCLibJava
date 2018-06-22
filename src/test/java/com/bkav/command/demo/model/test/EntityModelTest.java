@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import com.bkav.command.SystemManager;
 import com.bkav.command.common.Model;
-import com.bkav.command.data.SampleData;
+import com.bkav.command.demo.SampleData;
 import com.bkav.command.demo.data.HomeTest;
 import com.bkav.command.demo.model.HomeEntityModel;
 import com.bkav.command.model.ModelTest;

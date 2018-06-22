@@ -1,7 +1,6 @@
 package com.bkav.command.demo.data;
 
-import com.bkav.command.data.SampleData;
-import com.bkav.command.model.ModelData;
+import com.bkav.command.demo.SampleData;
 
 public class HomeTest extends Home {
 
@@ -17,6 +16,6 @@ public class HomeTest extends Home {
 		super(SampleData.AREAS, 
 				SampleData.FUNCTION, 
 				SampleData.DEVICES, 
-				ModelData.DEVICE_TYPE);
+				SampleData.DEVICE_TYPE);
 	}
 }

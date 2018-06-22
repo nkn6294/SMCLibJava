@@ -1,7 +1,74 @@
-package com.bkav.command.data;
+package com.bkav.command.demo;
 
 public class SampleData {
-	
+	public static final String[] DEVICE_ENTITY_TYPE = {
+			"thiết bị",
+		};
+		
+		public static final String[] FUNCTION_ENTITY_TYPE = {
+			"kịch bản",
+			"chế độ", 
+			"chức năng"
+		};
+		public static final String[] DEVICE_TYPE = {
+			"đèn", // LIGHT
+			"rèm",//CURTAIN
+			"điều hòa", //air conditioner // dieu hoa trong phong...(1 type /room)
+			"công tác", // SWITCH, 
+			"bình nóng lạnh",
+			"tv",
+			"tivi",
+		};
+		
+		public static final String[] CONTROLS = {
+			"bật",
+			"tắt",
+			"tăng",
+			"tăng lên",
+			"lên",
+			"giảm",
+			"giảm xuống",
+			"xuống",
+			"mở",
+			"đóng",
+			"kích họat",
+			"thêm",
+			"bớt",
+			"lớn hơn",
+			"nhỏ hơn",
+			"lớn nhất",
+			"nhỏ nhất",
+			"đặt",
+		};
+
+		public static final String[] MIN_CONTROL = {
+	    		"tắt",
+	    		"nhỏ hơn",
+	    		"đóng",
+	    		"nhỏ nhất",    		
+	    };
+	    
+	    public static final String[] MAX_CONTROL = {
+	    		"bật",
+	    		"mở",
+	    		"kích hoạt",
+	    		"lớn nhất",
+	    };
+	    
+		public static final String[] LOWER_CONTROL = { 
+				"giảm", 
+				"bớt", };
+
+		public static final  String[] UPPER_CONTROL = { 
+				"tăng", 
+				"thêm", 
+				"lớn hơn", };
+
+		public static final String[] VALUE_CONTROL = {
+				"đặt",
+				"điều chỉnh",
+				"thay đổi"
+		};
 	public static final String[] ENTITYS = {
 	};
 	
@@ -69,10 +136,10 @@ public class SampleData {
 	public static final String[] SampleCommands = {
 		// thiet bi cu the, nhom thiet bi, noi suy qua loai thiet bi (1/n thiet bi), trang thai hien tai
 			
-		"Điều chỉnh điều hòa một tăng mười độ",	
-			
-		"Bật đèn một phòng khách",//device with room
 		"Bật đèn một thứ ba", // device only
+
+		"Điều chỉnh điều hòa một tăng mười độ",	
+		"Bật đèn một phòng khách",//device with room
 		"Bật đèn phòng khách", // all device type in room
 		"Bật tất cả đèn",
 		"Bật đèn", 

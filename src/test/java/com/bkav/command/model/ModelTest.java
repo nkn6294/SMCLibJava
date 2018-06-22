@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import com.bkav.command.SystemManager;
 import com.bkav.command.common.Model;
-import com.bkav.command.data.SampleData;
+import com.bkav.command.demo.SampleData;
 import com.bkav.command.struct.ResultsProcess;
 import com.bkav.command.util.CollectionUtil;
 
@@ -42,7 +42,6 @@ public abstract class ModelTest {
 			return;
 		}
 		Arrays.stream(this.commands).forEach(command -> {
-			SystemManager.logger.info("-------------------------");
 			String commandString = String.join(" ", command);
 			SystemManager.logger.info("<" + commandString + ">");
 			ResultsProcess result = new ResultsProcess(command);

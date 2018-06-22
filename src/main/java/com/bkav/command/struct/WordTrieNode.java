@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.bkav.command.SystemManager;
 import com.bkav.command.common.CommandTextProcesser;
 
 public class WordTrieNode<T> {
@@ -106,11 +107,15 @@ public class WordTrieNode<T> {
 		alias.stream().forEach(words -> this.addPhrase(words, value));
 	}
 	public void addMultiPharase(String[] alias, T value, CommandTextProcesser textProcesser) {
-		Arrays.stream(alias).map(textProcesser::textToWords).forEach(words -> this.addPhrase(words, value));
+		Arrays.stream(alias)
+			.map(textProcesser::apply)
+			.peek(output -> SystemManager.logger.info("ADD_MULTI_PHARASE:" + output))
+			.map(textProcesser::textToWords).forEach(words -> this.addPhrase(words, value));
 	}
 	public void addPhrase(Iterator<String> words, T value) {
-		if (!words.hasNext())
-			return;
+		if (!words.hasNext()) {
+			return;			
+		}
 		WordTrieNode<T> node = this;
 		while (words.hasNext()) {
 			String word = words.next();

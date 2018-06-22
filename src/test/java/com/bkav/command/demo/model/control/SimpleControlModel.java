@@ -13,7 +13,8 @@ public class SimpleControlModel extends CollectionModel {
 	@Override
 	protected void initModels() {
 		super.initModels();
-		this.addModels(new MinControlModel(), 
+		this.addModels(
+				new MinControlModel(), 
 				new MaxControlModel());
 	}
 	

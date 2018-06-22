@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import com.bkav.command.common.Model;
-import com.bkav.command.data.SampleData;
+import com.bkav.command.demo.SampleData;
 import com.bkav.command.model.ModelTest;
 
 public class ShortTimeModelTest extends ModelTest {

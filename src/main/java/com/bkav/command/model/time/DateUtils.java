@@ -58,7 +58,7 @@ public class DateUtils {
 		return input.replaceAll(patternString, "_y$1");
 	}
 	protected static String normalDayOfWeek(String input) {
-		String patternString = "\\b((thứ\\+([2-7]|(tư))|(chủ\\s+nhật)))\\b";
+		String patternString = "\\b((thứ\\s([2-7]|(tư))|(chủ\\snhật)))\\b";
 		return textProcessByRegex(input, patternString, (matcher, builder) -> {
 			int stt = 0;
 			if (matcher.group(5) != null) {

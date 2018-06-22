@@ -4,74 +4,7 @@ package com.bkav.command.model;
  * 
  */
 public class ModelData {
-	public static final String[] DEVICE_ENTITY_TYPE = {
-		"thiết bị",
-	};
-	
-	public static final String[] FUNCTION_ENTITY_TYPE = {
-		"kịch bản",
-		"chế độ", 
-		"chức năng"
-	};
-	public static final String[] DEVICE_TYPE = {
-		"đèn", // LIGHT
-		"rèm",//CURTAIN
-		"điều hòa", //air conditioner // dieu hoa trong phong...(1 type /room)
-		"công tác", // SWITCH, 
-		"bình nóng lạnh",
-		"tv",
-		"tivi",
-	};
-	
-	public static final String[] CONTROLS = {
-		"bật",
-		"tắt",
-		"tăng",
-		"tăng lên",
-		"lên",
-		"giảm",
-		"giảm xuống",
-		"xuống",
-		"mở",
-		"đóng",
-		"kích họat",
-		"thêm",
-		"bớt",
-		"lớn hơn",
-		"nhỏ hơn",
-		"lớn nhất",
-		"nhỏ nhất",
-		"đặt",
-	};
 
-	public static final String[] MIN_CONTROL = {
-    		"tắt",
-    		"nhỏ hơn",
-    		"đóng",
-    		"nhỏ nhất",    		
-    };
-    
-    public static final String[] MAX_CONTROL = {
-    		"bật",
-    		"mở",
-    		"kích hoạt",
-    		"lớn nhất",
-    };
-    
-	public static final String[] LOWER_CONTROL = { 
-			"giảm", 
-			"bớt", };
-
-	public static final  String[] UPPER_CONTROL = { 
-			"tăng", 
-			"thêm", 
-			"lớn hơn", };
-
-	public static final String[] VALUE_CONTROL = {
-			"đặt",
-			"điều chỉnh",
-			"thay đổi"
-	};
 	public static final String[] CONTEXTS = {
 		"thời gian",
 		"vị trí",

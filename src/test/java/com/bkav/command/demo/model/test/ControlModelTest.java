@@ -3,7 +3,7 @@ package com.bkav.command.demo.model.test;
 import org.junit.Before;
 
 import com.bkav.command.common.Model;
-import com.bkav.command.data.SampleData;
+import com.bkav.command.demo.SampleData;
 import com.bkav.command.demo.model.control.ControlModel;
 import com.bkav.command.model.ModelTest;
 import com.bkav.command.util.CollectionUtil;

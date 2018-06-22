@@ -11,6 +11,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.bkav.command.SystemManager;
+import com.bkav.command.demo.SampleData;
 import com.bkav.command.demo.data.HomeTest;
 import com.bkav.command.demo.model.HomeEntityModel;
 import com.bkav.command.demo.model.control.ControlModel;
