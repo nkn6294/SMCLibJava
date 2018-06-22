@@ -52,7 +52,7 @@ public abstract class StaticInputWordsModel<T> extends InputWordsModel<T> {
 	@Override
 	protected void createModelTree() {
 		Function<String[], T> makeValue = this::getDataFromStringArray;
-		this.wordTrieNode = updateTrieNode(Arrays.stream(this.dataProcessed), makeValue);
+		this.wordTrieNode = updateTrieNode(Arrays.stream(this.dataProcessed), makeValue, createDefaultWordTrieNode());
 	}
 
 	@Override

@@ -28,7 +28,6 @@ import com.bkav.command.struct.ResultFind;
 import com.bkav.command.struct.ResultNode;
 import com.bkav.command.struct.ResultTreeNode;
 import com.bkav.command.struct.ResultsFind;
-import com.bkav.command.struct.WordTrieNode;
 import com.bkav.command.struct.WordTrieNodeManager;
 
 public class WordTrieNodeManagerTest {

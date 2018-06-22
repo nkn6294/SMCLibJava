@@ -2,6 +2,7 @@ package com.bkav.command.struct;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,39 +10,44 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.bkav.command.common.CommandTextProcesser;
+
 public class WordTrieNode<T> {
 
-	public WordTrieNode(WordTrieNode<T> parent, T id, String label) {
-		this.label = label;
-		this.parent = parent;
-		this.id = id;
-		this.childrens = new HashMap<>();
+	public WordTrieNode(WordTrieNode<T> parent, T value, String label) {
+		this.initWithValue(parent, value, label);
 	}
-
-	public WordTrieNode(WordTrieNode<T> parent, T id) {
-		this(parent, id, null);
+	
+	public WordTrieNode(WordTrieNode<T> parent, T value) {
+		this.initWithValue(parent, value, null);
+	}
+	/***
+	 * Create WordTrieNode with Collection values using result from {@link #importValues(Collection)}
+	 * if <b>null</b> using {@link #createValues()} after add all element from <b>inputs</b>
+	 * @param parent
+	 * @param values
+	 * @param label
+	 */
+	public WordTrieNode(WordTrieNode<T> parent, Collection<T> inputs, String label) {
+		this.initWithCollection(parent, inputs, label);
 	}
 
 	public WordTrieNode(WordTrieNode<T> parent) {
-		this(parent, null, null);
-	}
-	
-	public WordTrieNode() {
-		this(null, null, null);
+		this.initWithCollection(parent, this.createValues(), null);
 	}
 
+	public WordTrieNode() {
+		this.initWithCollection(parent, this.createValues(), null);
+	}
+	
+	public Collection<T> values() {
+		return this.values;
+	}
+	
 	public WordTrieNode<T> getParent() {
 		return this.parent;
 	}
-
-	public T getId() {
-		return this.id;
-	}
-
-	public void setId(T id) {
-		this.id = id;
-	}
-
+	
 	public boolean isRoot() {
 		return this.parent != null;
 	}
@@ -54,6 +60,17 @@ public class WordTrieNode<T> {
 		return this.label;
 	}
 
+	public boolean isHasValue() {
+		return !this.values.isEmpty();
+	}
+	
+	public T getValue() {
+		if (this.isHasValue()) {
+			return this.values.iterator().next();
+		}
+		return null;
+	}
+	
 	public String[] getLabels() {
 		List<String> listString = new ArrayList<>();
 		WordTrieNode<T> node = this;
@@ -69,7 +86,7 @@ public class WordTrieNode<T> {
 		return output;
 	}
 
-	public void addPhrase(String[] words, T id) {
+	public void addPhrase(String[] words, T value) {
 		if (words.length == 0)
 			return;
 		WordTrieNode<T> node = this;
@@ -77,15 +94,21 @@ public class WordTrieNode<T> {
 			String word = words[index];
 			WordTrieNode<T> childNode = node.getChildrens().get(word);
 			if (childNode == null) {
-				childNode = new WordTrieNode<>(node, null, word);
+				childNode = this.createNewNodeWithLabel(node, word);// new WordTrieNode<>(node, null, word);
 				node.getChildrens().put(word, childNode);
 			}
 			node = childNode;
 		}
-		node.setId(id);
+		node.addValue(value);
 	}
-
-	public void addPhrase(Iterator<String> words, T id) {
+	
+	public void addMultiPharase(List<String[]> alias, T value) {
+		alias.stream().forEach(words -> this.addPhrase(words, value));
+	}
+	public void addMultiPharase(String[] alias, T value, CommandTextProcesser textProcesser) {
+		Arrays.stream(alias).map(textProcesser::textToWords).forEach(words -> this.addPhrase(words, value));
+	}
+	public void addPhrase(Iterator<String> words, T value) {
 		if (!words.hasNext())
 			return;
 		WordTrieNode<T> node = this;
@@ -93,12 +116,12 @@ public class WordTrieNode<T> {
 			String word = words.next();
 			WordTrieNode<T> childNode = node.getChildrens().get(word);
 			if (childNode == null) {
-				childNode = new WordTrieNode<>(node, null, word);
+				childNode = this.createNewNodeWithLabel(node, word);// new WordTrieNode<>(node, null, word);
 				node.getChildrens().put(word, childNode);
 			}
 			node = childNode;
 		}
-		node.setId(id);
+		node.addValue(value);
 	}
 
 	public Collection<T> findPharases(String[] words, Collection<T> foundPharases) {
@@ -113,8 +136,8 @@ public class WordTrieNode<T> {
 				node = childNode;
 				index++;
 			} else {
-				if (node.getId() != null) {
-					foundPharases.add(node.getId());
+				if (node.isHasValue()) {
+					node.values.forEach(foundPharases::add);
 				}
 				if (node == this) {
 					index++;
@@ -123,8 +146,8 @@ public class WordTrieNode<T> {
 				}
 			}
 		}
-		if (node.getId() != null) {
-			foundPharases.add(node.getId());
+		if (node.isHasValue()) {
+			node.values.forEach(foundPharases::add);
 		}
 		return foundPharases;
 	}
@@ -146,8 +169,8 @@ public class WordTrieNode<T> {
 				index++;
 				continue;
 			}
-			if (currentNode.getId() != null) {
-				currentResult.addValue(currentNode.getId());
+			if (currentNode.isHasValue()) {
+				currentNode.values.forEach(currentResult::addValue);
 				wordsWithMark.setMark(indexs);
 			}	
 			if (currentNode == this) {
@@ -157,8 +180,8 @@ public class WordTrieNode<T> {
 			}
 			indexs.clear();
 		}
-		if (currentNode.getId() != null) {
-			currentResult.addValue(currentNode.getId());
+		if (currentNode.isHasValue()) {
+			currentNode.values.forEach(currentResult::addValue);
 			wordsWithMark.setMark(indexs);
 		}
 		indexs.clear();
@@ -186,8 +209,8 @@ public class WordTrieNode<T> {
 				word = words.next();
 				continue;
 			} 
-			if (node.getId() != null) {
-				foundPharases.add(node.getId());
+			if (node.isHasValue()) {
+				node.values.forEach(foundPharases::add);
 			}
 			if (node == this) {
 				word = words.next();
@@ -195,8 +218,8 @@ public class WordTrieNode<T> {
 				node = this;
 			}
 		}
-		if (node.getId() != null) {
-			foundPharases.add(node.getId());
+		if (node.isHasValue()) {
+			node.values.forEach(foundPharases::add);
 		}
 		return foundPharases;
 	}
@@ -208,7 +231,7 @@ public class WordTrieNode<T> {
 	@Override
 	public String toString() {
 		StringWriter writer = new StringWriter();
-		writer.append(":[" + this.id + "]");
+		writer.append(":[" + this.values + "]");
 		if (this.childrens.isEmpty()) {
 			return writer.toString();
 		}
@@ -234,9 +257,73 @@ public class WordTrieNode<T> {
 	public Map<String, WordTrieNode<T>> getChildrens() {
 		return this.childrens;
 	}
+	
+	protected void updateValue(T value) {
+		if (this.filterValue(value)) {
+			this.values.add(value);			
+		}
+	};
+	protected Collection<T> createValues() {
+		return new ArrayList<>();
+	};
+	protected WordTrieNode<T> createNewNodeWithLabel(WordTrieNode<T> parent, String label) {
+		return new WordTrieNode<>(parent, new HashSet<>(), label);
+	}
+	/***
+	 * Filter input value, override to custome.
+	 * @param value
+	 * @return
+	 */
+	protected boolean filterValue(T value) {
+		return value != null;
+	}
+	/***
+	 * Import input values.
+	 * @param values input value.
+	 * @return Collections after import.
+	 */
+	protected Collection<T> importValues(Collection<T> values) {
+		return values;
+	}
 
-	private String label;
-	private T id;
-	private WordTrieNode<T> parent;
-	private final Map<String, WordTrieNode<T>> childrens;
+	protected void addValue(T value) {
+		if (this.filterValue(value)) {
+			this.values.add(value);
+		}
+	}
+	
+	protected String label;
+	protected Collection<T> values;
+	protected WordTrieNode<T> parent;
+	protected final Map<String, WordTrieNode<T>> childrens = new HashMap<>();
+	
+	private void initWithValue(WordTrieNode<T> parent, T value, String label) {
+		this.label = label;
+		this.parent = parent;
+		this.values = this.createValues();
+		if (this.values == null) {
+			throw new RuntimeException("Invalid createValues collection");
+		}
+		if (value != null) {
+			this.values.add(value);
+		}
+	}
+	private void initWithCollection(WordTrieNode<T> parent, Collection<T> inputs, String label) {
+		this.label = label;
+		this.parent = parent;
+		Collection<T> outputs = this.importValues(inputs);
+		if (outputs == null) {
+			//createValues and add all element.
+			outputs = this.createValues();
+			if (outputs == null) {
+				throw new RuntimeException("Invalid createValues collection");
+			}
+			this.values = outputs;
+			if (inputs != null) {
+				inputs.stream().filter(this::filterValue).forEach(this.values::add);
+			}
+		} else {
+			this.values = outputs;
+		}
+	}
 }

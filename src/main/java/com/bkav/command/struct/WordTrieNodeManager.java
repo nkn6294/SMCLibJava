@@ -59,7 +59,7 @@ public class WordTrieNodeManager {
 				wordsWithMark.setMark(index);
 				index++;
 			} else {
-				Object valueNode = currentNode.getId();
+				Object valueNode = currentNode.getValue();
 				if (valueNode != null) {
 					String[][] marks = wordsWithMark.getStringFragments();
 					if (marks.length > 0) {
@@ -76,10 +76,10 @@ public class WordTrieNodeManager {
 				}
 			}
 		}
-		if (currentNode.getId() != null) {
+		if (currentNode.getValue() != null) {
 			String[][] marks = wordsWithMark.getStringFragments();
 			if (marks.length > 0) {
-				ResultFind<?> resultFind = new ResultFind<>(currentNode.getId(), marks[0],
+				ResultFind<?> resultFind = new ResultFind<>(currentNode.getValue(), marks[0],
 						wordsWithMark.unMarkStream().toArray(String[]::new));
 				results.add(resultFind);
 				wordsWithMark.reset();
@@ -101,8 +101,8 @@ public class WordTrieNodeManager {
 				wordsWithMark.setMark(index);
 				index++;
 			} else {
-				if (currentNode.getId() != null) {
-					results.add(currentNode.getId());
+				if (currentNode.getValue() != null) {
+					results.add(currentNode.getValue());
 				}
 				wordsWithMark.resetFragment(index);
 				if (currentNode == rootNode) {
@@ -112,8 +112,8 @@ public class WordTrieNodeManager {
 				}
 			}
 		}
-		if (currentNode.getId() != null) {
-			results.add(currentNode.getId());
+		if (currentNode.getValue() != null) {
+			results.add(currentNode.getValue());
 		} else {
 			try {
 				wordsWithMark.resetFragment(words.length - 1);				

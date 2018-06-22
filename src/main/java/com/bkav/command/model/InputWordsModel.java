@@ -8,8 +8,10 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import com.bkav.command.SystemManager;
+import com.bkav.command.common.CommandTextProcesser;
 import com.bkav.command.struct.ResultsProcess;
 import com.bkav.command.struct.WordTrieNode;
+import com.bkav.command.struct.WordTrieNodeDistinctValues;
 
 /***
  * Model build over collection words input (static or dynamic), using build word tree model.
@@ -85,18 +87,62 @@ public abstract class InputWordsModel<T> extends AbstractModel {
 	 */
 	protected WordTrieNode<T> wordTrieNode;
 
+	protected static final <T> WordTrieNode<T> createDefaultWordTrieNode() {
+		return new WordTrieNodeDistinctValues<>();
+	}
+	
+	protected static final CommandTextProcesser getDefaultCommandTextProcesser() {
+		return SystemManager.textProcesser;
+	}
+	
+	protected static final <T> WordTrieNode<T> updateTrieNode(Stream<String[]> stream, Function<String[], T> makeObject, WordTrieNode<T> wordTrieNode) {
+		final WordTrieNode<T> rootNode;
+		if (wordTrieNode == null) {
+			rootNode = createDefaultWordTrieNode();
+		} else {
+			rootNode = wordTrieNode;
+		}
+		stream.forEach(data -> rootNode.addPhrase(data, makeObject.apply(data)));
+		return rootNode;
+	}
+	
 	protected static final <T> WordTrieNode<T> updateTrieNode(Stream<String[]> stream, Function<String[], T> makeObject) {
-		WordTrieNode<T> wordTrieNode = new WordTrieNode<>();
-		stream.forEach(data -> wordTrieNode.addPhrase(data, makeObject.apply(data)));
-		return wordTrieNode;
+		return updateTrieNode(stream, makeObject, null);
 	}
 	
-	protected static final <T> WordTrieNode<T> updateTrieNode(Function<T, String[]> makeObject, Stream<T> stream) {
-		WordTrieNode<T> wordTrieNode = new WordTrieNode<>();
-		stream.forEach(data -> wordTrieNode.addPhrase(makeObject.apply(data), data));
-		return wordTrieNode;
+	protected static final <T> WordTrieNode<T> updateTrieNode(Function<T, String[]> getAlias, Stream<T> stream, WordTrieNode<T> wordTrieNode) {
+		final WordTrieNode<T> rootNode;
+		if (wordTrieNode == null) {
+			rootNode = createDefaultWordTrieNode();
+		} else {
+			rootNode = wordTrieNode;
+		}
+		stream.forEach(data -> rootNode.addPhrase(getAlias.apply(data), data));
+		return rootNode;
 	}
 	
+	protected static final <T> WordTrieNode<T> updateTrieNode(Function<T, String[]> getAlias, Stream<T> stream, CommandTextProcesser textProcesser, WordTrieNode<T> wordTrieNode) {
+		final WordTrieNode<T> rootNode;
+		final CommandTextProcesser commandTextProcesser;
+		if (wordTrieNode == null) {
+			rootNode = createDefaultWordTrieNode();
+		} else {
+			rootNode = wordTrieNode;
+		}
+		if (textProcesser == null) {
+			commandTextProcesser = getDefaultCommandTextProcesser();
+		} else {
+			commandTextProcesser = textProcesser;
+		}
+		stream.forEach(data -> rootNode.addMultiPharase(getAlias.apply(data), data, commandTextProcesser));
+		return rootNode;
+	}
+	protected static final <T> WordTrieNode<T> updateTrieNode(Function<T, String[]> getAlias, Stream<T> stream, CommandTextProcesser textProcesser) {
+		return updateTrieNode(getAlias, stream, textProcesser, null);
+	}
+	protected static final <T> WordTrieNode<T> updateTrieNode(Function<T, String[]> getAlias, Stream<T> stream) {
+		return updateTrieNode(getAlias, stream, null, null);
+	}
 	/***
 	 * Normal input to type can process add to tree model.
 	 * 
