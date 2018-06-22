@@ -1,7 +1,7 @@
 package com.bkav.command.model;
 
 import com.bkav.command.common.Model;
-import com.bkav.struct.ResultsProcess;
+import com.bkav.command.struct.ResultsProcess;
 
 /***
  * Supplier model with before resultsProcess

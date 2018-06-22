@@ -9,8 +9,8 @@ import com.bkav.command.data.SampleData;
 import com.bkav.command.demo.data.HomeTest;
 import com.bkav.command.demo.model.HomeEntityModel;
 import com.bkav.command.model.ModelTest;
+import com.bkav.command.struct.ResultsProcess;
 import com.bkav.command.util.CollectionUtil;
-import com.bkav.struct.ResultsProcess;
 
 public class EntityModelTest extends ModelTest {
 

@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.bkav.command.common.Model;
-import com.bkav.struct.ResultsProcess;
+import com.bkav.command.struct.ResultsProcess;
 
 public abstract class CollectionModel extends AbstractModel implements Iterable<Model> {
 

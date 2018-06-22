@@ -7,9 +7,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.bkav.command.common.Model;
-import com.bkav.struct.ListStringWithMask;
-import com.bkav.struct.MaskConfig;
-import com.bkav.struct.ResultsProcess;
+import com.bkav.command.struct.ListStringWithMask;
+import com.bkav.command.struct.MaskConfig;
+import com.bkav.command.struct.ResultsProcess;
 
 public class ShortTimeModel implements Model {
 

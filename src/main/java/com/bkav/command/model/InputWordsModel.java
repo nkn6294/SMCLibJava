@@ -8,8 +8,8 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import com.bkav.command.SystemManager;
-import com.bkav.struct.ResultsProcess;
-import com.bkav.struct.WordTrieNode;
+import com.bkav.command.struct.ResultsProcess;
+import com.bkav.command.struct.WordTrieNode;
 
 /***
  * Model build over collection words input (static or dynamic), using build word tree model.

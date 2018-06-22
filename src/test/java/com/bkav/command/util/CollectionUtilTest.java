@@ -1,4 +1,4 @@
-package com.bkav.util;
+package com.bkav.command.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

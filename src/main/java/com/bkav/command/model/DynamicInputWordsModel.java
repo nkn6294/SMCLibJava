@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.stream.Stream;
 
 import com.bkav.command.SystemManager;
-import com.bkav.struct.ResultsProcess;
+import com.bkav.command.struct.ResultsProcess;
 
 /***
  * Model is builded from dynamic collection words input with value map for each word.

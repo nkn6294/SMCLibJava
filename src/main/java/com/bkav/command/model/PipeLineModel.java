@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import com.bkav.command.common.Model;
-import com.bkav.struct.ResultsProcess;
+import com.bkav.command.struct.ResultsProcess;
 
 /***
  * Collection with order using for model process.

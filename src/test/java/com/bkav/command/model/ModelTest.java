@@ -13,8 +13,8 @@ import org.junit.Test;
 import com.bkav.command.SystemManager;
 import com.bkav.command.common.Model;
 import com.bkav.command.data.SampleData;
+import com.bkav.command.struct.ResultsProcess;
 import com.bkav.command.util.CollectionUtil;
-import com.bkav.struct.ResultsProcess;
 
 public abstract class ModelTest {
 

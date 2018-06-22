@@ -1,4 +1,4 @@
-package com.bkav.struct;
+package com.bkav.command.struct;
 
 import java.io.StringWriter;
 

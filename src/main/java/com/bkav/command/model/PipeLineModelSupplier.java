@@ -4,7 +4,7 @@ package com.bkav.command.model;
 import java.util.Iterator;
 
 import com.bkav.command.common.Model;
-import com.bkav.struct.ResultsProcess;
+import com.bkav.command.struct.ResultsProcess;
 
 public class PipeLineModelSupplier implements ModelSupplierWithResultProcess {
 

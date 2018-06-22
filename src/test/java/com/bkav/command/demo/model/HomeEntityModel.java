@@ -5,7 +5,7 @@ import com.bkav.command.demo.data.Home;
 import com.bkav.command.model.CollectionModel;
 import com.bkav.command.model.PipeLineModel;
 import com.bkav.command.model.PipeLineModelSupplier;
-import com.bkav.struct.ResultsProcess;
+import com.bkav.command.struct.ResultsProcess;
 
 public class HomeEntityModel extends CollectionModel {
 
