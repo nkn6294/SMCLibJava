@@ -7,8 +7,6 @@ public class ModelData {
 
 	public static final String[] CONTEXTS = {
 		"thời gian",
-		"vị trí",
-		"thiết bị",
 	};
 	
 	public static final String[] ONCE_TIME_REPEAT = {
@@ -110,6 +108,14 @@ public class ModelData {
 		"duy nhất",
 		"chỉ"
 	};
+	public static final String[] REPEATES = {
+			"một lần",//"gio nay ngay mai/tuan sau/...
+			"hàng ngày",
+			"hàng tuần",
+			"hàng tháng",
+			"hàng năm",
+	};
+		
 	
 	/***************************** RULES ******************************/
 	public static final String[] NUMBERS_RULES = {
@@ -136,58 +142,54 @@ public class ModelData {
 	};
 	
 	private ModelData() {}
-}
+	}
+
+	/*
+	-----------------CONTEXT----------------------
+	- VI TRI: PHONG, THIET BI
+	- THOI GIAN: thoi gian hien tai.
+	- TRANG THAI: 
+
+	------------------ENTITY----------------------
 
 
-/*
------------------CONTEXT----------------------
-- VI TRI: PHONG, THIET BI
-- THOI GIAN: thoi gian hien tai.
-- TRANG THAI: 
+	-----------------CONTROL----------------------
+	BAT/TAT
+	MO/DONG
+	KICH HOAT
+	TANG/GIAM [value]
+	THEM/BOT [value]
+	LON/NHO [HON/NHAT]
 
-------------------ENTITY----------------------
-ROOM (area)
-DEVICE  [ROOM]
-FUNCTION [ROOM]
-TIME [chinh xac/tuong doi]
-
-
------------------CONTROL----------------------
-BAT/TAT
-MO/DONG
-KICH HOAT
-TANG/GIAM [value]
-THEM/BOT [value]
-LON/NHO [HON/NHAT]
-
--------------------TIME------------------------
-NGAY/THANG/NAM
-NGAYMAI, TUAN TOI, 2 NGAY TOI, THANG TOI...
-LUC, SAU (sau 1 tieng nua), NUA.
-SANG/TRUA/CHIEU/TOI/DEM
+	-------------------TIME------------------------
+	TIME [chinh xac/tuong doi]
+	NGAY/THANG/NAM
+	NGAYMAI, TUAN TOI, 2 NGAY TOI, THANG TOI...
+	LUC, SAU (sau 1 tieng nua), NUA.
+	SANG/TRUA/CHIEU/TOI/DEM
 
 
------------------UNIT VALUE--------------------------
-- 0/1
-- %
-- KHOANG GIA TRI
+	-----------------UNIT VALUE--------------------------
+	- 0/1
+	- %
+	- KHOANG GIA TRI
 
------------------REPEATE---------------
-- HANG NGAY, HANG TUAN, HANG THANG, HANG NAM
-- MOT LAN (GIO NAY NGAY MAI)
-- BAT DAU/KET THUC - TU/DEN.
+	-----------------REPEATE---------------
+	- HANG NGAY, HANG TUAN, HANG THANG, HANG NAM
+	- MOT LAN (GIO NAY NGAY MAI)
+	- BAT DAU/KET THUC - TU/DEN.
 
-________________________________________________________________________
-COMMAND
-________________________________________________________________________
-[CONTEXT]<CONTROL><ENTITY>[<TIME>]-> [ROOM][KICH-HOAT][FUNCTION]
+	________________________________________________________________________
+	COMMAND
+	________________________________________________________________________
+	[CONTEXT]<CONTROL><ENTITY>[<TIME>]-> [ROOM][KICH-HOAT][FUNCTION]
 
-STATIC DATA
+	STATIC DATA
 
-RARELY CHANGED:
-- LIST DEVICEs, LIST AREAs
-NORMAL CHANGE:
-- FUNCTION
-USUALLY:
-*/ 
+	RARELY CHANGED:
+	- LIST DEVICEs, LIST AREAs
+	NORMAL CHANGE:
+	- FUNCTION
+	USUALLY:
+	*/ 
 

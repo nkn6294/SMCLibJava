@@ -8,12 +8,12 @@ import com.bkav.command.model.StaticInputWordsModel;
 public class DailyTimeRepeatModel extends StaticInputWordsModel<TimeRepeat> {
 
 	public DailyTimeRepeatModel() {
-		super(ModelData.ONCE_TIME_REPEAT);
+		super(ModelData.DAILY_TIME_REPEAT);
 		this.modelName = "ONCE_TIME_REPEAT";
 	}
 
 	@Override
 	protected TimeRepeat getDataFromStringArray(String[] datas) {
-		return TimeRepeat.createFromStringArray(datas, TimeRepeatType.ONCE);
+		return TimeRepeat.createFromStringArray(datas, TimeRepeatType.DAILY);
 	}
 }
