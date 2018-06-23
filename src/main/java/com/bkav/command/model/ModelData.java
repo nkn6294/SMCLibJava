@@ -11,14 +11,26 @@ public class ModelData {
 		"thiết bị",
 	};
 	
-	public static final String[] REPEATES = {
-		"một lần",//"gio nay ngay mai/tuan sau/...
-		"hàng ngày",
-		"hàng tuần",
-		"hàng tháng",
-		"hàng năm",
+	public static final String[] ONCE_TIME_REPEAT = {
+		"một lần",//"gio nay ngay mai/tuan sau/...	
 	};
 	
+	public static final String[] DAILY_TIME_REPEAT = {
+		"hàng ngày",
+	};
+
+	public static final String[] WEEKLY_TIME_REPEAT = {
+		"hàng tuần",
+	};
+
+	public static final String[] MONTHLY_TIME_REPEAT = {
+		"hàng tháng",
+	};
+
+	public static final String[] YEARLY_TIME_REPEAT = {
+		"hàng năm",
+	};
+
 	public static final String[] TIMES = {
 		"bây giờ",
 		"ngày mai",

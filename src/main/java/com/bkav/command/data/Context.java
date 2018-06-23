@@ -7,35 +7,26 @@ import java.time.LocalTime;
  * 
  * @author NamNK
  * 
- * @ Information current: time, room, status.
+ * @ Information current: time, status.
  */
 public class Context {
 	public long getCurrentTime() {
 		return System.currentTimeMillis();
 	}
-	
-	public LocalDate getCurrentDate() {
+
+	public LocalDate getNowDate() {
 		return LocalDate.now();
 	}
-	
+
 	public LocalTime getNow() {
 		return LocalTime.now();
 	}
-	
-	public void setCurrentRoom(String currentRoom) {
-		this.currentRoom = currentRoom;
-	}
-	
-	public String getCurrentRoom() {
-		return this.currentRoom;
-	}
-	
+
 	public String getAMOrPM() {
 		LocalTime time = this.getNow();
 		return time.getHour() >= 12 ? "PM" : "AM";
 	}
-	
-	private String currentRoom;
+
+	protected Context() {
+	}
 }
-
-
