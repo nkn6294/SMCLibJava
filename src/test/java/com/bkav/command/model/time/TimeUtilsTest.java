@@ -45,7 +45,7 @@ public class TimeUtilsTest {
 		for (int index = 0; index < inputs.length; index++) {
 			String output = TimeUtils.timeToNormal(inputs[index]);
 			SystemManager.logger.info(output);
-			assertEquals("_t_(" + expecteds[index] + ")", output);
+			assertEquals("_time(" + expecteds[index] + ")", output);
 		}
 	}
 }

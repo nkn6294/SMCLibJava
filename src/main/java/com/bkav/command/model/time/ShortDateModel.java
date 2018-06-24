@@ -26,7 +26,10 @@ public class ShortDateModel implements Model {
 		wordsWithMark.setConfig(MaskConfig.getDefaultConfig());
 		for (int index = 0; index < words.length; index++) {
 			String word = words[index];
-			LocalDate localTime = this.processDate(word);
+			if (!word.startsWith("_date(")) {
+				continue;
+			}
+			LocalDate localTime = this.processDate(word.replaceFirst("_date\\((.+)\\)", "$1"));
 			if (localTime != null) {
 				currentResult.stringsMark().setMarkWithRelativeIndex(index);
 				currentResult.addValue(localTime);

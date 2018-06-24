@@ -22,14 +22,10 @@ public class TimeUtils {
 		output = boundTime(output);
 		return output;
 	}
-	protected static String boundDate(String input) {
-		String patternString = "(\\+?\\d{1,2}(m|(:\\d{1,2})))";
-		return input.replaceAll(patternString, "_d_($1)");
-	}
-	
+
 	protected static String boundTime(String input) {
 		String patternString = "(\\+?\\d{1,2}(m|(:\\d{1,2})))";
-		return input.replaceAll(patternString, "_t_($1)");
+		return input.replaceAll(patternString, "_time($1)");
 	}
 	
 	protected static String normalRelativeTime(String input) {

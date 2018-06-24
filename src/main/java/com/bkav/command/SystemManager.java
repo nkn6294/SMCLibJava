@@ -9,8 +9,9 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import com.bkav.command.common.CommandTextProcesser;
+import com.bkav.command.common.CommandTextProcesserAdvance;
 import com.bkav.command.common.CommonCommandTextProcesser;
-import com.bkav.command.common.TextProcesserAdvance;
+import com.bkav.command.common.CommonTextProcesserAdvance;
 import com.bkav.command.data.NormalInputUtils;
 import com.bkav.command.data.NumberUtils;
 import com.bkav.command.model.time.DateUtils;
@@ -19,6 +20,16 @@ import com.bkav.command.model.time.TimeUtils;
 public class SystemManager {
 	public static Logger logger;// = null;
 	public static CommandTextProcesser textProcesser;
+	/*
+	 	SimpleFormatter
+	 	 1. format
+		 2. data
+		 3. source
+		 4. logger
+		 5. level
+		 6. message
+		 7. thrown
+	 */
 	public static final String loggingProperties = String.format("%s\r\n%s\r\n%s\r\n%s\r\n%s",
 			"handlers=java.util.logging.ConsoleHandler", 
 			".level=ALL", 
@@ -29,10 +40,11 @@ public class SystemManager {
 		ByteArrayInputStream stream = new ByteArrayInputStream(loggingProperties.getBytes());
 		try {
 			LogManager.getLogManager().readConfiguration(stream);
+			//TODO run all Handler in other thread. ???
 		} catch (Exception e) {
 		}
 		logger = Logger.getLogger(SystemManager.class.getSimpleName());
-		TextProcesserAdvance textProcesserAdvance = new TextProcesserAdvance();
+		CommandTextProcesserAdvance textProcesserAdvance = new CommonTextProcesserAdvance();
 		textProcesserAdvance.addTextProcesser(NormalInputUtils::normalInputSplitChar);
 		textProcesserAdvance.addTextProcesser(String::toLowerCase);
 		textProcesserAdvance.addTextProcesser(NumberUtils::textToNumber);

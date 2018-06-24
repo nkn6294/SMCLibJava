@@ -29,10 +29,10 @@ public class ValueModel implements Model {
 		List<Integer> indexs = new ArrayList<>();
 		for (int index = 0; index < words.length; index++) {
 			String word = words[index];
-			if (!word.startsWith("_v_(")) {
+			if (!word.startsWith("_value(")) {
 				continue;
 			}
-			ValueUnit valueUnit = this.processValueUnit(word.replaceFirst("_v_\\((.+)\\)", "$1"));
+			ValueUnit valueUnit = this.processValueUnit(word.replaceFirst("_value\\((.+)\\)", "$1"));
 			if (valueUnit != null) {
 				indexs.add(index);
 				currentResult.addValue(valueUnit);

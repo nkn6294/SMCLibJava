@@ -60,8 +60,11 @@ public final class StringUtil {
 		}
 		return checkSame(splitString(source), dest);
 	}
+	public static String joinString(String[] words) {
+		return String.join(" ", words);
+	}
     public static String[] splitString(String key) {
-    	return key.split("\\s+");
+    	return key.replaceAll("_", " _") .split("\\s+");
 //        return splitStringToList(key).stream().toArray(String[]::new);
     }
     

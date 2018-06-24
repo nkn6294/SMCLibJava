@@ -2,6 +2,8 @@ package com.bkav.command.model.time;
 
 import static com.bkav.command.util.StringUtil.textProcessByRegex;
 
+import com.bkav.command.SystemManager;
+
 public class DateUtils {
 	public static String dateToNormal(String input) {
 		String output = input;
@@ -9,24 +11,39 @@ public class DateUtils {
 		output = normalDayInMonthUnit(output);
 		output = normalMonthUnit(output);
 		output = normalYearUnit(output);
-		output = normalDayOfWeek(output);
-		output = normalCurrentWeek(output);
-		output = normalNextWeek(output);
-		output = normalWeekInMonth(output);
 		
 		output = longDateToShort(output);
 		output = longDateWithoutYear(output);
 		output = longDateOnlyDayOnMonth(output);
 		
+		output = normalDayOfWeek(output);
+		output = normalCurrentWeek(output);
+		output = normalNextWeek(output);
+		output = normalWeekInMonth(output);
+		output = normalNextDay(output);
+		
+		output = boundDate(output);
 		return output;
 	}
 	
 	protected static String boundDate(String input) {
-		String patternString = "(\\+?\\d{1,2}(m|(:\\d{1,2})))";
-		return input.replaceAll(patternString, "_d_($1)");
+		String output = input;
+		SystemManager.logger.info(output);
+//		String patternString = "(\\+?\\d{1,2}(m|(:\\d{1,2})))";
+		String longDatePatternString = "\\b(\\d{1,2}-\\d{1,2}-\\d{4})\\b";
+//		String specialMarkPatternString = "\\b(_[dew](\\w{1,2}\\s)+)\\b";
+//		String joinMarkPatternString = "\\b((_[dew]\\w{1,2})\\s?)\\b";
+//		output = output.replaceAll(joinMarkPatternString, "$2");
+//		SystemManager.logger.info(">" + output);
+		output = output.replaceAll(longDatePatternString, "_date($1)");
+//		SystemManager.logger.info(">>>" + output);
+//		output = output.replaceAll(specialMarkPatternString, "_date($1)");
+//		SystemManager.logger.info(">>" + output);
+		return output;
 	}
 	protected static String longDateFormatToShort(String input) {
 		String patternString = "\\b(ngày\\s)?((\\d{1,2})[\\-/_](\\d{1,2})[\\-/_](\\d{4}))\\b";
+//		String patternString = "\\b(_d\\s)?((\\d{1,2})[\\-/_](\\d{1,2})[\\-/_](\\d{4}))\\b";
 		return input.replaceAll(patternString, "$3-$4-$5");
 	}
 	protected static String longDateToShort(String input) {
@@ -81,6 +98,10 @@ public class DateUtils {
 	protected static String normalNextWeek(String input) {
 		String patternString = "\\btuần\\s(sau)|(tới)\\b";
 		return input.replaceAll(patternString, "_w+1");
+	}
+	protected static String normalNextDay(String input) {
+		String patternString = "\\bngày\\s(mai)|(tới)\\b";
+		return input.replaceAll(patternString, "_d+1");
 	}
 	protected static String normalWeekInMonth(String input) {
 		String patternString = "\\btuần\\s(\\d)\\s_m(\\d+)\\b";

@@ -1,9 +1,6 @@
 package com.bkav.command.data;
 
 public class CommonData {
-	public static String getSimpleName(String[] datas) {
-		return String.join("_", datas);
-	}
 	
 	public CommonData(String name) {
 		this.name = name;
@@ -21,4 +18,8 @@ public class CommonData {
 
 	protected String id;
 	protected String name;
+	
+	protected static String getSimpleName(String[] datas) {
+		return String.join("_", datas);
+	}
 }

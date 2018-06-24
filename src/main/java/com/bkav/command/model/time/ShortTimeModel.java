@@ -29,10 +29,10 @@ public class ShortTimeModel implements Model {
 		List<Integer> indexs = new ArrayList<>();
 		for (int index = 0; index < words.length; index++) {
 			String word = words[index];
-			if (!word.startsWith("_t_(")) {
+			if (!word.startsWith("_time(")) {
 				continue;
 			}
-			LocalTime localTime = this.processTime(word.replaceFirst("_t_\\((.+)\\)", "$1"));
+			LocalTime localTime = this.processTime(word.replaceFirst("_time\\((.+)\\)", "$1"));
 			if (localTime != null) {
 				indexs.add(index);
 				currentResult.addValue(localTime);
@@ -59,7 +59,6 @@ public class ShortTimeModel implements Model {
 			return null;
 		}
 	}
-//	protected static final String TIME_REGEX_PATTERN = "_t_\\(((\\D)?(\\d{1,2}):(\\d{1,2})?\\))";
 	protected static final String TIME_REGEX_PATTERN = "((\\D)?(\\d{1,2}):(\\d{1,2})?)";
 	protected static Pattern timePattern = Pattern.compile(TIME_REGEX_PATTERN);
 }

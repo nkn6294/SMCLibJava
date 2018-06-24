@@ -1,5 +1,6 @@
 package com.bkav.command.data;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -27,6 +28,14 @@ public class Context {
 		return time.getHour() >= 12 ? "PM" : "AM";
 	}
 
+	public DayOfWeek startOfWeek() {
+		return this.startDayOfWeek;
+	}
+	public void startDayOfWeek(DayOfWeek startDayOfWeek) {
+		this.startDayOfWeek = startDayOfWeek;
+	}
 	protected Context() {
 	}
+	
+	protected DayOfWeek startDayOfWeek = DayOfWeek.MONDAY;
 }

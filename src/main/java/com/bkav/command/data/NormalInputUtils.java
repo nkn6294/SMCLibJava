@@ -26,11 +26,11 @@ public class NormalInputUtils {
 	
 	protected static String celsiusToText(String input) {
 		String patternString = "\\b(\\d+)\\sđộ(\\s[cC])?\\b";
-		return input.replaceAll(patternString, "_v_($1" + ValueUnit.CELSIUS_UNIT_CHAR + ")");
+		return input.replaceAll(patternString, "_value($1" + ValueUnit.CELSIUS_UNIT_CHAR + ")");
 	}
 	
 	protected static String percentToText(String input) {
 		String patternString = "\\b(\\d+)\\sphần\\străm\\b";
-		return input.replaceAll(patternString, "_v_($1" + ValueUnit.PERCENT_UNIT_CHAR + ")");
+		return input.replaceAll(patternString, "_value($1" + ValueUnit.PERCENT_UNIT_CHAR + ")");
 	}
 }
