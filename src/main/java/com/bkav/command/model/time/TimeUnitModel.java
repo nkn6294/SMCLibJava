@@ -1,6 +1,6 @@
 package com.bkav.command.model.time;
 
-import com.bkav.command.data.TimeUnit;
+import com.bkav.command.data.time.TimeUnit;
 import com.bkav.command.model.ModelData;
 import com.bkav.command.model.StaticInputWordsModel;
 

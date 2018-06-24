@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.bkav.command.common.Model;
-import com.bkav.command.data.ValueUnit;
+import com.bkav.command.data.time.ValueUnit;
 import com.bkav.command.struct.ListStringWithMask;
 import com.bkav.command.struct.MaskConfig;
 import com.bkav.command.struct.ResultsProcess;

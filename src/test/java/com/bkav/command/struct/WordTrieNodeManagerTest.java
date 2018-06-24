@@ -14,7 +14,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.bkav.command.SystemManager;
-import com.bkav.command.data.TimeInDay;
+import com.bkav.command.data.time.TimeInDay;
 import com.bkav.command.demo.SampleData;
 import com.bkav.command.demo.data.HomeArea;
 import com.bkav.command.demo.data.HomeDevice;

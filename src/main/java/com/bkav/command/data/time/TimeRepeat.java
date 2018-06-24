@@ -1,9 +1,17 @@
-package com.bkav.command.data;
+package com.bkav.command.data.time;
 
+import com.bkav.command.data.CommonData;
 
 public class TimeRepeat extends CommonData {
-	public static TimeRepeat createFromStringArray(String[] datas, TimeRepeatType typeControl) {
-		return new TimeRepeat(getSimpleName(datas), typeControl);
+	public enum TimeRepeatType {
+		ONCE,
+		DAILY,
+		WEEKLY,
+		MONTHLY,
+		YEARLY
+	}
+	public static TimeRepeat createFromStringArray(String[] datas, TimeRepeatType timeRepeatType) {
+		return new TimeRepeat(getSimpleName(datas), timeRepeatType);
 	}
 
 	public TimeRepeat(String name, TimeRepeatType typeControl) {
@@ -15,13 +23,13 @@ public class TimeRepeat extends CommonData {
 	}
 
 
-	public TimeRepeatType setTimeRepeatType(TimeRepeatType timeRepeatType) {
+	public TimeRepeatType timeRepeatType(TimeRepeatType timeRepeatType) {
 		this.timeRepeatType = timeRepeatType;
 		return this.timeRepeatType;
 	}
 
 
-	public TimeRepeatType getTimeRepeatType() {
+	public TimeRepeatType timeRepeatType() {
 		return this.timeRepeatType;
 	}
 

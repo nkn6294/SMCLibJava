@@ -3,6 +3,8 @@ package com.bkav.command.data;
 import java.text.Normalizer;
 import java.util.regex.Pattern;
 
+import com.bkav.command.data.time.ValueUnit;
+
 public class NormalInputUtils {
 
 	public static String deAccentConvert(String input) {

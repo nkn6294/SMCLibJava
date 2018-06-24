@@ -1,7 +1,7 @@
 package com.bkav.command.model.time.repeat;
 
-import com.bkav.command.data.TimeRepeat;
-import com.bkav.command.data.TimeRepeatType;
+import com.bkav.command.data.time.TimeRepeat;
+import com.bkav.command.data.time.TimeRepeat.TimeRepeatType;
 import com.bkav.command.model.ModelData;
 import com.bkav.command.model.StaticInputWordsModel;
 
