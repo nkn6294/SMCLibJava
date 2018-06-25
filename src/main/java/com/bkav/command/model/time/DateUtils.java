@@ -2,8 +2,6 @@ package com.bkav.command.model.time;
 
 import static com.bkav.command.util.StringUtil.textProcessByRegex;
 
-import com.bkav.command.SystemManager;
-
 public class DateUtils {
 	public static String dateToNormal(String input) {
 		String output = input;
@@ -28,7 +26,7 @@ public class DateUtils {
 	
 	protected static String boundDate(String input) {
 		String output = input;
-		SystemManager.logger.info(output);
+//		SystemManager.logger.info(output);
 //		String patternString = "(\\+?\\d{1,2}(m|(:\\d{1,2})))";
 		String longDatePatternString = "\\b(\\d{1,2}-\\d{1,2}-\\d{4})\\b";
 //		String specialMarkPatternString = "\\b(_[dew](\\w{1,2}\\s)+)\\b";
