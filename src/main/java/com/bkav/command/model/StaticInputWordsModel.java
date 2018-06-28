@@ -6,6 +6,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import com.bkav.command.SystemManager;
+import com.bkav.command.common.ModelProcessMode;
 import com.bkav.command.struct.ResultsProcess;
 
 /***
@@ -41,7 +42,8 @@ public abstract class StaticInputWordsModel<T> extends InputWordsModel<T> {
 	}
 	@Override
 	public ResultsProcess process(ResultsProcess input) {
-		return this.wordTrieNode.findPharases(input);
+		boolean isMarkedOrigin = this.modelConfig.getModelProcessMode() == ModelProcessMode.PROCESS_AND_MARKED;
+		return this.wordTrieNode.findPharases(input, isMarkedOrigin);
 	}
 
 	/***

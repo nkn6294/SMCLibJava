@@ -1,9 +1,12 @@
 package com.bkav.command.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 import com.bkav.command.SystemManager;
+import com.bkav.command.common.ModelProcessMode;
 import com.bkav.command.struct.ResultsProcess;
 
 /***
@@ -33,13 +36,17 @@ public abstract class ParseStringModel<T> extends AbstractModel {
 	@Override
 	public ResultsProcess process(ResultsProcess input) {
 		String[] remains = input.remains();
+		List<Integer> indexs = new ArrayList<>();
 		for (int index = 0; index < remains.length; index++) {
 			String word = remains[index];
 			T data = this.createData(word);
 			if (data != null) {
-				input.stringsMark().setMarkWithRelativeIndex(index);
+				indexs.add(index);
 				input.addValue(data);
 			}
+		}
+		if (this.modelConfig.getModelProcessMode() == ModelProcessMode.PROCESS_AND_MARKED) {
+			input.stringsMark().setMarkWithRelativeIndex(indexs);			
 		}
 		return input;
 	}

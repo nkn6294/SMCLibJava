@@ -5,19 +5,15 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.bkav.command.common.Model;
+import com.bkav.command.common.ModelProcessMode;
 import com.bkav.command.data.time.ValueUnit;
+import com.bkav.command.model.AbstractModel;
 import com.bkav.command.struct.ListStringWithMask;
 import com.bkav.command.struct.MaskConfig;
 import com.bkav.command.struct.ResultsProcess;
 
-public class ValueModel implements Model {
+public class ValueModel extends AbstractModel {
 
-	@Override
-	public String getModelName() {
-		return "VALUE_MODEL";
-	}
-	
 	@Override
 	public ResultsProcess process(ResultsProcess currentResult) {
 		String[] words = currentResult.remains();
@@ -38,8 +34,18 @@ public class ValueModel implements Model {
 				currentResult.addValue(valueUnit);
 			}
 		}
-		currentResult.stringsMark().setMarkWithRelativeIndex(indexs);
+		if (this.modelConfig.getModelProcessMode() == ModelProcessMode.PROCESS_AND_MARKED) {
+			currentResult.stringsMark().setMarkWithRelativeIndex(indexs);			
+		}
 		return currentResult;
+	}
+	protected static final String REGEX_PATTERN = "(\\D)?(\\d+)(.+)";
+	protected static Pattern pattern = Pattern.compile(REGEX_PATTERN);
+	
+	@Override
+	protected void init() {
+		super.init();
+		this.modelName = "VALUE_MODEL";
 	}
 	
 	protected ValueUnit processValueUnit(String data) {
@@ -55,6 +61,4 @@ public class ValueModel implements Model {
 			return null;
 		}
 	}
-	protected static final String REGEX_PATTERN = "(\\D)?(\\d+)(.+)";
-	protected static Pattern pattern = Pattern.compile(REGEX_PATTERN);
 }

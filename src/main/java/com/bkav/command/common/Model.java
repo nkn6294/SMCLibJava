@@ -36,4 +36,10 @@ public interface Model {
     		.map(this::process)
     		.forEach(Object::toString);
     }
+    
+    default public ModelConfig getModelConfig() {
+    	return new ModelConfig();
+    }
+    
+    public void setModelConfig(ModelConfig mode);
 }

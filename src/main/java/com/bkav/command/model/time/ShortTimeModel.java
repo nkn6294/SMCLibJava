@@ -6,18 +6,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.bkav.command.common.Model;
+import com.bkav.command.common.ModelProcessMode;
+import com.bkav.command.model.AbstractModel;
 import com.bkav.command.struct.ListStringWithMask;
 import com.bkav.command.struct.MaskConfig;
 import com.bkav.command.struct.ResultsProcess;
 
-public class ShortTimeModel implements Model {
+public class ShortTimeModel extends AbstractModel {
 
-	@Override
-	public String getModelName() {
-		return "SHORT_TIME_MODEL";
-	}
-	
 	@Override
 	public ResultsProcess process(ResultsProcess currentResult) {
 		String[] words = currentResult.remains();
@@ -38,8 +34,18 @@ public class ShortTimeModel implements Model {
 				currentResult.addValue(localTime);
 			}
 		}
-		currentResult.stringsMark().setMarkWithRelativeIndex(indexs);
+		if (this.modelConfig.getModelProcessMode() == ModelProcessMode.PROCESS_AND_MARKED) {
+			currentResult.stringsMark().setMarkWithRelativeIndex(indexs);			
+		}
 		return currentResult;
+	}
+	protected static final String TIME_REGEX_PATTERN = "((\\D)?(\\d{1,2}):(\\d{1,2})?)";
+	protected static Pattern timePattern = Pattern.compile(TIME_REGEX_PATTERN);
+
+	@Override
+	protected void init() {
+		super.init();
+		this.modelName = "SHORT_TIME_MODEL";
 	}
 	
 	protected LocalTime processTime(String data) {
@@ -59,6 +65,4 @@ public class ShortTimeModel implements Model {
 			return null;
 		}
 	}
-	protected static final String TIME_REGEX_PATTERN = "((\\D)?(\\d{1,2}):(\\d{1,2})?)";
-	protected static Pattern timePattern = Pattern.compile(TIME_REGEX_PATTERN);
 }

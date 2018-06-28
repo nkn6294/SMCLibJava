@@ -156,7 +156,7 @@ public class WordTrieNode<T> {
 		return foundPharases;
 	}
 
-	public ResultsProcess findPharases(ResultsProcess currentResult) {
+	public ResultsProcess findPharases(ResultsProcess currentResult, boolean isMarkedOrigin) {
 		WordTrieNode<T> currentNode = this;
 		String[] words = currentResult.remains();
 		if (words.length == 0) {
@@ -189,7 +189,9 @@ public class WordTrieNode<T> {
 			wordsWithMark.setMark(indexs);
 		}
 		indexs.clear();
-		currentResult.stringsMark().setMarkWithRelativeIndex(wordsWithMark.markIndexs());
+		if (isMarkedOrigin) {
+			currentResult.stringsMark().setMarkWithRelativeIndex(wordsWithMark.markIndexs());			
+		}
 		return currentResult;
 	}
 	

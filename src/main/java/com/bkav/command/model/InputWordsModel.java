@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 
 import com.bkav.command.SystemManager;
 import com.bkav.command.common.CommandTextProcesser;
+import com.bkav.command.common.ModelProcessMode;
 import com.bkav.command.struct.ResultsProcess;
 import com.bkav.command.struct.WordTrieNode;
 import com.bkav.command.struct.WordTrieNodeDistinctValues;
@@ -66,7 +67,8 @@ public abstract class InputWordsModel<T> extends AbstractModel {
 
 	@Override
 	public ResultsProcess process(ResultsProcess input) {
-		return this.wordTrieNode.findPharases(input);
+		boolean isMarkedOrigin = this.modelConfig.getModelProcessMode() == ModelProcessMode.PROCESS_AND_MARKED;
+		return this.wordTrieNode.findPharases(input, isMarkedOrigin);
 	}
 
 	public WordTrieNode<T> getWordTrieNode() {
