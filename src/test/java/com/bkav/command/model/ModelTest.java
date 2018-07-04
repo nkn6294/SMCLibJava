@@ -2,8 +2,6 @@ package com.bkav.command.model;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -15,6 +13,7 @@ import com.bkav.command.common.Model;
 import com.bkav.command.demo.SampleData;
 import com.bkav.command.struct.ResultsProcess;
 import com.bkav.command.util.CollectionUtil;
+import com.bkav.command.util.StringUtil;
 
 public abstract class ModelTest {
 
@@ -41,14 +40,14 @@ public abstract class ModelTest {
 		if (this.model == null || this.commands == null) {
 			return;
 		}
-		Arrays.stream(this.commands).forEach(command -> {
-			String commandString = String.join(" ", command);
+		for (String[] command : this.commands) {
+			String commandString = StringUtil.joinString(command);
 			SystemManager.logger.info("<" + commandString + ">");
 			ResultsProcess result = new ResultsProcess(command);
 			result = this.model.process(result);
 //			this.model.test(command);
-			SystemManager.logger.info(result.toString());
-		});
+			SystemManager.logger.info(result.toString());			
+		}
 		assertTrue(true); // TODO TestModel model
 	}
 

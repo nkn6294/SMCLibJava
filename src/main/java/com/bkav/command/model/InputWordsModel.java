@@ -1,67 +1,67 @@
 package com.bkav.command.model;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.function.Function;
-import java.util.stream.Stream;
 
 import com.bkav.command.SystemManager;
 import com.bkav.command.common.CommandTextProcesser;
+import com.bkav.command.common.Function;
 import com.bkav.command.common.ModelProcessMode;
 import com.bkav.command.struct.ResultsProcess;
 import com.bkav.command.struct.WordTrieNode;
 import com.bkav.command.struct.WordTrieNodeDistinctValues;
 
 /***
- * Model build over collection words input (static or dynamic), using build word tree model.
+ * Model build over collection words input (static or dynamic), using build word
+ * tree model.
  * 
  * Example: array word input {den, dieu hoa, ...} map to {(Device 'den'),
  * (Device 'dieu hoa')}
  * 
- * @param <T> type of value map for each word.
+ * @param <T>  type of value map for each word.
  */
 public abstract class InputWordsModel<T> extends AbstractModel {
 
-	public static final Comparator<String[]> DEFAULT_STRING_ARRAY_COMPARATOR = (array1, array2) -> {
-		if (array1.length != array2.length) {
-			return array1.length > array2.length ? 1 : -1;
-		}
-		for (int index = 0; index < array1.length; index++) {
-			int compare = array1[index].compareTo(array2[index]);
-			if (compare != 0) {
-				return compare;				
-			}
-		}
-		return 0;
-	};
-	
-	public static final Comparator<Collection<String>> DEFAULT_COLLECTION_STRING_COMPARATOR = (array1, array2) -> {
-		if (array1.size() != array2.size()) {
-			return array1.size() > array2.size() ? 1 : -1;
-		}
-		Iterator<String> iterator1 = array1.iterator();
-		Iterator<String> iterator2 = array2.iterator();
-		while(iterator1.hasNext() && iterator2.hasNext()) {
-			int compare = iterator1.next().compareTo(iterator2.next());
-			if (compare != 0) {
-				return compare;
-			}			
-		}
-		return 0;
-	};
-	@Override
-	public void test(String[]... commands) {
-		Arrays.stream(commands)
-				.forEach(command -> this.wordTrieNode.findPharases(command).stream()
-						.map(Object::toString)
-						.forEach(SystemManager.logger::info));
-	}
+	public static final Comparator<String[]> DEFAULT_STRING_ARRAY_COMPARATOR = new Comparator<String[]>() {
 
-	public InputWordsModel(Stream<? extends Object> stream) {
+		@Override
+		public int compare(String[] array1, String[] array2) {
+			if (array1.length != array2.length) {
+				return array1.length > array2.length ? 1 : -1;
+			}
+			for (int index = 0; index < array1.length; index++) {
+				int compare = array1[index].compareTo(array2[index]);
+				if (compare != 0) {
+					return compare;
+				}
+			}
+			return 0;
+		}
+	};
+
+	public static final Comparator<Collection<String>> DEFAULT_COLLECTION_STRING_COMPARATOR = new Comparator<Collection<String>>() {
+
+		@Override
+		public int compare(Collection<String> array1, Collection<String> array2) {
+			if (array1.size() != array2.size()) {
+				return array1.size() > array2.size() ? 1 : -1;
+			}
+			Iterator<String> iterator1 = array1.iterator();
+			Iterator<String> iterator2 = array2.iterator();
+			while (iterator1.hasNext() && iterator2.hasNext()) {
+				int compare = iterator1.next().compareTo(iterator2.next());
+				if (compare != 0) {
+					return compare;
+				}
+			}
+			return 0;
+		}
+	};
+
+	public InputWordsModel(Collection<? extends Object> data) {
 		super();
-		this.normalInputData(stream);
+		this.normalInputData(data);
 		this.createModelTree();
 	}
 
@@ -76,11 +76,11 @@ public abstract class InputWordsModel<T> extends AbstractModel {
 	}
 
 	/***
-	 * Normal input data with {@link #normalInputData(Object)} and
-	 * reset Tree Model with {@link #createModelTree()}.
+	 * Normal input data with {@link #normalInputData(Object)} and reset Tree Model
+	 * with {@link #createModelTree()}.
 	 */
 	public void reloadModel(Collection<Object> data) {
-		this.normalInputData(data.stream());
+		this.normalInputData(data);
 		this.createModelTree();
 	}
 
@@ -92,38 +92,46 @@ public abstract class InputWordsModel<T> extends AbstractModel {
 	protected static final <T> WordTrieNode<T> createDefaultWordTrieNode() {
 		return new WordTrieNodeDistinctValues<>();
 	}
-	
+
 	protected static final CommandTextProcesser getDefaultCommandTextProcesser() {
 		return SystemManager.textProcesser;
 	}
-	
-	protected static final <T> WordTrieNode<T> updateTrieNode(Stream<String[]> stream, Function<String[], T> makeObject, WordTrieNode<T> wordTrieNode) {
+
+	protected static final <T> WordTrieNode<T> updateTrieNode(Collection<String[]> datas,
+			Function<String[], T> makeObject, WordTrieNode<T> wordTrieNode) {
 		final WordTrieNode<T> rootNode;
 		if (wordTrieNode == null) {
 			rootNode = createDefaultWordTrieNode();
 		} else {
 			rootNode = wordTrieNode;
 		}
-		stream.forEach(data -> rootNode.addPhrase(data, makeObject.apply(data)));
+		for (String[] data : datas) {
+			rootNode.addPhrase(data, makeObject.apply(data));
+		}
 		return rootNode;
 	}
-	
-	protected static final <T> WordTrieNode<T> updateTrieNode(Stream<String[]> stream, Function<String[], T> makeObject) {
+
+	protected static final <T> WordTrieNode<T> updateTrieNode(Collection<String[]> stream,
+			Function<String[], T> makeObject) {
 		return updateTrieNode(stream, makeObject, null);
 	}
-	
-	protected static final <T> WordTrieNode<T> updateTrieNode(Function<T, String[]> getAlias, Stream<T> stream, WordTrieNode<T> wordTrieNode) {
+
+	protected static final <T> WordTrieNode<T> updateTrieNode(Function<T, String[]> getAlias, Collection<T> stream,
+			WordTrieNode<T> wordTrieNode) {
 		final WordTrieNode<T> rootNode;
 		if (wordTrieNode == null) {
 			rootNode = createDefaultWordTrieNode();
 		} else {
 			rootNode = wordTrieNode;
 		}
-		stream.forEach(data -> rootNode.addPhrase(getAlias.apply(data), data));
+		for (T data : stream) {
+			rootNode.addPhrase(getAlias.apply(data), data);
+		}
 		return rootNode;
 	}
-	
-	protected static final <T> WordTrieNode<T> updateTrieNode(Function<T, String[]> getAlias, Stream<T> stream, CommandTextProcesser textProcesser, WordTrieNode<T> wordTrieNode) {
+
+	protected static final <T> WordTrieNode<T> updateTrieNode(Function<T, String[]> getAlias, Collection<T> datas,
+			CommandTextProcesser textProcesser, WordTrieNode<T> wordTrieNode) {
 		final WordTrieNode<T> rootNode;
 		final CommandTextProcesser commandTextProcesser;
 		if (wordTrieNode == null) {
@@ -136,21 +144,27 @@ public abstract class InputWordsModel<T> extends AbstractModel {
 		} else {
 			commandTextProcesser = textProcesser;
 		}
-		stream.forEach(data -> rootNode.addMultiPharase(getAlias.apply(data), data, commandTextProcesser));
+		for (T data : datas) {
+			rootNode.addMultiPharase(getAlias.apply(data), data, commandTextProcesser);
+		}
 		return rootNode;
 	}
-	protected static final <T> WordTrieNode<T> updateTrieNode(Function<T, String[]> getAlias, Stream<T> stream, CommandTextProcesser textProcesser) {
-		return updateTrieNode(getAlias, stream, textProcesser, null);
+
+	protected static final <T> WordTrieNode<T> updateTrieNode(Function<T, String[]> getAlias, Collection<T> datas,
+			CommandTextProcesser textProcesser) {
+		return updateTrieNode(getAlias, datas, textProcesser, null);
 	}
-	protected static final <T> WordTrieNode<T> updateTrieNode(Function<T, String[]> getAlias, Stream<T> stream) {
-		return updateTrieNode(getAlias, stream, null, null);
+
+	protected static final <T> WordTrieNode<T> updateTrieNode(Function<T, String[]> getAlias, Collection<T> datas) {
+		return updateTrieNode(getAlias, datas, null, null);
 	}
+
 	/***
 	 * Normal input to type can process add to tree model.
 	 * 
 	 * Implement this method with new variable inner sub class.
 	 */
-	protected abstract void normalInputData(Stream<? extends Object> stream);
+	protected abstract void normalInputData(Collection<? extends Object> data);
 
 	/***
 	 * Create Model tree from input (static or dynamic)

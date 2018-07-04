@@ -3,6 +3,7 @@ package com.bkav.command.model;
 import java.util.Collection;
 
 import com.bkav.command.data.StringWithTypeData;
+import com.bkav.command.util.StringUtil;
 
 public class StringMatchModel extends StaticInputWordsModel<StringWithTypeData> {
 
@@ -42,7 +43,7 @@ public class StringMatchModel extends StaticInputWordsModel<StringWithTypeData> 
 	}
 
 	protected String createString(String[] datas) {
-		return String.join(" ", datas);
+		return StringUtil.joinString(datas);
 	}
 
 	protected StringWithTypeData creatStringWithData(String datas) {

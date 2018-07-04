@@ -2,8 +2,8 @@ package com.bkav.command.struct;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.function.Consumer;
-import java.util.stream.IntStream;
+
+import com.bkav.command.common.Consumer;
 
 public abstract class MaskWrapper implements Mask {
 
@@ -81,11 +81,6 @@ public abstract class MaskWrapper implements Mask {
 	}
 
 	@Override
-	public IntStream markIndexStream() {
-		return this.mash.markIndexStream();
-	}
-
-	@Override
 	public Iterator<Integer> markInterator() {
 		return this.mash.markInterator();
 	}
@@ -93,11 +88,6 @@ public abstract class MaskWrapper implements Mask {
 	@Override
 	public int[] unMarkIndexs() {
 		return this.mash.unMarkIndexs();
-	}
-
-	@Override
-	public IntStream unMarkIndexStream() {
-		return this.mash.unMarkIndexStream();
 	}
 
 	@Override

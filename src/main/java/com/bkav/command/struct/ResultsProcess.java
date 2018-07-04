@@ -1,11 +1,9 @@
 package com.bkav.command.struct;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 /***
  * Wrapper String array input with value.
  */
@@ -13,12 +11,19 @@ public class ResultsProcess implements Iterable<Object> {
 
 	@SafeVarargs
 	public ResultsProcess(String[] remains, Object... values) {
-		this.values = Arrays.stream(values).collect(Collectors.toList());
+		this.values = new ArrayList<>();
+		for (int index = 0; index < values.length; index++) {
+			this.values.add(values[index]);
+		}
 		this.stringsMark = new ListStringWithMask(remains);
 	}
 
 	public ResultsProcess(String[] remains, Collection<Object> values) {
-		this.values = values.stream().collect(Collectors.toList());
+		this.values = new ArrayList<>();
+		Iterator<Object> iterator = values.iterator();
+		while (iterator.hasNext()) {
+			this.values.add(iterator.next());			
+		}
 		this.stringsMark = new ListStringWithMask(remains);
 	}
 	
@@ -48,10 +53,6 @@ public class ResultsProcess implements Iterable<Object> {
 	
 	public String[] strings() {
 		return this.stringsMark.datas();
-	}
-	
-	public Stream<Object> stream() {
-		return this.values.stream();
 	}
 
 	public ListStringWithMask stringsMark() {

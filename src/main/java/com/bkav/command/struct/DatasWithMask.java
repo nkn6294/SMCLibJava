@@ -6,12 +6,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.function.IntConsumer;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
-import com.bkav.command.util.StreamUtils;
 
 public abstract class DatasWithMask<T> extends MaskWrapper implements Iterable<T> {
 	
@@ -37,7 +31,9 @@ public abstract class DatasWithMask<T> extends MaskWrapper implements Iterable<T
 				temp.add(this.datas[index]);
 			} else if (!temp.isEmpty()) {
 				List<T> item = new ArrayList<>();
-				temp.forEach(item::add);
+				for (T t : temp) {
+					item.add(t);
+				}
 				result.add(item);
 				temp.clear();
 			}
@@ -53,7 +49,9 @@ public abstract class DatasWithMask<T> extends MaskWrapper implements Iterable<T
 				temp.add(this.datas[index]);
 			} else if (!temp.isEmpty()) {
 				List<T> item = new ArrayList<>();
-				temp.forEach(item::add);
+				for (T t : temp) {
+					item.add(t);
+				}
 				result.add(item);
 				temp.clear();
 			}
@@ -62,13 +60,11 @@ public abstract class DatasWithMask<T> extends MaskWrapper implements Iterable<T
 	}
 	public List<T> getFragment(int containIndex) {
 		this.checkValidIndex(containIndex);
-		return Arrays.stream(this.getFragmentIndex(containIndex))
-				.mapToObj(this::get).collect(Collectors.toList());//or using with consumer runtime
-	}
-
-	
-	public int[] getFragmentIndexWithIntConsumer(int containIndex, IntConsumer consumer) { 
-		return this.getFragmentIndex(containIndex, consumer::accept);
+		List<T> output = new ArrayList<>();
+		for (int index : this.getFragmentIndex(containIndex)) {
+			output.add(this.get(index));
+		}
+		return output;//or using with consumer runtime
 	}
 
 	public T[] datas() {
@@ -76,47 +72,64 @@ public abstract class DatasWithMask<T> extends MaskWrapper implements Iterable<T
 	}
 
 	public List<T> marksValue() {
-		return this.markStream().collect(Collectors.toList());
+		List<T> output = new ArrayList<>();
+		for (int index : this.markIndexs()) {
+			output.add(this.get(index));
+		}
+		return output;
 	}
 	
 	public List<T> unMarkValue() {
-		return this.unMarkStream().collect(Collectors.toList());
+		List<T> output = new ArrayList<>();
+		for (int index : this.unMarkIndexs()) {
+			output.add(this.get(index));
+		}
+		return output;
 	}
 	public String[] markString() {
-		return this.markStream().toArray(String[]::new);
+		List<T> marksValue = this.marksValue();
+		String[] output = new String[marksValue.size()];
+		for (int index = 0; index < output.length; index++) {
+			output[index] = marksValue.get(index).toString();
+		}
+		return output;
 	}
 	public String[] unMarkString() {
-		return this.unMarkStream().map(Object::toString).toArray(String[]::new);
+		List<T> marksValue = this.unMarkValue();
+		String[] output = new String[marksValue.size()];
+		for (int index = 0; index < output.length; index++) {
+			output[index] = marksValue.get(index).toString();
+		}
+		return output;
 	}
-	public Stream<T> stream() {
-		return StreamUtils.createStream(new InnerIterator());
-	}
-
-	public Stream<T> markStream() {
-		return this.markIndexStream().mapToObj(this::get);
-	}
-
-	public Stream<T> unMarkStream() {
-		return this.unMarkIndexStream().mapToObj(this::get);
-	}
-
 	@Override
 	public Iterator<T> iterator() {
 //		return new InnerIterator();
-		return this.unMarkStream().iterator();
+		return this.unMarkValue().iterator();
 	}
 
 	public List<T> getFragmentStartAt(int startIndexInclusive) {
 		int endIndexInclusive = this.getFragmentEndIndexStartAt(startIndexInclusive);
-		return endIndexInclusive < minIndex() ? Collections.emptyList() :
-			IntStream.rangeClosed(startIndexInclusive, endIndexInclusive)
-				.mapToObj(this::get).collect(Collectors.toList());
+		if (endIndexInclusive < minIndex()) {
+			return Collections.emptyList();
+		}
+		List<T> output = new ArrayList<>();
+		for (int index = startIndexInclusive; index <= endIndexInclusive; index++) {
+			output.add(this.get(index));
+		}
+		return output;
 	}
 
 	public List<T> getFragmenEndAt(int endIndexInclusive) {
 		int startIndexInclusive = this.getFragmenStartIndextEndAt(endIndexInclusive);
-		return startIndexInclusive < minIndex() ? Collections.emptyList() : 
-			IntStream.range(startIndexInclusive, endIndexInclusive).mapToObj(this::get).collect(Collectors.toList());
+		if (startIndexInclusive < minIndex()) {
+			return Collections.emptyList(); 
+		}
+		List<T> output = new ArrayList<>();
+		for (int index = startIndexInclusive; index < endIndexInclusive; index++) {
+			output.add(this.get(index));
+		}
+		return output;
 	}
 	
 	@Override
@@ -170,6 +183,10 @@ public abstract class DatasWithMask<T> extends MaskWrapper implements Iterable<T
 				}
 			}
 			return -1;
+		}
+
+		@Override
+		public void remove() {
 		}
 	}
 }

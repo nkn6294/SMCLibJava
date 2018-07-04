@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -44,23 +43,15 @@ public class ListStringWithMarkTest {
 
 	@Test
 	public final void testGet() {
-		IntStream.range(0, this.sample.length).forEach(index -> {
+		for (int index = 0; index < this.sample.length; index++) {
 			assertEquals(this.sample[index], this.listStringWithMark.get(index));
-		});
-	}
-
-	@Test
-	public final void testStream() {
-		this.listStringWithMark.setMark(1, 3, 5, 7, 9);
-		String[] output = this.listStringWithMark.stream().toArray(String[]::new);
-		String[] expected = { "0", "2", "4", "6", "8" };
-		assertArrayEquals(expected, output);
+		}
 	}
 
 	@Test
 	public final void testMarkStream() {
 		this.listStringWithMark.setMark(1, 3, 5, 7, 9);
-		String[] output = this.listStringWithMark.markStream().toArray(String[]::new);
+		String[] output = this.listStringWithMark.markString();
 		String[] expected = { "1", "3", "5", "7", "9" };
 		assertArrayEquals(expected, output);
 	}
@@ -68,7 +59,7 @@ public class ListStringWithMarkTest {
 	@Test
 	public final void testUnMarkStream() {
 		this.listStringWithMark.setMark(1, 3, 5, 7, 9);
-		String[] output = this.listStringWithMark.unMarkStream().toArray(String[]::new);
+		String[] output = this.listStringWithMark.unMarkString();
 		String[] expected = { "0", "2", "4", "6", "8" };
 		assertArrayEquals(expected, output);
 	}
@@ -85,7 +76,9 @@ public class ListStringWithMarkTest {
 	@Test
 	public final void testIterator() {
 		List<String> outputList = new ArrayList<>();
-		this.listStringWithMark.forEach(outputList::add);
+		for (String word : this.listStringWithMark) {
+			outputList.add(word);
+		}
 		String[] output = outputList.toArray(new String[outputList.size()]);
 		assertArrayEquals(this.listStringWithMark.datas(), output);
 	}
@@ -95,7 +88,9 @@ public class ListStringWithMarkTest {
 		String[] expected = { "1", "3", "5", "7", "9" };
 		List<String> expectedList = new ArrayList<>();
 		this.listStringWithMark.setMark(0, 2, 4, 6, 8);
-		this.listStringWithMark.forEach(expectedList::add);
+		for (String word : this.listStringWithMark) {
+			expectedList.add(word);
+		}
 		String[] output = expectedList.toArray(new String[expectedList.size()]);
 		assertArrayEquals(expected, output);
 	}

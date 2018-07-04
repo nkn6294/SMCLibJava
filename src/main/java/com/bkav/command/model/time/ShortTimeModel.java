@@ -1,10 +1,11 @@
 package com.bkav.command.model.time;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.joda.time.LocalTime;
 
 import com.bkav.command.common.ModelProcessMode;
 import com.bkav.command.model.AbstractModel;
@@ -60,7 +61,7 @@ public class ShortTimeModel extends AbstractModel {
 			if ("+".equals(param)) {
 				return LocalTime.now().plusHours(hour).plusMinutes(minute);
 			}
-			return LocalTime.of(hour, minute);
+			return new LocalTime(hour, minute);
 		} catch (Exception ex) {
 			return null;
 		}

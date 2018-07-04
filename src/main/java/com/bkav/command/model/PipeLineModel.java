@@ -1,12 +1,10 @@
 package com.bkav.command.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import com.bkav.command.common.Model;
 import com.bkav.command.struct.ResultsProcess;
@@ -23,7 +21,9 @@ public class PipeLineModel implements Iterable<Model> {
 
 	public PipeLineModel(Model... models) {
 		this.models = new LinkedList<>();
-		Arrays.stream(models).forEach(this.models::add);
+		for (Model model : models) {
+			this.models.add(model);
+		}
 	}
 
 	public void addLast(Model model) {
@@ -31,15 +31,23 @@ public class PipeLineModel implements Iterable<Model> {
 	}
 
 	public void addLast(Model... models) {
-		Arrays.stream(models).forEach(this.models::addLast);
+		for (Model model : models) {
+			this.models.addLast(model);
+		}
 	}
 
 	public void addFirst(Model... models) {
-		Arrays.stream(models).forEach(this.models::addFirst);
+		for (Model model : models) {
+			this.models.addFirst(model);
+		}
 	}
 
 	public String[] getModelsString() {
-		return this.models.stream().map(Model::getModelName).toArray(String[]::new);
+		String[] names = new String[this.models.size()];
+		for (int index = 0; index < this.models.size(); index++) {
+			names[index] = this.models.get(index).getModelName();
+		}
+		return names;
 	}
 
 	public ResultsProcess process(ResultsProcess input) {
@@ -64,10 +72,6 @@ public class PipeLineModel implements Iterable<Model> {
 
 	public void remove(Model model) {
 		this.models.remove(model);
-	}
-
-	public Stream<Model> stream() {
-		return this.models.stream();
 	}
 
 	@Override

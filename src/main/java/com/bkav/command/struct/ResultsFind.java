@@ -1,22 +1,28 @@
 package com.bkav.command.struct;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ResultsFind<T> implements Iterable<T> {
 
 	@SafeVarargs
 	public ResultsFind(String[] remains, T... values) {
-		this.values = Arrays.stream(values).collect(Collectors.toList());
+		this.values = new ArrayList<>();
+		for (int index = 0; index < remains.length; index++) {
+			this.values.add(values[index]);
+		}
 		this.remains = remains;
 	}
 
 	public ResultsFind(String[] remains, Collection<T> values) {
-		this.values = values.stream().collect(Collectors.toList());
+		this.values = new ArrayList<>();
+		Iterator<T> iterator = values.iterator();
+		while (iterator.hasNext()) {
+			this.values.add(iterator.next());
+		}
 		this.remains = remains;
 	}
 	
@@ -46,10 +52,6 @@ public class ResultsFind<T> implements Iterable<T> {
 	
 	public void setRemains(String[] remains) {
 		this.remains = remains;
-	}
-
-	public Stream<T> stream() {
-		return this.values.stream();
 	}
 
 	@Override

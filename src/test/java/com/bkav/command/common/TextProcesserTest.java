@@ -1,9 +1,6 @@
 package com.bkav.command.common;
 
 import static org.junit.Assert.assertEquals;
-
-import java.util.function.Function;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

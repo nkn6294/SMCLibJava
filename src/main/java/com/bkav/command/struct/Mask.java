@@ -2,8 +2,8 @@ package com.bkav.command.struct;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.function.Consumer;
-import java.util.stream.IntStream;
+
+import com.bkav.command.common.Consumer;
 
 public interface Mask {
 
@@ -26,11 +26,9 @@ public interface Mask {
 	public void unMarkWithRelativeIndex(int... relativeIndexs);
 	
 	public int[] markIndexs();
-	public IntStream markIndexStream();
 	public Iterator<Integer> markInterator();
 	
 	public int[] unMarkIndexs();
-	public IntStream unMarkIndexStream();
 	public Iterator<Integer> unMarkInterator();
 	
 	public int[][] getFragmentIndexs();

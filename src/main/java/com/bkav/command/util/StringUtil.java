@@ -1,11 +1,9 @@
 package com.bkav.command.util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import com.bkav.command.common.Function2;
 
@@ -28,7 +26,6 @@ public final class StringUtil {
     	}
     	return builder.toString();
 	}
-    
     
 	public static float checkSame(String[] sources, String[] dests) {
 		if (sources == null || dests == null || sources.length == 0 || dests.length == 0) {
@@ -61,27 +58,27 @@ public final class StringUtil {
 		return checkSame(splitString(source), dest);
 	}
 	public static String joinString(String[] words) {
-		return String.join(" ", words);
+		if (words.length == 0) {
+			return "";
+		}
+		StringBuilder builder = new StringBuilder();
+		builder.append(words[0]);
+		for (int index = 1; index < words.length; index++) {
+			builder.append(" ").append(words[index]);
+		}
+		return builder.toString();
 	}
     public static String[] splitString(String key) {
-    	return key.replaceAll("_", " _") .split("\\s+");
-//        return splitStringToList(key).stream().toArray(String[]::new);
+    	return key.replaceAll("_", " _").split("\\s+");
     }
     
     public static List<String> splitStringToList(String key) {
-    	return Arrays.stream(splitString(key)).collect(Collectors.toList());
-//        List<String> list = new ArrayList<>();
-//        try {
-//            final InputStreamBlock reader = new InputStreamBlock(new StringReader(key));
-//            String word = reader.nextWord();
-//            while (word != null) {
-//                list.add(word.toLowerCase());
-//                word = reader.nextWord();
-//            }
-//        } catch (IOException ex) {
-//        	SystemManager.logger.info(ex.getMessage());
-//        }
-//        return list;
+    	List<String> strings = new ArrayList<>();
+    	String[] arrays = splitString(key);
+    	for (int index = 0; index < arrays.length; index++) {
+    		strings.add(arrays[index]);
+    	}
+    	return strings;
     }
     public static int search(String key, String source) {
         String[] keys = splitString(key);
@@ -104,25 +101,7 @@ public final class StringUtil {
     	}
     	return input.isEmpty();
     }
-    
-    public static List<String> search(String key, String[] sources) {
-        int maxItem = splitString(key).length;
-        return Arrays.stream(sources)
-        		.filter(item -> search(key, item) == maxItem)
-        		.collect(Collectors.toList());
-    }
-
-    public static List<Integer> searchByIndex(String key, String[] sources) {
-        int maxItem = splitString(key).length;
-        List<Integer> strings = new ArrayList<>();
-        for (int i = 0; i < sources.length; i++) {
-            String item = sources[i];
-            if (search(key, item) == maxItem) {
-                strings.add(i);
-            }
-        }
-        return strings;
-    }
+   
   
     private StringUtil() {}
 }

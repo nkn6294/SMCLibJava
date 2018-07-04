@@ -2,8 +2,6 @@ package com.bkav.command.data;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -40,9 +38,11 @@ public class TextWrapperTest {
 
 	@Test
 	public final void testProccess() {
-		Arrays.stream(this.commands).map(TextWrapper::new)
-				.map(textWrapper -> textWrapper.proccess(pipeLineModel).toString())
-				.forEach(SystemManager.logger::info);
+		for (String command : commands) {
+			TextWrapper textWrapper = new TextWrapper(command);
+			String output = textWrapper.proccess(pipeLineModel).toString();
+			SystemManager.logger.info(output);
+		}
 		assertTrue(true);// TODO test TextWrapper.process
 	}
 

@@ -11,6 +11,7 @@ import com.bkav.command.demo.model.HomeEntityModel;
 import com.bkav.command.model.ModelTest;
 import com.bkav.command.struct.ResultsProcess;
 import com.bkav.command.util.CollectionUtil;
+import com.bkav.command.util.StringUtil;
 
 public class EntityModelTest extends ModelTest {
 
@@ -31,7 +32,7 @@ public class EntityModelTest extends ModelTest {
 		command = new String[] {"dieu", "chinh", "dieu", "hoa", "1", "nho", "nhat"};
 		ResultsProcess result = new ResultsProcess(command);
 		result = this.model.process(result);
-		String commandString = String.join(" ", command);
+		String commandString = StringUtil.joinString(command);
 		SystemManager.logger.info("<" + commandString + ">");
 		SystemManager.logger.info(result.toString());
 	}

@@ -1,5 +1,7 @@
 package com.bkav.command.data;
 
+import com.bkav.command.util.StringUtil;
+
 public class CommonData {
 	
 	public CommonData(String name) {
@@ -20,6 +22,6 @@ public class CommonData {
 	protected String name;
 	
 	protected static String getSimpleName(String[] datas) {
-		return String.join("_", datas);
+		return StringUtil.joinString(datas);
 	}
 }

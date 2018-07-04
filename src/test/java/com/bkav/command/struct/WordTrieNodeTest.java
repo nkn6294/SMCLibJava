@@ -41,7 +41,10 @@ public class WordTrieNodeTest {
 		ResultsProcess results = model.process(new ResultsProcess(s1));
 //		assertTrue(results.size() == 2);
 		assertTrue(true);//TODO testFindPharases
-		results.stream().map(Object::toString).forEach(SystemManager.logger::info);
+		for (Object result : results) {
+			String resultResult = result.toString();
+			SystemManager.logger.info(resultResult);
+		}
 		SystemManager.logger.info(Arrays.toString(results.remains()));
 	}
 }

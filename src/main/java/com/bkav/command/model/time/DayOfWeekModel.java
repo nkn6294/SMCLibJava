@@ -1,7 +1,6 @@
 package com.bkav.command.model.time;
 
-import java.time.DayOfWeek;
-
+import com.bkav.command.common.DayOfWeek;
 import com.bkav.command.model.ParseStringModel;
 
 public class DayOfWeekModel extends ParseStringModel<DayOfWeek> {

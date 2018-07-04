@@ -1,10 +1,10 @@
 package com.bkav.command.data.time;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import org.joda.time.LocalTime;
 
+import com.bkav.command.common.DayOfWeek;
 import com.bkav.command.data.Context;
 import com.bkav.command.data.time.TimeRepeat;
 import com.bkav.command.data.time.TimeRepeat.TimeRepeatType;
@@ -60,10 +60,10 @@ public class ScheduleObject {
 		//dateTime = null
 		if (this.date != null) {
 			if (this.time == null) {
-				this.time = LocalTime.of(0, 0);
+				this.time = new LocalTime(0, 0);
 			}
 			if (dayOfWeek == null) {
-				dayOfWeek = this.date.getDayOfWeek();
+				dayOfWeek = DayOfWeek.of(this.date.getDayOfWeek());
 			}
 			if (this.timeRepeat == null) {
 				this.timeRepeat = new TimeRepeat("", TimeRepeatType.ONCE);

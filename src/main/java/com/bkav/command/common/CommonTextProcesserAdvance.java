@@ -25,6 +25,7 @@ public class CommonTextProcesserAdvance extends CommonCommandTextProcesser imple
 		}
 		return output;
 	}
+	
 	@Override
 	public boolean removeTextProcesser(TextProcesser processer) {
 		return this.processers.remove(processer);

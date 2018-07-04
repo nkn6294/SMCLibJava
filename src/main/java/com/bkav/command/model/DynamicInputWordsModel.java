@@ -1,10 +1,7 @@
 package com.bkav.command.model;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.stream.Stream;
 
-import com.bkav.command.SystemManager;
 import com.bkav.command.common.ModelProcessMode;
 import com.bkav.command.struct.ResultsProcess;
 
@@ -14,15 +11,7 @@ import com.bkav.command.struct.ResultsProcess;
  */
 public abstract class DynamicInputWordsModel<T> extends InputWordsModel<T> {
 
-	@Override
-	public void test(String[]... commands) {
-		Arrays.stream(commands).forEach(command -> 
-		this.wordTrieNode.findPharases(command).stream()
-			.map(Object::toString)
-			.forEach(SystemManager.logger::info));
-	}
-
-	public DynamicInputWordsModel(Stream<? extends Object> stream) {
+	public DynamicInputWordsModel(Collection<? extends Object> stream) {
 		super(stream);
 	}
 
@@ -52,7 +41,7 @@ public abstract class DynamicInputWordsModel<T> extends InputWordsModel<T> {
 		
 	}
 	@Override
-	protected void normalInputData(Stream<? extends Object> stream) {
+	protected void normalInputData(Collection<? extends Object> stream) {
 			
 	}
 }

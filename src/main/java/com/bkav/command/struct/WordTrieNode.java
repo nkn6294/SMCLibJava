@@ -2,7 +2,6 @@ package com.bkav.command.struct;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -17,13 +16,16 @@ public class WordTrieNode<T> {
 	public WordTrieNode(WordTrieNode<T> parent, T value, String label) {
 		this.initWithValue(parent, value, label);
 	}
-	
+
 	public WordTrieNode(WordTrieNode<T> parent, T value) {
 		this.initWithValue(parent, value, null);
 	}
+
 	/***
-	 * Create WordTrieNode with Collection values using result from {@link #importValues(Collection)}
-	 * if <b>null</b> using {@link #createValues()} after add all element from <b>inputs</b>
+	 * Create WordTrieNode with Collection values using result from
+	 * {@link #importValues(Collection)} if <b>null</b> using
+	 * {@link #createValues()} after add all element from <b>inputs</b>
+	 * 
 	 * @param parent
 	 * @param values
 	 * @param label
@@ -39,15 +41,15 @@ public class WordTrieNode<T> {
 	public WordTrieNode() {
 		this.initWithCollection(parent, this.createValues(), null);
 	}
-	
+
 	public Collection<T> values() {
 		return this.values;
 	}
-	
+
 	public WordTrieNode<T> getParent() {
 		return this.parent;
 	}
-	
+
 	public boolean isRoot() {
 		return this.parent != null;
 	}
@@ -63,14 +65,14 @@ public class WordTrieNode<T> {
 	public boolean isHasValue() {
 		return !this.values.isEmpty();
 	}
-	
+
 	public T getValue() {
 		if (this.isHasValue()) {
 			return this.values.iterator().next();
 		}
 		return null;
 	}
-	
+
 	public String[] getLabels() {
 		List<String> listString = new ArrayList<>();
 		WordTrieNode<T> node = this;
@@ -101,19 +103,24 @@ public class WordTrieNode<T> {
 		}
 		node.addValue(value);
 	}
-	
+
 	public void addMultiPharase(List<String[]> alias, T value) {
-		alias.stream().forEach(words -> this.addPhrase(words, value));
+		for (String[] words : alias) {
+			this.addPhrase(words, value);
+		}
 	}
+
 	public void addMultiPharase(String[] alias, T value, CommandTextProcesser textProcesser) {
-		Arrays.stream(alias)
-			.map(textProcesser::apply)
-//			.peek(output -> SystemManager.logger.info("ADD_MULTI_PHARASE:" + output))
-			.map(textProcesser::textToWords).forEach(words -> this.addPhrase(words, value));
+		for (String alia : alias) {
+			String textProcessed = textProcesser.apply(alia);
+			String[] words = textProcesser.textToWords(textProcessed);
+			this.addPhrase(words, value);
+		}
 	}
+
 	public void addPhrase(Iterator<String> words, T value) {
 		if (!words.hasNext()) {
-			return;			
+			return;
 		}
 		WordTrieNode<T> node = this;
 		while (words.hasNext()) {
@@ -141,7 +148,9 @@ public class WordTrieNode<T> {
 				index++;
 			} else {
 				if (node.isHasValue()) {
-					node.values.forEach(foundPharases::add);
+					for (T value : node.values) {
+						foundPharases.add(value);
+					}
 				}
 				if (node == this) {
 					index++;
@@ -151,7 +160,9 @@ public class WordTrieNode<T> {
 			}
 		}
 		if (node.isHasValue()) {
-			node.values.forEach(foundPharases::add);
+			for (T value : node.values) {
+				foundPharases.add(value);
+			}
 		}
 		return foundPharases;
 	}
@@ -162,7 +173,7 @@ public class WordTrieNode<T> {
 		if (words.length == 0) {
 			return currentResult;
 		}
-		ListStringWithMask wordsWithMark =  new ListStringWithMask(words);
+		ListStringWithMask wordsWithMark = new ListStringWithMask(words);
 		wordsWithMark.setConfig(MaskConfig.getDefaultConfig());
 		List<Integer> indexs = new ArrayList<>();
 		for (int index = 0; index < words.length;) {
@@ -174,9 +185,11 @@ public class WordTrieNode<T> {
 				continue;
 			}
 			if (currentNode.isHasValue()) {
-				currentNode.values.forEach(currentResult::addValue);
+				for (T value : currentNode.values) {
+					currentResult.addValue(value);
+				}
 				wordsWithMark.setMark(indexs);
-			}	
+			}
 			if (currentNode == this) {
 				index++;
 			} else {
@@ -185,16 +198,18 @@ public class WordTrieNode<T> {
 			indexs.clear();
 		}
 		if (currentNode.isHasValue()) {
-			currentNode.values.forEach(currentResult::addValue);
+			for (T value : currentNode.values) {
+				currentResult.addValue(value);
+			}
 			wordsWithMark.setMark(indexs);
 		}
 		indexs.clear();
 		if (isMarkedOrigin) {
-			currentResult.stringsMark().setMarkWithRelativeIndex(wordsWithMark.markIndexs());			
+			currentResult.stringsMark().setMarkWithRelativeIndex(wordsWithMark.markIndexs());
 		}
 		return currentResult;
 	}
-	
+
 	public Collection<T> findPharases(String[] words) {
 		return findPharases(words, null);
 	}
@@ -214,9 +229,11 @@ public class WordTrieNode<T> {
 				node = childNode;
 				word = words.next();
 				continue;
-			} 
+			}
 			if (node.isHasValue()) {
-				node.values.forEach(foundPharases::add);
+				for (T value : node.values) {
+					foundPharases.add(value);
+				}
 			}
 			if (node == this) {
 				word = words.next();
@@ -225,11 +242,13 @@ public class WordTrieNode<T> {
 			}
 		}
 		if (node.isHasValue()) {
-			node.values.forEach(foundPharases::add);
+			for (T value : node.values) {
+				foundPharases.add(value);
+			}
 		}
 		return foundPharases;
 	}
-	
+
 	public Collection<T> findPharases(Iterator<String> words) {
 		return this.findPharases(words, null);
 	}
@@ -263,29 +282,36 @@ public class WordTrieNode<T> {
 	public Map<String, WordTrieNode<T>> getChildrens() {
 		return this.childrens;
 	}
-	
+
 	protected void updateValue(T value) {
 		if (this.filterValue(value)) {
-			this.values.add(value);			
+			this.values.add(value);
 		}
 	};
+
 	protected Collection<T> createValues() {
 		return new ArrayList<>();
 	};
+
 	protected WordTrieNode<T> createNewNodeWithLabel(WordTrieNode<T> parent, String label) {
-		return new WordTrieNode<>(parent, new HashSet<>(), label);
+		return new WordTrieNode<>(parent, new HashSet<T>(), label);
 	}
+
 	/***
 	 * Filter input value, override to custome.
+	 * 
 	 * @param value
 	 * @return
 	 */
 	protected boolean filterValue(T value) {
 		return value != null;
 	}
+
 	/***
 	 * Import input values.
-	 * @param values input value.
+	 * 
+	 * @param values
+	 *            input value.
 	 * @return Collections after import.
 	 */
 	protected Collection<T> importValues(Collection<T> values) {
@@ -297,12 +323,12 @@ public class WordTrieNode<T> {
 			this.values.add(value);
 		}
 	}
-	
+
 	protected String label;
 	protected Collection<T> values;
 	protected WordTrieNode<T> parent;
 	protected final Map<String, WordTrieNode<T>> childrens = new HashMap<>();
-	
+
 	private void initWithValue(WordTrieNode<T> parent, T value, String label) {
 		this.label = label;
 		this.parent = parent;
@@ -314,19 +340,24 @@ public class WordTrieNode<T> {
 			this.values.add(value);
 		}
 	}
+
 	private void initWithCollection(WordTrieNode<T> parent, Collection<T> inputs, String label) {
 		this.label = label;
 		this.parent = parent;
 		Collection<T> outputs = this.importValues(inputs);
 		if (outputs == null) {
-			//createValues and add all element.
+			// createValues and add all element.
 			outputs = this.createValues();
 			if (outputs == null) {
 				throw new RuntimeException("Invalid createValues collection");
 			}
 			this.values = outputs;
 			if (inputs != null) {
-				inputs.stream().filter(this::filterValue).forEach(this.values::add);
+				for (T input : inputs) {
+					if (this.filterValue(input)) {
+						this.values.add(input);
+					}
+				}
 			}
 		} else {
 			this.values = outputs;

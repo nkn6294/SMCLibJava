@@ -71,6 +71,6 @@ public class WordTrieNodeDistinctValues<T> extends WordTrieNode<T> {
 		} catch (Exception ex) {
 			nodeParent = null;
 		}
-		return new WordTrieNodeDistinctValues<>(nodeParent, new HashSet<>(), label);
+		return new WordTrieNodeDistinctValues<>(nodeParent, new HashSet<T>(), label);
 	}
 }

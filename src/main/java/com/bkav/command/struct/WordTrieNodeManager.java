@@ -1,9 +1,9 @@
 package com.bkav.command.struct;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -37,15 +37,20 @@ public class WordTrieNodeManager {
 			return parent;
 		}
 		final WordTrieNode<?> nextTrieNode = iterator.next();
-		childNodes.forEach(node -> processNodes(node, nextTrieNode, iterator));
+		for (ResultTreeNode<?> node : childNodes) {
+			processNodes(node, nextTrieNode, iterator);
+		}
 		return parent;
 	}
 
 	public static final List<ResultTreeNode<?>> makeChildNodes(ResultTreeNode<?> parent, WordTrieNode<?> wordTrieNode) {
-		findPharasesWithReset(parent.getValue(), wordTrieNode).stream()
-				.map(result -> new ResultTreeNode<>(parent, result)).forEach(parent::addChild);
+		for (ResultFind<?> result : findPharasesWithReset(parent.getValue(), wordTrieNode)) {
+			ResultTreeNode<?> resultNode = new ResultTreeNode<>(parent, result);
+			parent.addChild(resultNode);
+		}
 		return parent.getChilds();
 	}
+
 	public static List<ResultFind<?>> findPharasesWithReset(ResultFind<?> currentResult, WordTrieNode<?> rootNode) {
 		WordTrieNode<?> currentNode = rootNode;
 		String[] words = currentResult.getRemains();
@@ -64,7 +69,7 @@ public class WordTrieNodeManager {
 					String[][] marks = wordsWithMark.getStringFragments();
 					if (marks.length > 0) {
 						ResultFind<?> resultFind = new ResultFind<>(valueNode, marks[0],
-								wordsWithMark.unMarkStream().toArray(String[]::new));
+								wordsWithMark.unMarkString());
 						results.add(resultFind);
 						wordsWithMark.reset();// ?? save index + not reset.
 					}
@@ -80,7 +85,7 @@ public class WordTrieNodeManager {
 			String[][] marks = wordsWithMark.getStringFragments();
 			if (marks.length > 0) {
 				ResultFind<?> resultFind = new ResultFind<>(currentNode.getValue(), marks[0],
-						wordsWithMark.unMarkStream().toArray(String[]::new));
+						wordsWithMark.unMarkString());
 				results.add(resultFind);
 				wordsWithMark.reset();
 			}
@@ -116,13 +121,13 @@ public class WordTrieNodeManager {
 			results.add(currentNode.getValue());
 		} else {
 			try {
-				wordsWithMark.resetFragment(words.length - 1);				
-			} catch(Exception ex) {
+				wordsWithMark.resetFragment(words.length - 1);
+			} catch (Exception ex) {
 				SystemManager.logger.info(ex.getMessage());
 			}
 		}
-		String[] remains = wordsWithMark.unMarkStream().toArray(String[]::new);
-		return new ResultsFind<>(remains, results);//? results.length = 0
+		String[] remains = wordsWithMark.unMarkString();
+		return new ResultsFind<>(remains, results);// ? results.length = 0
 	}
 
 	public static final ResultNode<?> processNode(ResultNode<?> parent, Iterator<WordTrieNode<?>> iterator) {
@@ -146,8 +151,11 @@ public class WordTrieNodeManager {
 
 	public static ResultFind<?> findPharase(ResultFind<?> currentResult, WordTrieNode<?> rootNode) {
 		List<ResultFind<?>> listResult = findPharasesWithReset(currentResult, rootNode);
-		Collections.sort(listResult,
-				(result1, result2) -> Integer.compare(result1.getRemains().length, result2.getRemains().length));
+		Collections.sort(listResult, new Comparator<ResultFind<?>>() {
+			public int compare(ResultFind<?> result1, ResultFind<?> result2) {
+				return Integer.compare(result1.getRemains().length, result2.getRemains().length);
+			}
+		});
 		if (!listResult.isEmpty()) {
 			return listResult.get(0);
 		}
@@ -156,7 +164,9 @@ public class WordTrieNodeManager {
 
 	@SafeVarargs
 	public final void addWordTrieNode(WordTrieNode<?>... nodes) {
-		Arrays.stream(nodes).forEach(this.wordTrieNodes::add);
+		for (WordTrieNode<?> node : nodes) {
+			this.wordTrieNodes.add(node);
+		}
 	}
 
 	public final ResultNode<?> find(String[] commands) {

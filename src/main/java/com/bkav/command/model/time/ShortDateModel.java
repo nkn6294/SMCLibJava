@@ -1,10 +1,11 @@
 package com.bkav.command.model.time;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.joda.time.LocalDate;
 
 import com.bkav.command.common.ModelProcessMode;
 import com.bkav.command.model.AbstractModel;
@@ -36,7 +37,7 @@ public class ShortDateModel extends AbstractModel {
 			}
 		}
 		if (this.modelConfig.getModelProcessMode() == ModelProcessMode.PROCESS_AND_MARKED) {
-			currentResult.stringsMark().setMarkWithRelativeIndex(indexs);					
+			currentResult.stringsMark().setMarkWithRelativeIndex(indexs);
 		}
 		return currentResult;
 	}
@@ -59,7 +60,7 @@ public class ShortDateModel extends AbstractModel {
 			int year = Integer.parseInt(matcher.group(1));
 			int month = Integer.parseInt(matcher.group(2));
 			int dayOfMonth = Integer.parseInt(matcher.group(3));
-			return LocalDate.of(year, month, dayOfMonth);
+			return new LocalDate(year, month, dayOfMonth);
 		} catch (Exception ex) {
 			return null;
 		}

@@ -2,10 +2,9 @@ package com.bkav.command.struct;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -55,7 +54,7 @@ public class WordTrieNodeManagerTest {
 		SystemManager.logger.info(node.toString());
 		assertTrue(true); // TODO testFindCommands
 	}
-	
+
 	@Test
 	public final void testFindAdvanceCommands() {
 		String[] s1 = { "phong", "khach", "phong", "trung", "tam", "den", "dieu", "hoa", "buoi", "trua" };
@@ -69,27 +68,40 @@ public class WordTrieNodeManagerTest {
 		WordTrieNode<HomeDeviceType> wordTrieNode = new HomeDeviceTypeModel(SampleData.DEVICE_TYPE).getWordTrieNode();
 		String[] s1 = { "phong", "khach", "phong", "an", "dieu", "hoa", "buoi", "den", "trua" };
 		SystemManager.logger.info(Arrays.toString(s1));
-		WordTrieNodeManager.findPharasesWithReset(new ResultFind<Object>(null, new String[] {}, s1), wordTrieNode)
-				.forEach(resultFind -> {
-					assertTrue(resultFind.getValue() instanceof HomeDeviceType);
-					String[] detectes = resultFind.getDetects();
-					String[] remains = resultFind.getRemains();
-					List<String> strings = Arrays.stream(s1).collect(Collectors.toList());
-					Stream.concat(Arrays.stream(detectes), Arrays.stream(remains)).forEach(strings::remove);
-					assertTrue(strings.size() == 0);
-					SystemManager.logger.info(resultFind.toString());
-				});
+		for (ResultFind<?> resultFind : WordTrieNodeManager
+				.findPharasesWithReset(new ResultFind<Object>(null, new String[] {}, s1), wordTrieNode)) {
+			assertTrue(resultFind.getValue() instanceof HomeDeviceType);
+			String[] detectes = resultFind.getDetects();
+			String[] remains = resultFind.getRemains();
+			List<String> strings = new ArrayList<>();
+			for (String s : s1) {
+				strings.add(s);
+			}
+			for (String detecte : detectes) {
+				strings.remove(detecte);
+			}
+			for (String remain : remains) {
+				strings.remove(remain);
+			}
+			assertTrue(strings.size() == 0);
+			SystemManager.logger.info(resultFind.toString());
+		}
+
 	}
+
 	@Test
 	public final void testFindPharases() {
 		WordTrieNode<HomeDeviceType> wordTrieNode = new HomeDeviceTypeModel(SampleData.DEVICE_TYPE).getWordTrieNode();
-		String[] s1 = { "phong", "khach", "phong", "an", "dieu", "hoa", "buoi", "trua", "dieu", "den", "abc"};
+		String[] s1 = { "phong", "khach", "phong", "an", "dieu", "hoa", "buoi", "trua", "dieu", "den", "abc" };
 		SystemManager.logger.info(Arrays.toString(s1));
 		ResultsFind<HomeDeviceType> results = WordTrieNodeManager.findPharases(new ResultsFind<>(s1), wordTrieNode);
-//		assertTrue(results.size() == 2);
-		assertTrue(true);//TODO testFindPharases
-		results.stream().map(HomeDeviceType::getName).forEach(SystemManager.logger::info);
+		// assertTrue(results.size() == 2);
+		assertTrue(true);// TODO testFindPharases
+		for (HomeDeviceType deviceType : results) {
+			SystemManager.logger.info(deviceType.getName());
+		}
 		SystemManager.logger.info(Arrays.toString(results.remains()));
 	}
+
 	private WordTrieNodeManager wordTrieNodes;
 }

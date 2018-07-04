@@ -1,9 +1,5 @@
 package com.bkav.command.common;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.bkav.command.struct.ResultsProcess;
 
 public interface Model {
@@ -12,34 +8,15 @@ public interface Model {
 	 */
     public String getModelName();
     
-    default public String[] process(String[] input) {
-    	return this.process(new ResultsProcess(input)).remains();
-    }
+    public String[] process(String[] input);
     
-    default public List<String> process(List<String> input) {
-    	String[] inputArray = input.toArray(new String[input.size()]);
-    	String[] outputArray = this.process(inputArray);
-    	return Arrays.stream(outputArray).collect(Collectors.toList());
-    }
     /***
      * Process input with model and return new or update input model after process with this model.
      * @param input data input need process.
      * @return new/update {@link ResultsProcess} input.
      */
-    default public ResultsProcess process(ResultsProcess input) {
-    	return input;
-    }
-    
-    default public void test(String[]... commands) {
-    	Arrays.stream(commands)
-    		.map(ResultsProcess::new)
-    		.map(this::process)
-    		.forEach(Object::toString);
-    }
-    
-    default public ModelConfig getModelConfig() {
-    	return new ModelConfig();
-    }
+    public ResultsProcess process(ResultsProcess input);
+    public ModelConfig getModelConfig();
     
     public void setModelConfig(ModelConfig mode);
 }

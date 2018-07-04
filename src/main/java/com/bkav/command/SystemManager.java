@@ -12,6 +12,7 @@ import com.bkav.command.common.CommandTextProcesser;
 import com.bkav.command.common.CommandTextProcesserAdvance;
 import com.bkav.command.common.CommonCommandTextProcesser;
 import com.bkav.command.common.CommonTextProcesserAdvance;
+import com.bkav.command.common.TextProcesser;
 import com.bkav.command.data.NormalInputUtils;
 import com.bkav.command.data.NumberUtils;
 import com.bkav.command.model.time.DateUtils;
@@ -45,12 +46,42 @@ public class SystemManager {
 		}
 		logger = Logger.getLogger(SystemManager.class.getSimpleName());
 		CommandTextProcesserAdvance textProcesserAdvance = new CommonTextProcesserAdvance();
-		textProcesserAdvance.addTextProcesser(NormalInputUtils::normalInputSplitChar);
-		textProcesserAdvance.addTextProcesser(String::toLowerCase);
-		textProcesserAdvance.addTextProcesser(NumberUtils::textToNumber);
-		textProcesserAdvance.addTextProcesser(TimeUtils::timeToNormal);
-		textProcesserAdvance.addTextProcesser(DateUtils::dateToNormal);
-		textProcesserAdvance.addTextProcesser(NormalInputUtils::textToUnit);
+		textProcesserAdvance.addTextProcesser(new TextProcesser() {
+			@Override
+			public String apply(String value) {
+				return NormalInputUtils.normalInputSplitChar(value);
+			}
+		});
+		textProcesserAdvance.addTextProcesser(new TextProcesser() {
+			@Override
+			public String apply(String value) {
+				return value.toLowerCase();
+			}
+		});
+		textProcesserAdvance.addTextProcesser(new TextProcesser() {
+			@Override
+			public String apply(String value) {
+				return NumberUtils.textToNumber(value);
+			}
+		});
+		textProcesserAdvance.addTextProcesser(new TextProcesser() {
+			@Override
+			public String apply(String value) {
+				return TimeUtils.timeToNormal(value);
+			}
+		});
+		textProcesserAdvance.addTextProcesser(new TextProcesser() {
+			@Override
+			public String apply(String value) {
+				return DateUtils.dateToNormal(value);
+			}
+		});
+		textProcesserAdvance.addTextProcesser(new TextProcesser() {
+			@Override
+			public String apply(String value) {
+				return NormalInputUtils.textToUnit(value);
+			}
+		});
 //		textProcesserAdvance.addTextProcesser(NormalInputUtils::deAccentConvert);
 		textProcesser = new CommonCommandTextProcesser(textProcesserAdvance);
 	}

@@ -1,7 +1,6 @@
 package com.bkav.command.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -17,10 +16,7 @@ public abstract class CollectionModel extends AbstractModel implements Iterable<
 	 * Custom process mode with {@link PipeLineModelSupplier} generate next model from before result.
 	 */
 	public static final int CUSTOM_OPTIONAL = 3;
-	@Override
-	public void test(String[]... commands) {
-		this.pipeLineModel.stream().forEach(item -> item.test(commands));
-	}
+	
 	public CollectionModel() {
 		super();
 	}
@@ -107,12 +103,16 @@ public abstract class CollectionModel extends AbstractModel implements Iterable<
 
 	@SafeVarargs
 	protected final void addModels(Model... newModels) {
-		Arrays.stream(newModels).forEach(this.pipeLineModel::addLast);
+		for (Model model : newModels) {
+			this.pipeLineModel.addLast(model);
+		}
 	}
 
 	@SafeVarargs
 	protected final void removeModels(Model... newModels) {
-		Arrays.stream(newModels).forEach(this.pipeLineModel::remove);
+		for (Model model: newModels) {
+			this.pipeLineModel.remove(model);
+		}
 	}
 
 	protected final void cleanAllModel() {

@@ -1,8 +1,9 @@
 package com.bkav.command.data;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
+
+import com.bkav.command.common.DayOfWeek;
 
 /***
  * 
@@ -25,7 +26,7 @@ public class Context {
 
 	public String getAMOrPM() {
 		LocalTime time = this.getNow();
-		return time.getHour() >= 12 ? "PM" : "AM";
+		return time.getHourOfDay() >= 12 ? "PM" : "AM";
 	}
 
 	public DayOfWeek startOfWeek() {

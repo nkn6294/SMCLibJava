@@ -1,11 +1,13 @@
 package com.bkav.command.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.function.Function;
-import java.util.stream.Stream;
+import java.util.Collections;
+import java.util.List;
 
 import com.bkav.command.SystemManager;
+import com.bkav.command.common.Function;
 import com.bkav.command.common.ModelProcessMode;
 import com.bkav.command.struct.ResultsProcess;
 
@@ -15,31 +17,24 @@ import com.bkav.command.struct.ResultsProcess;
  * @param <T> type of value map for each words input.
  */
 public abstract class StaticInputWordsModel<T> extends InputWordsModel<T> {
-	@Override
-	public void test(String[]... commands) {
-		Arrays.stream(commands)
-				.forEach(command -> this.wordTrieNode.findPharases(command).stream().map(Object::toString).forEach(SystemManager.logger::info));
+	
+	public static Collection<String> stringsToCollection(String[] dataInput) {
+		List<String> data = new ArrayList<>();
+		for (int index = 0; index < dataInput.length; index++) {
+			data.add(dataInput[index]);
+		}
+		return data;
 	}
-
+	
 	public StaticInputWordsModel(Collection<String> dataInput) {
-		super(dataInput.stream());
-		Arrays.sort(this.dataProcessed, DEFAULT_STRING_ARRAY_COMPARATOR);
+		super(dataInput);
+		Collections.sort(this.dataProcessed, DEFAULT_STRING_ARRAY_COMPARATOR);
 	}
 
 	public StaticInputWordsModel(String[] dataInput) {
-		super(Arrays.stream(dataInput));
-		Arrays.sort(this.dataProcessed, DEFAULT_STRING_ARRAY_COMPARATOR);
+		this(stringsToCollection(dataInput));
 	}
 	
-	public StaticInputWordsModel(String[] dataInput, Function<Object, String> convert) {
-		super(Arrays.stream(dataInput).map(convert::apply));
-		Arrays.sort(this.dataProcessed, DEFAULT_STRING_ARRAY_COMPARATOR);
-	}
-
-	public StaticInputWordsModel(Collection<Object> dataInput, Function<Object, String> convert) {
-		super(dataInput.stream().map(convert::apply));
-		Arrays.sort(this.dataProcessed, DEFAULT_STRING_ARRAY_COMPARATOR);
-	}
 	@Override
 	public ResultsProcess process(ResultsProcess input) {
 		boolean isMarkedOrigin = this.modelConfig.getModelProcessMode() == ModelProcessMode.PROCESS_AND_MARKED;
@@ -49,18 +44,28 @@ public abstract class StaticInputWordsModel<T> extends InputWordsModel<T> {
 	/***
 	 * data[commands] -> data[command[]], created in {@link #normalInputData(Stream)}
 	 */
-	protected String[][] dataProcessed;
+	protected List<String[]> dataProcessed;
 
 	@Override
 	protected void createModelTree() {
-		Function<String[], T> makeValue = this::getDataFromStringArray;
-		this.wordTrieNode = updateTrieNode(Arrays.stream(this.dataProcessed), makeValue, createDefaultWordTrieNode());
+		Function<String[], T> makeValue = new Function<String[], T>() {
+			@Override
+			public T apply(String[] value) {
+				return getDataFromStringArray(value);
+			}
+		};
+		this.wordTrieNode = 
+				updateTrieNode(this.dataProcessed, makeValue, createDefaultWordTrieNode());
 	}
 
 	@Override
-	protected void normalInputData(Stream<? extends Object> stream) {
-		this.dataProcessed = stream.map(Object::toString)
-				.map(SystemManager.textProcesser::textToWords).toArray(String[][]::new);
+	protected void normalInputData(Collection<? extends Object> stream) {
+		List<String[]> listOutput = new ArrayList<>();
+		for (Object object: stream) {
+			String data[] = SystemManager.textProcesser.textToWords(object.toString());
+			listOutput.add(data);
+		}
+		this.dataProcessed = listOutput;
 	}
 
 	/***

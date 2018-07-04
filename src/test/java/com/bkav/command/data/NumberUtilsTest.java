@@ -2,6 +2,7 @@ package com.bkav.command.data;
 
 import org.junit.Test;
 
+import com.bkav.command.common.Function;
 import com.bkav.command.common.TextProcesserTest;
 
 public class NumberUtilsTest extends TextProcesserTest {
@@ -32,6 +33,12 @@ public class NumberUtilsTest extends TextProcesserTest {
 				"110",
 				"Tăng điều hòa 1 10 độ"
 		};
-		this.testItemProcesser(inputs, expecteds, NumberUtils::textToNumber);
+		this.testItemProcesser(inputs, expecteds, new Function<String, String>() {
+			
+			@Override
+			public String apply(String value) {
+				return NumberUtils.textToNumber(value);
+			}
+		});
 	}
 }

@@ -1,7 +1,5 @@
 package com.bkav.command.struct;
 
-import java.util.stream.IntStream;
-
 public class IntMask extends CommonMaskWithMarkAction<Integer> {
 
 	public IntMask(int length) {
@@ -15,7 +13,9 @@ public class IntMask extends CommonMaskWithMarkAction<Integer> {
 	@Override
 	protected Integer[] createMaskArrayValue(int length) {
 		Integer[] masks = new Integer[length];
-		IntStream.range(0, length).forEach(index -> masks[index] = 0);
+		for (int index = 0; index < length; index++) {
+			masks[index] = 0;
+		}
 		return masks;
 	}
 }

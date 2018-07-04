@@ -2,6 +2,7 @@ package com.bkav.command.model;
 
 import com.bkav.command.common.Model;
 import com.bkav.command.common.ModelConfig;
+import com.bkav.command.struct.ResultsProcess;
 
 /***
  * Abstract for Model with model name.
@@ -34,6 +35,15 @@ public abstract class AbstractModel implements Model {
 	public void setModelConfig(ModelConfig modeConfig) {
 		this.modelConfig = modeConfig;
 	}
+	
+	public String[] process(String[] input) {
+    	return this.process(new ResultsProcess(input)).remains();
+    }
+	
+	public ResultsProcess process(ResultsProcess input) {
+    	return input;
+    }
+
 	
 	protected String modelName = "MODEL";
 	protected ModelConfig modelConfig;

@@ -14,6 +14,7 @@ import com.bkav.command.SystemManager;
 import com.bkav.command.demo.SampleData;
 import com.bkav.command.struct.ResultsProcess;
 import com.bkav.command.util.CollectionUtil;
+import com.bkav.command.util.StringUtil;
 
 public abstract class ModelsTest {
 
@@ -51,7 +52,7 @@ public abstract class ModelsTest {
 	@Test
 	public final void testProcessModels() {
 		for (String[] command : commands) {
-			String commandString = String.join(" ", command);
+			String commandString = StringUtil.joinString(command);
 			logger.info("<" + commandString + ">");
 			ResultsProcess result = new ResultsProcess(command);
 			result = pipeLineModel.process(result);

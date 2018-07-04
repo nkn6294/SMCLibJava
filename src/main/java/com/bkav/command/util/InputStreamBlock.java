@@ -6,8 +6,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
+
+import com.bkav.command.common.Consumer;
+import com.bkav.command.common.Predicate;
 
 public class InputStreamBlock {
 
@@ -46,23 +47,37 @@ public class InputStreamBlock {
 	}
 
 	public String nextElement() throws IOException {
-		return this.nextElement(Character::isLetterOrDigit);
+		return this.nextElement(new Predicate<Character>() {
+			@Override
+			public boolean test(Character value) {
+				return Character.isLetterOrDigit(value);
+			}
+		});
 	}
 
 	public String nextElement(final Character[] delimeterChar) throws IOException {
-		return this.nextElement(value -> !CollectionUtil.contains(delimeterChar, value));
+		return this.nextElement(new Predicate<Character>() {
+
+			@Override
+			public boolean test(Character value) {
+				return !CollectionUtil.contains(delimeterChar, value);
+			}
+		});
 	}
 
 	public String nextElementAdvance(final Character[] delimeterChar, final Consumer<Character> consumer)
 			throws IOException {
-		return this.nextElement(value -> {
-			if (CollectionUtil.contains(delimeterChar, value)) {
-				if (consumer != null) {
-					consumer.accept(value);
+		return this.nextElement(new Predicate<Character>() {
+			@Override
+			public boolean test(Character value) {
+				if (CollectionUtil.contains(delimeterChar, value)) {
+					if (consumer != null) {
+						consumer.accept(value);
+					}
+					return false;
 				}
-				return false;
+				return true;
 			}
-			return true;
 		});
 	}
 
