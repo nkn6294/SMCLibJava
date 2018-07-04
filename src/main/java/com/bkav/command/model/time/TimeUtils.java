@@ -17,8 +17,6 @@ public class TimeUtils {
 		output = timePMToShort(output);
 		output = normalRelativeTime(output);
 		output = normalAtTime(output);
-		
-//		SystemManager.logger.info(">" + output);
 		output = boundTime(output);
 		return output;
 	}
@@ -26,6 +24,21 @@ public class TimeUtils {
 	protected static String boundTime(String input) {
 		String patternString = "(\\+?\\d{1,2}(m|(:\\d{1,2})))";
 		return input.replaceAll(patternString, "_time($1)");
+	}
+	
+	protected static String normalHourUnit(String input) {
+		String patternString = "\\b(\\d+)\\s*giờ\\b";
+		return input.replaceAll(patternString, "$1h");
+	}
+
+	protected static String normalMinuteUnit(String input) {
+		String patternString = "\\b(\\d+)\\s*phút\\b";
+		return input.replaceAll(patternString, "$1m");
+	}
+
+	protected static String normalSecondUnit(String input) {
+		String patternString = "\\b(\\d+)\\s*giây\\b";
+		return input.replaceAll(patternString, "$1s");
 	}
 	
 	protected static String normalRelativeTime(String input) {
@@ -67,7 +80,6 @@ public class TimeUtils {
 			}
 			return builder;
 		});
-//		return input.replaceAll(patternString, "$1am");
 	}
 	protected static String timeAMToShort(String input) {
 		String patternString = "\\b(\\d+)(:\\d{2})?am\\b";
@@ -95,21 +107,6 @@ public class TimeUtils {
 		String patternString = "\\b(\\d+)m\\b";
 		return input.replaceAll(patternString, "00:$1");
 	}
-	protected static String normalHourUnit(String input) {
-		String patternString = "\\b(\\d+)\\s*giờ\\b";
-		return input.replaceAll(patternString, "$1h");
-	}
-
-	protected static String normalMinuteUnit(String input) {
-		String patternString = "\\b(\\d+)\\s*phút\\b";
-		return input.replaceAll(patternString, "$1m");
-	}
-
-	protected static String normalSecondUnit(String input) {
-		String patternString = "\\b(\\d+)\\s*giây\\b";
-		return input.replaceAll(patternString, "$1s");
-	}
-
 	private TimeUtils() {
 	};
 }

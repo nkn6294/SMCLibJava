@@ -19,29 +19,19 @@ public class DateUtils {
 		output = normalNextWeek(output);
 		output = normalWeekInMonth(output);
 		output = normalNextDay(output);
-		
+		output = normalCurrentDay(output);
 		output = boundDate(output);
 		return output;
 	}
 	
 	protected static String boundDate(String input) {
 		String output = input;
-//		SystemManager.logger.info(output);
-//		String patternString = "(\\+?\\d{1,2}(m|(:\\d{1,2})))";
 		String longDatePatternString = "\\b(\\d{1,2}-\\d{1,2}-\\d{4})\\b";
-//		String specialMarkPatternString = "\\b(_[dew](\\w{1,2}\\s)+)\\b";
-//		String joinMarkPatternString = "\\b((_[dew]\\w{1,2})\\s?)\\b";
-//		output = output.replaceAll(joinMarkPatternString, "$2");
-//		SystemManager.logger.info(">" + output);
 		output = output.replaceAll(longDatePatternString, "_date($1)");
-//		SystemManager.logger.info(">>>" + output);
-//		output = output.replaceAll(specialMarkPatternString, "_date($1)");
-//		SystemManager.logger.info(">>" + output);
 		return output;
 	}
 	protected static String longDateFormatToShort(String input) {
 		String patternString = "\\b(ngày\\s)?((\\d{1,2})[\\-/_](\\d{1,2})[\\-/_](\\d{4}))\\b";
-//		String patternString = "\\b(_d\\s)?((\\d{1,2})[\\-/_](\\d{1,2})[\\-/_](\\d{4}))\\b";
 		return input.replaceAll(patternString, "$3-$4-$5");
 	}
 	protected static String longDateToShort(String input) {
@@ -88,7 +78,10 @@ public class DateUtils {
 			return builder.append("_e").append(stt);
 		});
 	}
-	
+	protected static String normalCurrentDay(String input) {
+		String patternString = "\\bhôm\\snay\\b";
+		return input.replaceAll(patternString, "_d+0");
+	}
 	protected static String normalCurrentWeek(String input) {
 		String patternString = "\\btuần\\snày\\b";
 		return input.replaceAll(patternString, "_w+0");
