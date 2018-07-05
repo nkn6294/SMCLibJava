@@ -1,7 +1,6 @@
 package com.bkav.command.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -10,6 +9,7 @@ import com.bkav.command.SystemManager;
 import com.bkav.command.common.Function;
 import com.bkav.command.common.ModelProcessMode;
 import com.bkav.command.struct.ResultsProcess;
+import com.bkav.command.struct.WordTrieNode;
 
 /***
  * Model is builded from static collection words input with value map for each word.
@@ -54,8 +54,8 @@ public abstract class StaticInputWordsModel<T> extends InputWordsModel<T> {
 				return getDataFromStringArray(value);
 			}
 		};
-		this.wordTrieNode = 
-				updateTrieNode(this.dataProcessed, makeValue, createDefaultWordTrieNode());
+		WordTrieNode<T> defaultNode = createDefaultWordTrieNode();
+		this.wordTrieNode = updateTrieNode(this.dataProcessed, makeValue, defaultNode);
 	}
 
 	@Override

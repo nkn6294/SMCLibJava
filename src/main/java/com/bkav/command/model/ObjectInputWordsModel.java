@@ -7,7 +7,6 @@ import java.util.List;
 import com.bkav.command.SystemManager;
 import com.bkav.command.common.Function;
 import com.bkav.command.struct.WordTrieNodeDistinctValues;
-import com.bkav.command.util.Utils;
 
 /***
  * 
@@ -42,7 +41,7 @@ public abstract class ObjectInputWordsModel<T> extends InputWordsModel<T> {
 				return getAlias(value);
 			}
 		};
-		this.wordTrieNode = updateTrieNode(makeOutput, this.inputs, SystemManager.textProcesser, new WordTrieNodeDistinctValues<>());
+		this.wordTrieNode = updateTrieNode(makeOutput, this.inputs, SystemManager.textProcesser, new WordTrieNodeDistinctValues<T>());
 	}
 	
 	@SuppressWarnings("unchecked")

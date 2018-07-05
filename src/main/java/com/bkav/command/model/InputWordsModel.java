@@ -90,7 +90,7 @@ public abstract class InputWordsModel<T> extends AbstractModel {
 	protected WordTrieNode<T> wordTrieNode;
 
 	protected static final <T> WordTrieNode<T> createDefaultWordTrieNode() {
-		return new WordTrieNodeDistinctValues<>();
+		return new WordTrieNodeDistinctValues<T>();
 	}
 
 	protected static final CommandTextProcesser getDefaultCommandTextProcesser() {
