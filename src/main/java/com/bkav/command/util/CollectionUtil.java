@@ -184,7 +184,7 @@ public class CollectionUtil {
 
 	public static final String[][] toArray(List<List<String>> input) {
 		String[][] output = new String[input.size()][];
-		for (int index = 0; index < input.size(); index++) {
+		for (int index = 0; index < output.length; index++) {
 			List<String> item = input.get(index);
 			output[index] = item.toArray(new String[item.size()]);
 		}
@@ -193,47 +193,43 @@ public class CollectionUtil {
 
 	public static boolean[] toArray(Boolean[] input) {
 		boolean[] output = new boolean[input.length];
-		for (int index = 0; index < input.length; index++) {
+		for (int index = 0; index < output.length; index++) {
 			output[index] = input[index];
 		}
 		return output;
 	}
-
 	public static int[] toArray(Integer[] input) {
 		int[] output = new int[input.length];
-		for (int index = 0; index < input.length; index++) {
+		for (int index = 0; index < output.length; index++) {
 			output[index] = input[index];
 		}
 		return output;
 	}
-
 	public static long[] toArray(Long[] input) {
 		long[] output = new long[input.length];
-		for (int index = 0; index < input.length; index++) {
+		for (int index = 0; index < output.length; index++) {
 			output[index] = input[index];
 		}
 		return output;
 	}
-
 	public static float[] toArray(Float[] input) {
 		float[] output = new float[input.length];
-		for (int index = 0; index < input.length; index++) {
+		for (int index = 0; index < output.length; index++) {
 			output[index] = input[index];
 		}
 		return output;
 	}
-
 	public static double[] toArray(Double[] input) {
 		double[] output = new double[input.length];
-		for (int index = 0; index < input.length; index++) {
+		for (int index = 0; index < output.length; index++) {
 			output[index] = input[index];
 		}
 		return output;
 	}
-
+	
 	public static int[][] toArray(Integer[][] input) {
 		int[][] output = new int[input.length][];
-		for (int index = 0; index < input.length; index++) {
+		for (int index = 0; index < output.length; index++) {
 			output[index] = toArray(input[index]);
 		}
 		return output;
@@ -241,7 +237,7 @@ public class CollectionUtil {
 
 	public static long[][] toArray(Long[][] input) {
 		long[][] output = new long[input.length][];
-		for (int index = 0; index < input.length; index++) {
+		for (int index = 0; index < output.length; index++) {
 			output[index] = toArray(input[index]);
 		}
 		return output;
@@ -249,7 +245,7 @@ public class CollectionUtil {
 
 	public static boolean[][] toArray(Boolean[][] input) {
 		boolean[][] output = new boolean[input.length][];
-		for (int index = 0; index < input.length; index++) {
+		for (int index = 0; index < output.length; index++) {
 			output[index] = toArray(input[index]);
 		}
 		return output;
@@ -257,7 +253,7 @@ public class CollectionUtil {
 
 	public static double[][] toArray(Double[][] input) {
 		double[][] output = new double[input.length][];
-		for (int index = 0; index < input.length; index++) {
+		for (int index = 0; index < output.length; index++) {
 			output[index] = toArray(input[index]);
 		}
 		return output;
@@ -265,7 +261,7 @@ public class CollectionUtil {
 
 	public static float[][] toArray(Float[][] input) {
 		float[][] output = new float[input.length][];
-		for (int index = 0; index < input.length; index++) {
+		for (int index = 0; index < output.length; index++) {
 			output[index] = toArray(input[index]);
 		}
 		return output;
@@ -332,7 +328,6 @@ public class CollectionUtil {
 	public static Predicate<int[]> distinctArrayInteger() {
 		final List<int[]> seen = new ArrayList<>();
 		return new Predicate<int[]>() {
-
 			@Override
 			public boolean test(int[] itemInput) {
 				boolean isContain = false;

@@ -242,7 +242,7 @@ public abstract class CommonMask implements Mask {
 			endInclusiveIndex = containIndex;
 		}
 		int[] output = new int[endInclusiveIndex - startInclusiveIndex + 1];
-		for (int index = startInclusiveIndex; index <= endInclusiveIndex; index++) {
+		for (int index = 0; index < output.length; index++) {
 			consumer.accept(index);
 			output[index] = index + startInclusiveIndex;
 		}
@@ -264,7 +264,7 @@ public abstract class CommonMask implements Mask {
 		int index = -1;
 		for (int containIndex : containIndexs) {
 			int[] fragmentIndex = this.getFragmentIndex(containIndex);
-			output[index++] = fragmentIndex;
+			output[++index] = fragmentIndex;
 		}
 		return output;
 	}
@@ -297,11 +297,7 @@ public abstract class CommonMask implements Mask {
 				listOutput.add(fragment);
 			}
 		}
-		int[][] output = new int[listOutput.size()][];
-		for (int index = 0; index < listOutput.size(); index++) {
-			output[index] = listOutput.get(index);
-		}
-		return output;
+		return listOutput.toArray(new int[listOutput.size()][]);
 	}
 
 	@Override
@@ -314,12 +310,17 @@ public abstract class CommonMask implements Mask {
 		}
 		List<int[]> fragments = new ArrayList<>();
 		for (int index : indexs) {
+			boolean isContains = false;
 			for (int i = 0; i < starts.size(); i++) {
 				int start = starts.get(i);
 				int end = ends.get(i);
 				if (index >= start && index <= end) {
+					isContains = true;
 					continue;
 				}
+			}
+			if (isContains) {
+				continue;
 			}
 			int[] fragment = this.getFragmentIndex(index);
 			if (fragment.length == 0) {
@@ -329,11 +330,7 @@ public abstract class CommonMask implements Mask {
 			ends.add(fragment[fragment.length - 1]);
 			fragments.add(fragment);
 		}
-		int[][] output = new int[fragments.size()][];
-		for (int index = 0; index < output.length; index++) {
-			output[index] = fragments.get(index);
-		}
-		return output;
+		return fragments.toArray(new int[fragments.size()][]);
 	}
 
 	@Override

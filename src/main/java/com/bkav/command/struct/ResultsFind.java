@@ -11,7 +11,7 @@ public class ResultsFind<T> implements Iterable<T> {
 	@SafeVarargs
 	public ResultsFind(String[] remains, T... values) {
 		this.values = new ArrayList<>();
-		for (int index = 0; index < remains.length; index++) {
+		for (int index = 0; index < values.length; index++) {
 			this.values.add(values[index]);
 		}
 		this.remains = remains;
