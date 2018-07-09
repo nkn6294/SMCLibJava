@@ -12,9 +12,20 @@ public class DayOfWeekModel extends ParseStringModel<DayOfWeek> {
 	}
 
 	@Override
+	protected boolean preWordFilter(String word) {		
+		if (!super.preWordFilter(word)) {
+			return false;
+		}
+		return word.startsWith("_e(");
+	}
+	@Override
+	protected String getStringData(String word) {
+		return word.replaceFirst("_e(\\d)", "$1");
+	}
+	@Override
 	protected DayOfWeek createData(String word) {
 		try {
-			return DayOfWeek.of((Integer.parseInt(word.replaceFirst("_e(\\d)", "$1")) - 1));			
+			return DayOfWeek.of((Integer.parseInt(word) - 1));			
 		} catch(Exception ex) {
 			return null;
 		}

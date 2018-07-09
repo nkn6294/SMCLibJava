@@ -63,9 +63,9 @@ public class TimeUtils {
 			} else if ("trưa".equals(timeInDay)) {
 				int hour = Integer.parseInt(matcher.group(1));
 				if (hour >= 1 && hour <= 3) {
-					builder.append("am");
-				} else {
 					builder.append("pm");
+				} else {
+					builder.append("am");
 				} 
 			} else if("đêm".equals(timeInDay)) {
 				int hour = Integer.parseInt(matcher.group(1));

@@ -11,7 +11,7 @@ import com.bkav.command.data.time.TimeRepeat.TimeRepeatType;
 
 public class ScheduleObject {
 
-	public ScheduleObject(LocalTime time, LocalDate date, LocalDateTime dateTime, DayOfWeek dayOfWeek,
+	public ScheduleObject(TimeValue time, LocalDate date, LocalDateTime dateTime, DayOfWeek dayOfWeek,
 			TimeRepeat timeRepeat, Context context) {
 		this.date = date;
 		this.time = time;
@@ -26,7 +26,7 @@ public class ScheduleObject {
 	}
 
 	public LocalTime time() {
-		return this.time;
+		return this.time.time();
 	}
 
 	public LocalDateTime dateTime() {
@@ -60,7 +60,7 @@ public class ScheduleObject {
 		//dateTime = null
 		if (this.date != null) {
 			if (this.time == null) {
-				this.time = LocalTime.of(0, 0);
+				this.time = new TimeValue(LocalTime.of(0, 0));
 			}
 			if (dayOfWeek == null) {
 				dayOfWeek = this.date.getDayOfWeek();
@@ -148,7 +148,7 @@ public class ScheduleObject {
 	}
 	
 	protected LocalDate date;
-	protected LocalTime time;
+	protected TimeValue time;
 	protected DayOfWeek dayOfWeek;
 	protected TimeRepeat timeRepeat;
 	protected LocalDateTime dateTime;

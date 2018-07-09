@@ -39,7 +39,11 @@ public abstract class ParseStringModel<T> extends AbstractModel {
 		List<Integer> indexs = new ArrayList<>();
 		for (int index = 0; index < remains.length; index++) {
 			String word = remains[index];
-			T data = this.createData(word);
+			if (!this.preWordFilter(word)) {
+				continue;
+			}
+			String stringData = this.getStringData(word);
+			T data = this.createData(stringData);
 			if (data != null) {
 				indexs.add(index);
 				input.addValue(data);
@@ -51,7 +55,15 @@ public abstract class ParseStringModel<T> extends AbstractModel {
 		return input;
 	}
 
-
+	protected boolean preWordFilter(String word) {
+		if (word == null) {
+			return false;
+		}
+		return !word.isEmpty();
+	}
+	protected String getStringData(String word) {
+		return word;
+	}
 	/***
 	 * Create Data from word input (static or dynamic)
 	 */
