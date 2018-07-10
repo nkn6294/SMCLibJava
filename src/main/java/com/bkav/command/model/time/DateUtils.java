@@ -28,6 +28,9 @@ public class DateUtils {
 		String output = input;
 		String longDatePatternString = "\\b(\\d{1,2}-\\d{1,2}-\\d{4})\\b";
 		output = output.replaceAll(longDatePatternString, "_date($1)");
+		
+//		longDatePatternString = "\\b(_([dwmy])(\\+)(\\d))\\b";
+//		output = output.replaceAll(longDatePatternString, "_date($1)");
 		return output;
 	}
 	protected static String longDateFormatToShort(String input) {

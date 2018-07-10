@@ -42,7 +42,7 @@ public class TimeValue {
 		LocalTime output = null;
 		if (this.localTime == null) {
 			LocalTime now = LocalTime.now();
-			output = LocalTime.of(now.getHour(), now.getMinute());
+			output = now;//LocalTime.of(now.getHour(), now.getMinute());
 		} else {
 			output = LocalTime.of(this.localTime.getHour(), this.localTime.getMinute());
 		}
