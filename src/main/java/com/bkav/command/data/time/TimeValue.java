@@ -62,6 +62,12 @@ public class TimeValue {
 				" [localTime=" + localTime + ", duration=" + duration + ", mode=" + mode + "]";
 	}
 
+	public boolean isValid() {
+		boolean isValid = false;
+		isValid = this.localTime != null || this.duration != null;
+		return isValid;
+	}
+	
 	protected LocalTime localTime;
 	protected Duration duration;
 	protected TimeValueModel mode;

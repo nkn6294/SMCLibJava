@@ -17,9 +17,10 @@ public class DateUtils {
 		output = normalDayOfWeek(output);
 		output = normalCurrentWeek(output);
 		output = normalNextWeek(output);
-		output = normalWeekInMonth(output);
+//		output = normalWeekInMonth(output);
 		output = normalNextDay(output);
 		output = normalCurrentDay(output);
+		output = normalTimeRepeat(output);
 		output = boundDate(output);
 		return output;
 	}
@@ -29,8 +30,8 @@ public class DateUtils {
 		String longDatePatternString = "\\b(\\d{1,2}-\\d{1,2}-\\d{4})\\b";
 		output = output.replaceAll(longDatePatternString, "_date($1)");
 		
-//		longDatePatternString = "\\b(_([dwmy])(\\+)(\\d))\\b";
-//		output = output.replaceAll(longDatePatternString, "_date($1)");
+		String timeContextPatternString = "\\b(_([edwmy])(\\+)((\\d\\b)|\\*))";
+		output = output.replaceAll(timeContextPatternString, "_date($1)");
 		return output;
 	}
 	protected static String longDateFormatToShort(String input) {
@@ -78,7 +79,31 @@ public class DateUtils {
 					stt = Integer.parseInt(matcher.group(3));					
 				}
 			}
-			return builder.append("_e").append(stt);
+			return builder.append("_e+").append(stt);
+		});
+	}
+	protected static String normalTimeRepeat(String input) {
+		String patternString = "\\b((hàng)|(mỗi))\\s((ngày)|(tuần)|(tháng)|(năm))\\b";
+		return textProcessByRegex(input, patternString, (matcher, builder) -> {
+			try {
+				String param = null;
+				String unit = matcher.group(4);//ngay|tuan|thang|nam
+				if ("ngày".equals(unit)) {
+					param = "_d";
+				} else if ("tuần".equals(unit)) {
+					param = "_w";
+				} else if ("tháng".equals(unit)) {
+					param = "_m";
+				} else if ("năm".equals(unit)) {
+					param = "_y";
+				}
+				if (param == null) {
+					return builder.append(input);
+				}
+				return builder.append(param).append("+*");				
+			} catch (Exception ex) {
+				return builder.append(input);
+			}
 		});
 	}
 	protected static String normalCurrentDay(String input) {
@@ -90,17 +115,17 @@ public class DateUtils {
 		return input.replaceAll(patternString, "_w+0");
 	}
 	protected static String normalNextWeek(String input) {
-		String patternString = "\\btuần\\s(sau)|(tới)\\b";
+		String patternString = "\\btuần\\s((sau)|(tới))\\b";
 		return input.replaceAll(patternString, "_w+1");
 	}
 	protected static String normalNextDay(String input) {
-		String patternString = "\\bngày\\s(mai)|(tới)\\b";
+		String patternString = "\\bngày\\s((mai)|(tới))\\b";
 		return input.replaceAll(patternString, "_d+1");
 	}
-	protected static String normalWeekInMonth(String input) {
-		String patternString = "\\btuần\\s(\\d)\\s_m(\\d+)\\b";
-		return input.replaceAll(patternString, "_w\\#$1_m$2");
-	}
+//	protected static String normalWeekInMonth(String input) {
+//		String patternString = "\\btuần\\s(\\d)\\s_m(\\d+)\\b";
+//		return input.replaceAll(patternString, "_w\\#$1_m$2");
+//	}
 	private DateUtils() {
 	};
 }

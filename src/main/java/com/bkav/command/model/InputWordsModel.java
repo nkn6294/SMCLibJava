@@ -79,7 +79,7 @@ public abstract class InputWordsModel<T> extends AbstractModel {
 	 * Normal input data with {@link #normalInputData(Object)} and
 	 * reset Tree Model with {@link #createModelTree()}.
 	 */
-	public void reloadModel(Collection<Object> data) {
+	public void reloadModel(Collection<? extends Object> data) {
 		this.normalInputData(data.stream());
 		this.createModelTree();
 	}

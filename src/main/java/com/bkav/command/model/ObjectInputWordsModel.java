@@ -30,7 +30,9 @@ public abstract class ObjectInputWordsModel<T> extends InputWordsModel<T> {
 	
 	@Override
 	protected void normalInputData(Stream<? extends Object> stream) {
-		this.inputs = stream.map(this::parserObject).filter(Utils::isNotNull).collect(Collectors.toList());
+		this.inputs = stream.map(this::parserObject)
+				.filter(Utils::isNotNull)
+				.collect(Collectors.toList());
 	}
 
 	@Override

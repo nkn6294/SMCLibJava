@@ -12,6 +12,7 @@ import com.bkav.command.common.CommandTextProcesser;
 import com.bkav.command.common.CommandTextProcesserAdvance;
 import com.bkav.command.common.CommonCommandTextProcesser;
 import com.bkav.command.common.CommonTextProcesserAdvance;
+import com.bkav.command.common.TextProcesser;
 import com.bkav.command.data.NormalInputUtils;
 import com.bkav.command.data.NumberUtils;
 import com.bkav.command.model.time.DateUtils;
@@ -47,14 +48,21 @@ public class SystemManager {
 		CommandTextProcesserAdvance textProcesserAdvance = new CommonTextProcesserAdvance();
 		textProcesserAdvance.addTextProcesser(NormalInputUtils::normalInputSplitChar);
 		textProcesserAdvance.addTextProcesser(String::toLowerCase);
+		textProcesserAdvance.addTextProcesser(DateUtils::dateToNormal);//năm xxxx->  
 		textProcesserAdvance.addTextProcesser(NumberUtils::textToNumber);
 		textProcesserAdvance.addTextProcesser(TimeUtils::timeToNormal);
 		textProcesserAdvance.addTextProcesser(DateUtils::dateToNormal);
 		textProcesserAdvance.addTextProcesser(NormalInputUtils::textToUnit);
 //		textProcesserAdvance.addTextProcesser(NormalInputUtils::deAccentConvert);
-		textProcesser = new CommonCommandTextProcesser(textProcesserAdvance);
+		SystemManager.textProcesserAdvance = textProcesserAdvance;
+		textProcesser = new CommonCommandTextProcesser(SystemManager.textProcesserAdvance);
 	}
-	
+	public static void addTextProcesser(TextProcesser processer) {
+		SystemManager.textProcesserAdvance.addTextProcesser(processer);
+	}
+	public static void removeTextProcesser(TextProcesser processer) {
+		SystemManager.textProcesserAdvance.removeTextProcesser(processer);
+	}
 	public static void loadLogProperties(String fileName) {//logging.properties
 		InputStream stream = null;
 		try {
@@ -117,4 +125,6 @@ public class SystemManager {
 		}
 	}
 	private SystemManager() {}
+	
+	private static CommandTextProcesserAdvance textProcesserAdvance;
 }

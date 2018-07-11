@@ -5,10 +5,9 @@ import java.time.LocalTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.bkav.command.data.time.TimeValue;
 import com.bkav.command.model.ParseStringModel;
 
-public class ShortTimeModel extends ParseStringModel<TimeValue> {// extends AbstractModel {
+public class ShortTimeModel extends ParseStringModel<Object> {// extends AbstractModel {
 
 	public ShortTimeModel() {
 		super();
@@ -33,7 +32,7 @@ public class ShortTimeModel extends ParseStringModel<TimeValue> {// extends Abst
 	}
 
 	@Override
-	protected TimeValue createData(String word) {
+	protected Object createData(String word) {
 		try {
 			Matcher matcher = timePattern.matcher(word);
 			if (!matcher.find()) {
@@ -43,9 +42,11 @@ public class ShortTimeModel extends ParseStringModel<TimeValue> {// extends Abst
 			int hour = Integer.parseInt(matcher.group(3));
 			int minute = Integer.parseInt(matcher.group(4));
 			if (this.isContextTimeFormat(param)) {
-				return new TimeValue(Duration.ofHours(hour).plusMinutes(minute));
+				return Duration.ofHours(hour).plusMinutes(minute);
+//				return new TimeValue(Duration.ofHours(hour).plusMinutes(minute));
 			}
-			return new TimeValue(LocalTime.of(hour, minute));
+			return LocalTime.of(hour, minute);
+//			return new TimeValue(LocalTime.of(hour, minute));
 		} catch (Exception ex) {
 			return null;
 		}

@@ -64,7 +64,7 @@ public final class StringUtil {
 		return String.join(" ", words);
 	}
     public static String[] splitString(String key) {
-    	return key.replaceAll("_", " _") .split("\\s+");
+    	return key.split("\\s+");//key.replaceAll("_", " _").split("\\s+");
 //        return splitStringToList(key).stream().toArray(String[]::new);
     }
     

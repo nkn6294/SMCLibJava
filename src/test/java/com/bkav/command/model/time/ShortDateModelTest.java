@@ -1,35 +1,18 @@
 package com.bkav.command.model.time;
 
-import static org.junit.Assert.*;
+import com.bkav.command.common.Model;
+import com.bkav.command.demo.SampleData;
+import com.bkav.command.model.ModelTest;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+public class ShortDateModelTest extends ModelTest {
 
-public class ShortDateModelTest {
-
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	@Override
+	protected Model createModel() {
+		return new ShortDateModel();
 	}
 
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
+	@Override
+	protected String[] getTestCommands() {
+		return SampleData.SampleDateSchedule;
 	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	@Test
-	public void test() {
-//		fail("Not yet implemented");
-		assertTrue(true);
-	}
-
 }

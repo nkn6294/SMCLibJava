@@ -60,6 +60,7 @@ public abstract class StaticInputWordsModel<T> extends InputWordsModel<T> {
 	@Override
 	protected void normalInputData(Stream<? extends Object> stream) {
 		this.dataProcessed = stream.map(Object::toString)
+				.map(SystemManager.textProcesser::apply)
 				.map(SystemManager.textProcesser::textToWords).toArray(String[][]::new);
 	}
 

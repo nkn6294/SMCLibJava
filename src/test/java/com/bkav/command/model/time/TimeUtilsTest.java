@@ -11,29 +11,29 @@ public class TimeUtilsTest {
 	@Test
 	public final void testTimeToNormal() {
 		String[] inputs = new String[] { 
-				"s 6 am e",
-				"s 6am e",
-				"s 12 a. m e",
-				"s 01 a . m e",
-				"s 2 giờ e",
+				"6 am",
+				"6am",
+				"12 a. m",
+				"01 a . m",
+				"2 giờ",
 				
-				"s 2 giờ pm e",
-				"s 2 giờ 10 phút e",
-				"s 2 giờ 10 phút e",
-				"s 2 giờ 10 phút nữa e",
-				"s sau 2 giờ 10 phút nữa e",
+				"2 giờ pm",
+				"2 giờ 10 phút",
+				"2 giờ 10 phút",
+				"2 giờ 10 phút nữa",
+				"sau 2 giờ 10 phút nữa",
 				
-				"s 2 phút e",
-				"s 2 phút nữa e",
-				"s sau 02 phút nữa e",
-				"s lúc 2 giờ 10 e",
-				"s 6 giờ 30 am e",
+				"2 phút",
+				"2 phút nữa",
+				"sau 02 phút nữa",
+				"lúc 2 giờ 10",
+				"6 giờ 30 am",
 				
-				"s 6 giờ 30 pm e",
-				"s 6 giờ sáng e",
-				"s 3 giờ chiều e",
-				"s 11 giờ trưa e",
-				"s 11 giờ 30 đêm e",
+				"6 giờ 30 pm",
+				"6 giờ sáng",
+				"3 giờ chiều",
+				"11 giờ trưa",
+				"11 giờ 30 đêm",
 				};
 		String[] expecteds = new String[] { 
 				"6:00",
@@ -61,9 +61,9 @@ public class TimeUtilsTest {
 				"23:30",
 		};
 		for (int index = 0; index < inputs.length; index++) {
-			String output = TimeUtils.timeToNormal(inputs[index]);
+			String output = TimeUtils.timeToNormal("< " + inputs[index] + " >");
 			SystemManager.logger.info(output);
-			assertEquals("s _time(" + expecteds[index] + ") e", output);
+			assertEquals("< _time(" + expecteds[index] + ") >", output);
 		}
 	}
 }
