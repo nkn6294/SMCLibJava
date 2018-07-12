@@ -20,7 +20,8 @@ public class ShortDateModel extends ParseStringModel<Object> {
 	}
 	
 	public static final String DATE_REGEX_PATTERN = "((\\d{1,2})-(\\d{1,2})-(\\d{4}))";
-	public static final String DATE_CONTEXT_REGEX_PATTERN = "(_([edwmy])(\\+)(\\d))";
+//	public static final String DATE_CONTEXT_REGEX_PATTERN = "(_([edwmy])(\\+)(\\d))";
+	public static final String DATE_CONTEXT_REGEX_PATTERN = "(_([edwmy])(\\+)((\\d\\b)|\\*))";
 	protected static Pattern datePattern = Pattern.compile(DATE_REGEX_PATTERN);
 	protected static Pattern dateContextPattern = Pattern.compile(DATE_CONTEXT_REGEX_PATTERN);
 
@@ -29,12 +30,14 @@ public class ShortDateModel extends ParseStringModel<Object> {
 		if (!super.preWordFilter(word)) {
 			return false;
 		}
-		return word.startsWith("_date(");
+//		return word.startsWith("_date(");
+		return word.startsWith("_date_");
 	}
 	
 	@Override
 	protected String getStringData(String word) {
-		return word.replaceFirst("_date\\((.+)\\)", "$1");
+//		return word.replaceFirst("_date\\((.+)\\)", "$1");
+		return word.replaceFirst("_date_(.+)_", "$1");
 	}
 	
 	@Override
@@ -55,7 +58,7 @@ public class ShortDateModel extends ParseStringModel<Object> {
 				}
 			}
 			matcher = dateContextPattern.matcher(word);
-			if (!matcher.find()) {
+			if (matcher.find()) {
 				String param = matcher.group(2);
 				String valueString = matcher.group(4);
 				if ("*".equals(valueString)) {

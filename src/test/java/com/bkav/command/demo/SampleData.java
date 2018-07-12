@@ -193,16 +193,16 @@ public class SampleData {
 	};
 	public static final String[] SampleSchedule = {
 		// chu y AM, PM, thoi gian hien tai, ngay trong thang..., gio,phut,giay -> h,m,s, hh:ss
-		"2 giờ 10 phút ngày 12-12-2012",
-		"lúc 2 giờ chiều",
-		"lúc 2 giờ 10 phút",
-		"lúc 2 giờ sáng",
-		"lúc 14 giờ 10 phút",
-		"lúc 2 giờ 10 phút ngày mai",
-		"sau 2 giờ 10 phút nữa",
+//		"2 giờ 10 phút ngày 12-12-2012",
+//		"lúc 2 giờ chiều",
+//		"lúc 2 giờ 10 phút",
+//		"lúc 2 giờ sáng",
+//		"lúc 14 giờ 10 phút",
+//		"lúc 2 giờ 10 phút ngày mai",
+//		"sau 2 giờ 10 phút nữa",
 		"2 giờ 10 phút thứ 6 tuần này",
-		"2 giờ 10 phút thứ 6 tuần sau",
-		"sau 2 phút nữa",
+//		"2 giờ 10 phút thứ 6 tuần sau",
+//		"sau 2 phút nữa",
 	};
 	public static final String[] SampleTimeSchedule = {
 			// chu y AM, PM, thoi gian hien tai, ngay trong thang..., gio,phut,giay -> h,m,s, hh:ss

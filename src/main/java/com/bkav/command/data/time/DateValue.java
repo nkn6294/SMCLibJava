@@ -49,16 +49,15 @@ public class DateValue {
 		} else if (this.dayOfWeek != null) {
 			int current = localDate.getDayOfWeek().getValue();
 			int setValue = this.dayOfWeek.getValue();
-			localDate = localDate.plusDays(setValue - current);//DayOfWeek in current week (in localDate)
-//			if (current > setValue) {
-//				localDate = localDate.plusDays(setValue + 7 - current);
-//				if (this.period != null) {
-//					localDate = localDate.minusDays(this.period.getDays());
-//				}
-//			};
+			if (setValue < current) {
+				if (this.period == null) {//next week if not period input.
+					setValue += 7;
+				}
+			}
+			localDate = localDate.plusDays(setValue - current);
 		}
 		if (this.period != null) {
-			localDate.plus(this.period);
+			localDate = localDate.plus(this.period);
 		}
 		return localDate;
 	}
@@ -93,20 +92,17 @@ public class DateValue {
 		return this.mode;
 	}
 	
+	
+
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + " [monthDay=" + monthDay + ", date=" + localDate + ", dayOfWeek=" + dayOfWeek + ", mode=" + mode
-				+ ", period=" + period + "]";
+		return this.getClass().getSimpleName() + " [localDate=" + localDate + ", monthDay=" + monthDay + ", dayOfMonth=" + dayOfMonth
+				+ ", dayOfWeek=" + dayOfWeek + ", period=" + period + ", mode=" + mode + ", isNormaled=" + isNormaled
+				+ ", isValid=" + isValid + "]";
 	}
 
 	public boolean isValid() {
-		boolean isValid = false;
-		isValid = 
-				this.localDate != null
-				|| this.monthDay != null
-				|| this.dayOfMonth != null
-				|| this.dayOfWeek != null;
-		return isValid;
+		return this.isValid;
 	}
 	
 	protected LocalDate localDate;
@@ -117,6 +113,7 @@ public class DateValue {
 	protected Period period;
 	protected DateValueType mode;
 	protected boolean isNormaled = false;
+	protected boolean isValid = false;
 	
 	protected void normal() {
 		//localDate > monthDay > dayOfMonth > dayOfWeek
@@ -124,6 +121,10 @@ public class DateValue {
 			return;
 		}
 		this.isNormaled = true;
+		this.checkValid();
+		if (!this.isValid()) {
+			return;
+		}
 		if (this.localDate != null) {
 			this.monthDay = MonthDay.of(this.localDate.getMonth(), this.localDate.getDayOfMonth());
 			this.dayOfMonth = DayOfMonth.of(this.localDate.getDayOfMonth());
@@ -143,7 +144,13 @@ public class DateValue {
 		}
 		//localDate, monthDay, dayOfMonth == null
 	}
-	
+	protected void checkValid() {
+		this.isValid = 
+				this.localDate != null
+				|| this.monthDay != null
+				|| this.dayOfMonth != null
+				|| this.dayOfWeek != null;
+	}
 	protected void updateMode() {
 		//localDate > monthDay > dayOfMonth > dayOfWeek
 		if (this.localDate != null) {

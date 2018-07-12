@@ -42,8 +42,12 @@ public class DateUtilsTest {
 		};
 		for (int index = 0; index < inputs.length; index++) {
 			String output = DateUtils.dateToNormal("< " + inputs[index] + " >");
+//			String output = DateUtils.dateToNormal(inputs[index]);
+//			SystemManager.logger.info(output);
+			output = DateUtils.dateToNormal(output);
 			SystemManager.logger.info(output);
-			assertEquals("< _date(" + expecteds[index] + ") >", output);
+			assertEquals("< _date_" + expecteds[index] + "_ >", output);
+//			assertTrue(true);
 		}
 	}
 }

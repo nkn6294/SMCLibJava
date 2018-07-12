@@ -8,13 +8,19 @@ public class TimeValue {
 		VALUE, 
 		CONTEXT,
 	}
-	
-	public TimeValue(LocalTime localTime, Duration period) {
+	public enum DayContext {
+		AM, PM, AM_PM
+	}
+	public TimeValue(LocalTime localTime, Duration period, DayContext dayContext) {
 		this.localTime = localTime;
 		this.duration = period;
+		this.dayContext = dayContext;
+		this.normal();
 		this.updateMode();
 	}
-	
+	public TimeValue(LocalTime localTime, Duration period) {
+		this(localTime, period, DayContext.AM_PM);
+	}
 	public TimeValue(LocalTime localTime) {
 		this(localTime, null);
 	}
@@ -40,14 +46,14 @@ public class TimeValue {
 	 */
 	public LocalTime time() {
 		LocalTime output = null;
-		if (this.localTime == null) {
-			LocalTime now = LocalTime.now();
-			output = now;//LocalTime.of(now.getHour(), now.getMinute());
+		if (this.localTime != null) {
+//			output = this.localTime;//LocalTime.of(this.localTime.getHour(), this.localTime.getMinute());
+			return this.localTime;
+		} else if (this.duration != null) {
+			output = LocalTime.now().plus(duration);				
 		} else {
-			output = LocalTime.of(this.localTime.getHour(), this.localTime.getMinute());
-		}
-		if (this.duration != null) {
-			output = output.plus(duration);
+//			LocalTime now = LocalTime.now();
+//			output = now;//LocalTime.of(now.getHour(), now.getMinute());
 		}
 		return output;
 	}
@@ -55,22 +61,43 @@ public class TimeValue {
 	public TimeValueModel mode() {
 		return mode;
 	}
-	
+	public DayContext dayContext() {
+		return this.dayContext;
+	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + 
-				" [localTime=" + localTime + ", duration=" + duration + ", mode=" + mode + "]";
+		return this.getClass().getSimpleName() + " [localTime=" + localTime + ", duration=" + duration + ", mode=" + mode + ", isNormaled="
+				+ isNormaled + ", isValid=" + isValid + "]";
 	}
 
 	public boolean isValid() {
-		boolean isValid = false;
-		isValid = this.localTime != null || this.duration != null;
-		return isValid;
+		return this.isValid;
+	}
+	
+	public void normal() {
+		if (this.isNormaled) {
+			return;
+		}
+		this.isNormaled = true;
+		this.checkValid();
+		if (!this.isValid()) {
+			return;
+		}
+		if (this.localTime != null) {
+			this.duration = null;
+		}
 	}
 	
 	protected LocalTime localTime;
 	protected Duration duration;
 	protected TimeValueModel mode;
+	protected boolean isNormaled = false;
+	protected boolean isValid = false;
+	protected DayContext dayContext = DayContext.AM_PM;
+	
+	protected void checkValid() {
+		this.isValid = this.localTime != null || this.duration != null;
+	}
 	
 	protected final void updateMode() {
 		if (duration == null) {

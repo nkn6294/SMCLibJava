@@ -2,6 +2,7 @@ package com.bkav.command.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -18,9 +19,17 @@ import com.bkav.command.struct.ResultsProcess;
  */
 public abstract class ParseStringModel<T> extends AbstractModel {
 
-	public ParseStringModel() {
+	public enum ParseStringMode {
+		ONE_MAP_ONE,
+		ONE_MAP_MANY
 	}
 	
+	public ParseStringModel(ParseStringMode mode) {
+		this.parseStringMode = mode;
+	}
+	public ParseStringModel() {
+		this.parseStringMode = ParseStringMode.ONE_MAP_ONE;
+	}
 	@Override
 	public void test(String[]... commands) {
 		Arrays.stream(commands).map(words -> new ResultsProcess(words))
@@ -43,10 +52,18 @@ public abstract class ParseStringModel<T> extends AbstractModel {
 				continue;
 			}
 			String stringData = this.getStringData(word);
-			T data = this.createData(stringData);
-			if (data != null) {
-				indexs.add(index);
-				input.addValue(data);
+			if (this.parseStringMode == ParseStringMode.ONE_MAP_ONE) {
+				T data = this.createData(word);
+				if (data != null) {
+					indexs.add(index);
+					input.addValue(data);
+				}
+			} else if (this.parseStringMode == ParseStringMode.ONE_MAP_MANY) {
+				Collection<T> datas = this.createDatas(stringData);
+				if (datas != null) {
+					indexs.add(index);
+					input.addValues(datas);
+				}				
 			}
 		}
 		if (this.modelConfig.getModelProcessMode() == ModelProcessMode.PROCESS_AND_MARKED) {
@@ -55,6 +72,8 @@ public abstract class ParseStringModel<T> extends AbstractModel {
 		return input;
 	}
 
+	protected ParseStringMode parseStringMode;
+	
 	protected boolean preWordFilter(String word) {
 		if (word == null) {
 			return false;
@@ -65,7 +84,16 @@ public abstract class ParseStringModel<T> extends AbstractModel {
 		return word;
 	}
 	/***
-	 * Create Data from word input (static or dynamic)
+	 * Create Data from word input (static or dynamic) with mode {@link ParseStringMode#ONE_MAP_ONE}
 	 */
 	protected abstract T createData(String word);
+	/***
+	 * Create Data from word input (static or dynamic) with mode {@link ParseStringMode#ONE_MAP_MANY}
+	 * Default return {@link Collection} with one item using {@link ParseStringModel#createData(String)}
+	 */
+	protected Collection<T> createDatas(String word) {
+		Collection<T> output = new ArrayList<>();
+		output.add(this.createData(word));
+		return output;
+	}
 }

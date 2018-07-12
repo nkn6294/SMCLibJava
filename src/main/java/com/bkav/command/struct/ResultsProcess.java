@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import com.bkav.command.util.Utils;
 /***
  * Wrapper String array input with value.
  */
@@ -33,7 +35,9 @@ public class ResultsProcess implements Iterable<Object> {
 	public void addValue(Object value) {
 		this.values.add(value);
 	}
-
+	public void addValues(Collection<? extends Object> values) {
+		values.stream().filter(Utils::isNotNull).forEach(this.values::add);
+	}
 	public void removeValue(Object value) {
 		this.values.remove(value);
 	}

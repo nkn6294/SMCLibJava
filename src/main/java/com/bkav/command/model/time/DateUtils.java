@@ -28,10 +28,10 @@ public class DateUtils {
 	protected static String boundDate(String input) {
 		String output = input;
 		String longDatePatternString = "\\b(\\d{1,2}-\\d{1,2}-\\d{4})\\b";
-		output = output.replaceAll(longDatePatternString, "_date($1)");
+		output = output.replaceAll(longDatePatternString, "_date_$1_");
 		
 		String timeContextPatternString = "\\b(_([edwmy])(\\+)((\\d\\b)|\\*))";
-		output = output.replaceAll(timeContextPatternString, "_date($1)");
+		output = output.replaceAll(timeContextPatternString, "_date_$1_");
 		return output;
 	}
 	protected static String longDateFormatToShort(String input) {

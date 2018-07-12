@@ -34,12 +34,13 @@ public class TimeUtilsTest {
 				"3 giờ chiều",
 				"11 giờ trưa",
 				"11 giờ 30 đêm",
+				
 				};
 		String[] expecteds = new String[] { 
-				"6:00",
-				"6:00",
-				"12:00",
-				"01:00",
+				"6:00a",
+				"6:00a",
+				"12:00a",
+				"01:00a",
 				"2:00",
 				
 				"14:00",
@@ -52,13 +53,14 @@ public class TimeUtilsTest {
 				"+00:2",
 				"+00:02",
 				"2:10",
-				"6:30",
+				"6:30a",
 				
 				"18:30",
-				"6:00",
+				"6:00a",
 				"15:00",
-				"11:00",
+				"11:00a",
 				"23:30",
+				
 		};
 		for (int index = 0; index < inputs.length; index++) {
 			String output = TimeUtils.timeToNormal("< " + inputs[index] + " >");
