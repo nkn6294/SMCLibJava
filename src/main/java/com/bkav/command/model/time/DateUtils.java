@@ -94,7 +94,7 @@ public class DateUtils {
 		});
 	}
 
-	protected static String normalTimeRepeat(String input) {
+	protected static String normalTimeRepeat(final String input) {
 		String patternString = "\\b((hàng)|(mỗi))\\s((ngày)|(tuần)|(tháng)|(năm))\\b";
 		return textProcessByRegex(input, patternString, new Function2<Matcher, StringBuilder, StringBuilder>() {
 			public StringBuilder apply(Matcher matcher, StringBuilder builder) {
