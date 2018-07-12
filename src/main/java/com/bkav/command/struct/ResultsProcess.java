@@ -38,7 +38,14 @@ public class ResultsProcess implements Iterable<Object> {
 	public void addValue(Object value) {
 		this.values.add(value);
 	}
-
+	public void addValues(Collection<? extends Object> values) {
+		for (Object value : values) {
+			if (value == null) {
+				continue;
+			}
+			this.values.add(value);
+		}
+	}
 	public void removeValue(Object value) {
 		this.values.remove(value);
 	}
@@ -66,7 +73,18 @@ public class ResultsProcess implements Iterable<Object> {
 
 	@Override
 	public String toString() {
-		return String.format("%s [values=%s, stringsMark=%s]", this.getClass().getSimpleName(), values, stringsMark);
+		StringBuilder builder = new StringBuilder();
+		builder.append("[");
+		if (this.values.size() > 0) {
+			Object value = this.values.get(0);
+			builder.append(String.format("%s(%s)", value.toString(), value.getClass().getSimpleName()));
+		}
+		for (int index = 1; index < this.values.size(); index++) {
+			Object value = this.values.get(index);
+			builder.append(String.format(", %s(%s)", value.toString(), value.getClass().getSimpleName()));
+		}
+		builder.append("]");
+		return String.format("%s [values=%s, stringsMark=%s]", this.getClass().getSimpleName(), builder.toString(), stringsMark);
 	}
 
 	private List<Object> values;

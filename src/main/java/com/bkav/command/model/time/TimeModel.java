@@ -1,7 +1,6 @@
 package com.bkav.command.model.time;
 
 import com.bkav.command.model.CollectionModel;
-import com.bkav.command.model.time.repeat.TimeRepeatModel;
 
 public class TimeModel extends CollectionModel { 
 
@@ -16,10 +15,10 @@ public class TimeModel extends CollectionModel {
 		super.initModels();
 		this.addModels(
 				new ShortTimeModel(),
-				new ShortDateModel(),
-				new DayOfWeekModel(),
+				new ShortDateModel()
+//				new DayOfWeekModel(),
 //				new TimeInDayModel(),
-				new TimeRepeatModel()
+//				new TimeRepeatModel()
 //				new TimeUnitModel()
 				);
 	}

@@ -15,21 +15,25 @@ public class ModelData {
 	
 	public static final String[] DAILY_TIME_REPEAT = {
 		"hàng ngày",
+		"mỗi ngày",
 	};
 
 	public static final String[] WEEKLY_TIME_REPEAT = {
 		"hàng tuần",
+		"mỗi tuần",
 	};
 
 	public static final String[] MONTHLY_TIME_REPEAT = {
 		"hàng tháng",
+		"mỗi tháng",
 	};
 
 	public static final String[] YEARLY_TIME_REPEAT = {
 		"hàng năm",
+		"mỗi năm",
 	};
 
-	public static final String[] TIMES = {
+	public static final String[] TIMES = {//bay gio ngay mai, gio nay
 		"bây giờ",
 		"ngày mai",
 	};

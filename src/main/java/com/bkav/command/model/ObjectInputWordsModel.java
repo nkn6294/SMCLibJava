@@ -10,18 +10,20 @@ import com.bkav.command.struct.WordTrieNodeDistinctValues;
 
 /***
  * 
- * @author namnk
- * Create Model from collections data can exportable to string.
- * @param <T> type of input.
+ * @author namnk Create Model from collections data can exportable to string.
+ * @param <T>
+ *            type of input.
  */
 public abstract class ObjectInputWordsModel<T> extends InputWordsModel<T> {
 
 	public ObjectInputWordsModel(Collection<? extends Object> stream) {
 		super(stream);
 	}
+
 	protected List<T> inputs;
-	
+
 	@Override
+
 	protected void normalInputData(Collection<? extends Object> stream) {
 		this.inputs = new ArrayList<>();
 		for (Object object : stream) {
@@ -31,6 +33,7 @@ public abstract class ObjectInputWordsModel<T> extends InputWordsModel<T> {
 			}
 			this.inputs.add(value);
 		}
+
 	}
 
 	@Override
@@ -41,19 +44,22 @@ public abstract class ObjectInputWordsModel<T> extends InputWordsModel<T> {
 				return getAlias(value);
 			}
 		};
-		this.wordTrieNode = updateTrieNode(makeOutput, this.inputs, SystemManager.textProcesser, new WordTrieNodeDistinctValues<T>());
+		this.wordTrieNode = updateTrieNode(makeOutput, this.inputs, SystemManager.textProcesser,
+				new WordTrieNodeDistinctValues<T>());
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	protected T parserObject(Object input) {
 		try {
-			return (T)input;
+			return (T) input;
 		} catch (Exception ex) {
 			return null;
 		}
 	}
+
 	/***
 	 * Return all alias from export from object.
+	 * 
 	 * @param object
 	 * @return
 	 */

@@ -1,157 +1,267 @@
 package com.bkav.command.data.time;
 
+
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
+import org.joda.time.MonthDay;
+import org.joda.time.ReadablePeriod;
 
 import com.bkav.command.common.DayOfWeek;
 import com.bkav.command.data.Context;
-import com.bkav.command.data.time.TimeRepeat;
 import com.bkav.command.data.time.TimeRepeat.TimeRepeatType;
+import com.bkav.command.data.time.TimeValue.DayContext;
 
 public class ScheduleObject {
+	public enum ScheduleUnitDefaultMode {
+		NONE, NOW, START
+	};
 
-	public ScheduleObject(LocalTime time, LocalDate date, LocalDateTime dateTime, DayOfWeek dayOfWeek,
-			TimeRepeat timeRepeat, Context context) {
-		this.date = date;
-		this.time = time;
-		this.dayOfWeek = dayOfWeek;
+	public static ScheduleInformation process(ScheduleObject scheduleObject,
+			ScheduleUnitDefaultMode scheduleUnitDefaultMode, ReadablePeriod duration) throws Exception {
+		if (scheduleObject == null) {
+			throw new Exception("Schedule invalid: " + scheduleObject);
+		}
+		if (!scheduleObject.isValid()) {
+			throw new Exception("Schedule invalid: " + scheduleObject);
+		}
+		LocalDateTime now = LocalDateTime.now();
+		TimeRepeat scheduleTimeRepeat = scheduleObject.timeRepeat();
+		LocalDateTime scheduleDateTime = scheduleObject.dateTime();
+		LocalDate scheduleDate = scheduleObject.date();
+		LocalTime scheduleTime = scheduleObject.time();
+		DayOfWeek dayOfWeek = scheduleObject.dayOfWeek();
+		MonthDay monthDay = scheduleObject.monthDay();
+		DayOfMonth dayOfMonth = scheduleObject.dayOfMonth();
+		DayContext dayContext = scheduleObject.dayContext();
+		if (scheduleTimeRepeat == null) {
+			scheduleTimeRepeat = TimeRepeat.of(TimeRepeatType.ONCE);
+		}
+		if (scheduleDateTime == null) {
+			if (scheduleUnitDefaultMode == ScheduleUnitDefaultMode.NONE) {
+			} else if (scheduleUnitDefaultMode == ScheduleUnitDefaultMode.START) {
+				if (scheduleTime == null) {
+					scheduleTime = new LocalTime(0, 0);
+				}
+			} else if (scheduleUnitDefaultMode == ScheduleUnitDefaultMode.NOW) {
+				if (scheduleDate == null) {
+					scheduleDate = now.toLocalDate();
+				}
+				if (scheduleTime == null) {
+					scheduleTime = now.toLocalTime();
+				}
+			}
+			if (scheduleDate != null && scheduleTime != null) {
+				scheduleDateTime = new LocalDateTime(scheduleDate.getYear(), scheduleDate.getMonthOfYear(), 
+						scheduleDate.getDayOfMonth(), scheduleTime.getHourOfDay(), scheduleTime.getMinuteOfHour());
+			}
+		}
+		if (scheduleTimeRepeat.timeRepeatType() == TimeRepeatType.ONCE) {
+			if (scheduleDateTime == null) {
+				throw new Exception(String.format("Not enough information[scheduleDateTime]. %s. %s", scheduleObject,
+						scheduleUnitDefaultMode));
+			}
+		} else if (scheduleTimeRepeat.timeRepeatType() == TimeRepeatType.DAILY) {
+			if (scheduleTime == null) {
+				throw new Exception(String.format("Not enough information[scheduleTime]. %s. %s", scheduleObject,
+						scheduleUnitDefaultMode));
+			}
+		} else if (scheduleTimeRepeat.timeRepeatType() == TimeRepeatType.WEEKLY) { // thu x hang tuan
+			if (dayOfWeek == null) {
+				throw new Exception(String.format("Not enough information[dayOfWeek]. %s. %s", scheduleObject,
+						scheduleUnitDefaultMode));
+			}
+		} else if (scheduleTimeRepeat.timeRepeatType() == TimeRepeatType.MONTHLY) { 
+			if (dayOfMonth == null) {
+				throw new Exception(String.format("Not enough information[dayOfMonth]. %s. %s", scheduleObject,
+						scheduleUnitDefaultMode));
+			}
+		} else if (scheduleTimeRepeat.timeRepeatType() == TimeRepeatType.YEARLY) { 
+			if (monthDay == null) {
+				throw new Exception(String.format("Not enough information[monthDay]. %s. %s", scheduleObject,
+						scheduleUnitDefaultMode));
+			}
+		}
+		if (scheduleDateTime == null) {
+			scheduleDateTime = now;
+		}
+		LocalDateTime beginDateTime = scheduleDateTime;
+		TimeRepeatType currentRepeat = scheduleTimeRepeat.timeRepeatType();
+		if (beginDateTime.isBefore(now)) {
+			switch (currentRepeat) {
+			case ONCE: {
+				LocalDateTime tempDateTime = beginDateTime;
+				int timeHour = tempDateTime.getHourOfDay();
+				if (timeHour < 12 && dayContext != DayContext.AM) {
+					tempDateTime = tempDateTime.plusHours(12);
+				}
+				if (tempDateTime.isBefore(now)) {
+					beginDateTime = beginDateTime.plusDays(1);
+				} else {
+					beginDateTime = tempDateTime;
+				}
+				if (beginDateTime.isBefore(now)) {
+					throw new Exception("Date schedule must be after now");
+				}
+				break;
+			}
+			case DAILY:
+				beginDateTime = beginDateTime.plusDays(1);
+				break;
+			case WEEKLY:
+				beginDateTime = beginDateTime.plusWeeks(1);
+				break;
+			case MONTHLY:
+				beginDateTime = beginDateTime.plusMonths(1);
+				break;
+			case YEARLY:
+				beginDateTime = beginDateTime.plusYears(1);
+				break;
+			default:
+				break;
+			}
+		}
+		return new ScheduleInformation(beginDateTime, currentRepeat, duration);
+	}
+
+	public ScheduleObject(TimeValue timeValue, DateValue dateValue, TimeRepeat timeRepeat, Context context) {
+		this.dateValue = dateValue;
+		this.timeValue = timeValue;
 		this.timeRepeat = timeRepeat;
-		this.dateTime = dateTime;
 		this.context = context;
+		this.normal();
+	}
+
+	public DateValue dateValue() {
+		return this.dateValue;
+	}
+
+	public TimeValue timeValue() {
+		return this.timeValue;
+	}
+
+	public DayContext dayContext() {
+		return this.timeValue.dayContext();
 	}
 
 	public LocalDate date() {
-		return this.date;
+		LocalDate date = this.dateValue.date();
+		return date == null ? this.date : date;
 	}
 
 	public LocalTime time() {
-		return this.time;
+		LocalTime time = this.timeValue.time();
+		return time == null ? this.time : time;
 	}
 
 	public LocalDateTime dateTime() {
+		LocalDate date = this.date();
+		LocalTime time = this.time();
+		if (date != null && time != null) {
+			return new LocalDateTime(date.getYear(), date.getMonthOfYear(), date.getDayOfMonth(),
+					time.getHourOfDay(), time.getMinuteOfHour());
+		}
 		return this.dateTime;
 	}
 
+	public MonthDay monthDay() {
+		MonthDay monthDay = this.dateValue.monthDay();
+		return monthDay == null ? this.monthDay : monthDay;
+	}
+
+	public DayOfMonth dayOfMonth() {
+		DayOfMonth dayOfMonth = this.dateValue.dayOfMonth();
+		return dayOfMonth == null ? this.dayOfMonth : dayOfMonth;
+	}
+
 	public DayOfWeek dayOfWeek() {
-		return this.dayOfWeek;
+		DayOfWeek dayOfWeek = this.dateValue.dayOfWeek();
+		return dayOfWeek == null ? this.dayOfWeek : dayOfWeek;
 	}
 
 	public TimeRepeat timeRepeat() {
+		if (this.timeRepeat == null) {
+			this.timeRepeat = TimeRepeat.of(TimeRepeatType.ONCE);
+		}
 		return this.timeRepeat;
 	}
 
+	/***
+	 * Normal unit value, set status {@link ScheduleObject#isValid()} to false if
+	 * conflic or not enought information.
+	 */
 	public void normal() {
 		if (this.isNormaled) {
 			return;
 		}
-		//order normal: dateTime > date > time > dayOfWeek > timeRepeat
-		if (this.dateTime != null) {
-			this.date = null;
-			this.time = null;
-			this.dayOfWeek = null;
-			if (this.timeRepeat == null) {
-				this.timeRepeat = new TimeRepeat("", TimeRepeatType.ONCE);				
-			} else {
-				this.timeRepeat.timeRepeatType(TimeRepeatType.ONCE);
-			}
-			return;
-		} 
-		//dateTime = null
-		if (this.date != null) {
-			if (this.time == null) {
-				this.time = new LocalTime(0, 0);
-			}
-			if (dayOfWeek == null) {
-				dayOfWeek = DayOfWeek.of(this.date.getDayOfWeek());
-			}
-			if (this.timeRepeat == null) {
-				this.timeRepeat = new TimeRepeat("", TimeRepeatType.ONCE);
-			}
+		this.isNormaled = true;
+		this.checkValid();
+		if (!this.isValid()) {
 			return;
 		}
-		//[dateTime, date] = null
-		if (this.time != null) {
-			if (this.timeRepeat == null) {
-				this.timeRepeat = new TimeRepeat("", TimeRepeatType.DAILY);
-			} else {
-//				this.timeRepeat.timeRepeatType(TimeRepeatType.DAILY);
-			}
-			if (dayOfWeek == null) {
-				dayOfWeek = context.startOfWeek();
-			}
-			return;
+		this.timeValue.normal();
+		this.dateValue.normal();
+		if (this.timeRepeat == null) {
+			// DEFAUL ONCE if not info
+			this.timeRepeat = TimeRepeat.of(TimeRepeatType.ONCE);
 		}
-		//[dateTime, date, time] = null
-		if (this.dayOfWeek != null) {
-			if (this.timeRepeat == null) {
-				this.timeRepeat = new TimeRepeat("", TimeRepeatType.WEEKLY);
-			} else {
-				//ERROR
+		if (this.timeValue.isValid() && this.dateValue.isValid()) {
+			// full datetime -> ONCE, DAILY, WEEKLY, MONTHLY, YEARLY
+		} else if (this.dateValue.isValid()) {
+			// only date -> default time (now or 0,0) -> ONCE, DAILY, WEEKLY, MONTHLY,
+			// YEARLY
+		} else if (this.timeValue.isValid()) {// only time -> ONCE, DAILY
+			if (this.timeRepeat.timeRepeatType() != TimeRepeatType.ONCE
+					&& this.timeRepeat.timeRepeatType() != TimeRepeatType.DAILY) {
+				this.isValid = false;
 			}
-			return;
-		}
-		//[dateTime, date, time, dayOfWeek] = null
-		if (this.timeRepeat != null) {
-			this.dayOfWeek = context.startOfWeek();
-			switch (this.timeRepeat.timeRepeatType()) {
-			case ONCE:
-				break;
-			case DAILY:
-				break;
-			case WEEKLY:
-				break;
-			case MONTHLY:
-				break;
-			case YEARLY:
-				break;
-			default: 
-				break;
+		} else {
+			// without datetime -> default time (now, 0, 0) -> DAILY
+			if (this.timeRepeat.timeRepeatType() != TimeRepeatType.DAILY) {
+				this.isValid = false;
 			}
 		}
 	}
+
 	/***
 	 * Normal with now.
 	 */
 	public boolean normalNow() throws Exception {
 		this.normal();
 		LocalDateTime now = LocalDateTime.now();
-		if (this.dateTime != null) {
-			if (this.dateTime.isBefore(now)) {
-				throw new Exception("Date schedule must be after now. ScheduleDateTime: " + this.dateTime);
+		if (this.dateTime() != null) {
+			if (this.dateTime().isBefore(now)) {
+				throw new Exception("Date schedule must be after now. ScheduleDateTime: " + this.dateTime());
 			}
 		}
 		return true;
 	}
-	
+
 	public boolean isValid() {
-		//TODO complete isValis ScheduleObject
-		boolean isValid = true;
-		isValid = this.date != null 
-				|| this.time != null 
-				|| this.dateTime != null
-				|| this.dayOfWeek != null
-				|| this.timeRepeat != null;
-//		if (this.time == null && this.date == null && this.dateTime == null) {
-//			isValid = false;
-//		}
-//		else if (dayOfWeek == null && this.timeRepeat == null) {
-//			isValid = false;
-//		}
-		return isValid;
+		return this.isValid;
 	}
 
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + " [date=" + date + ", time=" + time + ", dayOfWeek=" + dayOfWeek
-				+ ", timeRepeat=" + timeRepeat + ", dateTime=" + dateTime + "]";
+		return this.getClass().getSimpleName() + " [dateValue=" + dateValue + ", timeValue=" + timeValue
+				+ ", timeRepeat=" + timeRepeat + ", dateTime=" + this.dateTime() + "]";
 	}
-	
-	protected LocalDate date;
-	protected LocalTime time;
-	protected DayOfWeek dayOfWeek;
+
+	protected DateValue dateValue;
+	protected TimeValue timeValue;
 	protected TimeRepeat timeRepeat;
-	protected LocalDateTime dateTime;
 	protected Context context;
 	protected boolean isNormaled = false;
+
+	private boolean isValid = false;
+	private LocalDateTime dateTime = null;
+	private LocalTime time = null;
+	private LocalDate date = null;
+	private MonthDay monthDay = null;
+	private DayOfMonth dayOfMonth = null;
+	private DayOfWeek dayOfWeek = null;
+
+	private void checkValid() {
+		this.isValid = this.dateValue.isValid() || this.timeValue.isValid() || this.timeRepeat != null;
+	}
 }

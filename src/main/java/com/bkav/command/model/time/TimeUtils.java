@@ -26,12 +26,12 @@ public class TimeUtils {
 	}
 
 	protected static String boundTime(String input) {
-		String patternString = "(\\+?\\d{1,2}(m|(:\\d{1,2})))";
+		String patternString = "(\\+?\\d{1,2}(m|(:\\d{1,2}))a?)";
 		return input.replaceAll(patternString, "_time($1)");
 	}
 
 	protected static String normalHourUnit(String input) {
-		String patternString = "\\b(\\d+)\\s*giờ\\b";
+		String patternString = "\\b(\\d+)\\s*((giờ)|(tiếng))\\b";
 		return input.replaceAll(patternString, "$1h");
 	}
 
@@ -51,7 +51,7 @@ public class TimeUtils {
 	}
 
 	protected static String normalAtTime(String input) {
-		String patternString = "(\\blúc\\s)?(\\d{1,2}:\\d{1,2})\\b";
+		String patternString = "(\\blúc\\s)?(\\d{1,2}:\\d{1,2}a?)\\b";
 		return input.replaceAll(patternString, "$2");
 	}
 

@@ -1,69 +1,86 @@
 package com.bkav.command.model.time;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.joda.time.LocalTime;
+import org.joda.time.Period;
 
-import com.bkav.command.common.ModelProcessMode;
-import com.bkav.command.model.AbstractModel;
-import com.bkav.command.struct.ListStringWithMask;
-import com.bkav.command.struct.MaskConfig;
-import com.bkav.command.struct.ResultsProcess;
+import com.bkav.command.data.time.TimeValue.DayContext;
+import com.bkav.command.model.ParseStringModel;
 
-public class ShortTimeModel extends AbstractModel {
+public class ShortTimeModel extends ParseStringModel<Object> {// extends AbstractModel {
 
-	@Override
-	public ResultsProcess process(ResultsProcess currentResult) {
-		String[] words = currentResult.remains();
-		if (words.length == 0) {
-			return currentResult;
-		}
-		ListStringWithMask wordsWithMark =  new ListStringWithMask(words);
-		wordsWithMark.setConfig(MaskConfig.getDefaultConfig());
-		List<Integer> indexs = new ArrayList<>();
-		for (int index = 0; index < words.length; index++) {
-			String word = words[index];
-			if (!word.startsWith("_time(")) {
-				continue;
-			}
-			LocalTime localTime = this.processTime(word.replaceFirst("_time\\((.+)\\)", "$1"));
-			if (localTime != null) {
-				indexs.add(index);
-				currentResult.addValue(localTime);
-			}
-		}
-		if (this.modelConfig.getModelProcessMode() == ModelProcessMode.PROCESS_AND_MARKED) {
-			currentResult.stringsMark().setMarkWithRelativeIndex(indexs);			
-		}
-		return currentResult;
-	}
-	protected static final String TIME_REGEX_PATTERN = "((\\D)?(\\d{1,2}):(\\d{1,2})?)";
-	protected static Pattern timePattern = Pattern.compile(TIME_REGEX_PATTERN);
-
-	@Override
-	protected void init() {
-		super.init();
+	public ShortTimeModel() {
+		super(ParseStringMode.ONE_MAP_MANY);
 		this.modelName = "SHORT_TIME_MODEL";
 	}
-	
-	protected LocalTime processTime(String data) {
+
+	protected static final String TIME_REGEX_PATTERN = "((\\D)?(\\d{1,2}):(\\d{1,2})?(a?))";
+	protected static final Pattern timePattern = Pattern.compile(TIME_REGEX_PATTERN);
+ 
+	@Override
+	protected boolean preWordFilter(String word) {
+		if (!super.preWordFilter(word)) {
+			return false;
+		}
+		return word.startsWith("_time(");
+	}
+
+	@Override
+	protected String getStringData(String word) {
+		return word.replaceFirst("_time\\((.+)\\)", "$1");
+	}
+
+	@Override
+	protected Object createData(String word) {
 		try {
-			Matcher matcher = timePattern.matcher(data);
+			Matcher matcher = timePattern.matcher(word);
 			if (!matcher.find()) {
 				throw new Exception();
 			}
 			String param = matcher.group(2);
 			int hour = Integer.parseInt(matcher.group(3));
 			int minute = Integer.parseInt(matcher.group(4));
-			if ("+".equals(param)) {
-				return LocalTime.now().plusHours(hour).plusMinutes(minute);
+			if (this.isContextTimeFormat(param)) {
+				return Period.hours(hour).plusMinutes(minute);
 			}
 			return new LocalTime(hour, minute);
 		} catch (Exception ex) {
 			return null;
 		}
+	}
+
+	@Override
+	protected Collection<Object> createDatas(String word) {
+		try {
+			Collection<Object> objects = new ArrayList<>();
+			Matcher matcher = timePattern.matcher(word);
+			if (!matcher.find()) {
+				throw new Exception();
+			}
+			String param = matcher.group(2);
+			int hour = Integer.parseInt(matcher.group(3));
+			int minute = Integer.parseInt(matcher.group(4));
+
+			if (this.isContextTimeFormat(param)) {
+				objects.add(Period.hours(hour).plusMinutes(minute));
+			} else {
+				objects.add(new LocalTime(hour, minute));
+				boolean isAM = matcher.group(5) != null;
+				if (isAM) {
+					objects.add(DayContext.AM);
+				}
+			}
+			return objects;
+		} catch (Exception ex) {
+			return null;
+		}
+	}
+
+	protected boolean isContextTimeFormat(String param) {
+		return "+".equals(param);
 	}
 }

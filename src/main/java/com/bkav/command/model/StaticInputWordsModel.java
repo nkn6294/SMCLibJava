@@ -62,10 +62,12 @@ public abstract class StaticInputWordsModel<T> extends InputWordsModel<T> {
 	protected void normalInputData(Collection<? extends Object> stream) {
 		List<String[]> listOutput = new ArrayList<>();
 		for (Object object: stream) {
-			String data[] = SystemManager.textProcesser.textToWords(object.toString());
+			String objectString = SystemManager.textProcesser.apply(object.toString());
+			String data[] = SystemManager.textProcesser.textToWords(objectString);
 			listOutput.add(data);
 		}
 		this.dataProcessed = listOutput;
+
 	}
 
 	/***

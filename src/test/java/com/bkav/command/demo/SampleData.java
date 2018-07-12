@@ -170,6 +170,13 @@ public class SampleData {
 		"Tăng điều hòa phòng ngủ mười độ lúc sáu giờ sáng thứ năm tuần tới",
 		"Tăng điều hòa phòng ngủ mười giờ ngày mai",
 	};
+	
+	public static final String[] SampleTimeRepeat = {
+		"hàng ngày",
+		"hàng tháng",
+		"hàng năm",
+	};
+	
 	public static final String[] SampleShortSchedule = {
 		"lúc 10:22",
 		"lúc 22:30",
@@ -186,16 +193,63 @@ public class SampleData {
 	};
 	public static final String[] SampleSchedule = {
 		// chu y AM, PM, thoi gian hien tai, ngay trong thang..., gio,phut,giay -> h,m,s, hh:ss
-		"2 giờ 10 phút ngày 12-12-2012",
-		"lúc 2 giờ chiều",
-		"lúc 2 giờ 10 phút",
-		"lúc 2 giờ sáng",
-		"lúc 14 giờ 10 phút",
-		"lúc 2 giờ 10 phút ngày mai",
-		"sau 2 giờ 10 phút nữa",
+//		"2 giờ 10 phút ngày 12-12-2012",
+//		"lúc 2 giờ chiều",
+//		"lúc 2 giờ 10 phút",
+//		"lúc 2 giờ sáng",
+//		"lúc 14 giờ 10 phút",
+//		"lúc 2 giờ 10 phút ngày mai",
+//		"sau 2 giờ 10 phút nữa",
 		"2 giờ 10 phút thứ 6 tuần này",
-		"2 giờ 10 phút thứ 6 tuần sau",
-		"sau 2 phút nữa",
+//		"2 giờ 10 phút thứ 6 tuần sau",
+//		"sau 2 phút nữa",
 	};
+	public static final String[] SampleTimeSchedule = {
+			// chu y AM, PM, thoi gian hien tai, ngay trong thang..., gio,phut,giay -> h,m,s, hh:ss
+			"lúc 2 giờ chiều",
+			"lúc 2 giờ 10 phút",
+			"lúc 2 giờ sáng",
+			"lúc 14 giờ 10 phút",
+			"lúc 2 giờ 10 phút ngày mai",
+			"sau 2 giờ 10 phút nữa",
+			"2 giờ 10 phút thứ 6 tuần này",
+			"2 giờ 10 phút thứ 6 tuần sau",
+			"sau 2 phút nữa",
+			"6 am",
+			"6am",
+			"12 a. m",
+			"01 a . m",
+			"2 giờ",
+			
+			"2 giờ pm",
+			"2 giờ 10 phút",
+			"2 giờ 10 phút",
+			"2 giờ 10 phút nữa",
+			"sau 2 giờ 10 phút nữa",
+			
+			"2 phút",
+			"2 phút nữa",
+			"sau 02 phút nữa",
+			"lúc 2 giờ 10",
+			"6 giờ 30 am",
+			
+			"6 giờ 30 pm",
+			"6 giờ sáng",
+			"3 giờ chiều",
+			"11 giờ trưa",
+			"11 giờ 30 đêm",
+		};
+	public static final String[] SampleDateSchedule = {
+			// chu y AM, PM, thoi gian hien tai, ngay trong thang..., gio,phut,giay -> h,m,s, hh:ss
+			"ngày 12-12-2012",
+			"ngày 12 tháng 2 năm 2019",
+			"ngày 12 tháng 2",
+			"12 tháng 4",
+			"ngày 12",
+			"ngày 12-12-2012",
+			"ngày 12/12/2012",
+			"ngày 12_12_2012",
+			"thứ sáu ngày 12_12_2012",
+		};
 	private SampleData() {}
 }

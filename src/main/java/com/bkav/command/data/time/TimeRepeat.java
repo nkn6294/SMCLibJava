@@ -10,6 +10,11 @@ public class TimeRepeat extends CommonData {
 		MONTHLY,
 		YEARLY
 	}
+	
+	public static TimeRepeat of(TimeRepeatType type) {
+		return new TimeRepeat("", type);
+	}
+	
 	public static TimeRepeat createFromStringArray(String[] datas, TimeRepeatType timeRepeatType) {
 		return new TimeRepeat(getSimpleName(datas), timeRepeatType);
 	}
@@ -22,12 +27,10 @@ public class TimeRepeat extends CommonData {
 		this(name, TimeRepeatType.ONCE);
 	}
 
-
 	public TimeRepeatType timeRepeatType(TimeRepeatType timeRepeatType) {
 		this.timeRepeatType = timeRepeatType;
 		return this.timeRepeatType;
 	}
-
 
 	public TimeRepeatType timeRepeatType() {
 		return this.timeRepeatType;

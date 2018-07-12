@@ -13,7 +13,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.bkav.command.SystemManager;
-import com.bkav.command.data.time.TimeInDay;
 import com.bkav.command.demo.SampleData;
 import com.bkav.command.demo.data.HomeArea;
 import com.bkav.command.demo.data.HomeDevice;
@@ -21,7 +20,6 @@ import com.bkav.command.demo.data.HomeDeviceType;
 import com.bkav.command.demo.model.HomeAreaModel;
 import com.bkav.command.demo.model.HomeDeviceModel;
 import com.bkav.command.demo.model.HomeDeviceTypeModel;
-import com.bkav.command.model.time.TimeInDayModel;
 
 public class WordTrieNodeManagerTest {
 
@@ -39,8 +37,7 @@ public class WordTrieNodeManagerTest {
 		WordTrieNode<HomeDeviceType> deviceTypeNode = new HomeDeviceTypeModel(SampleData.DEVICE_TYPE).getWordTrieNode();
 		WordTrieNode<HomeDevice> deviceNode = new HomeDeviceModel(SampleData.DEVICES).getWordTrieNode();
 		WordTrieNode<HomeArea> areaNode = new HomeAreaModel(SampleData.AREAS).getWordTrieNode();
-		WordTrieNode<TimeInDay> timeInDayNode = new TimeInDayModel().getWordTrieNode();
-		this.wordTrieNodes.addWordTrieNode(areaNode, deviceTypeNode, deviceNode, timeInDayNode);
+		this.wordTrieNodes.addWordTrieNode(areaNode, deviceTypeNode, deviceNode);
 	}
 
 	@After

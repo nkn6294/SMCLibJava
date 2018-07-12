@@ -83,9 +83,15 @@ public class SystemManager {
 			}
 		});
 //		textProcesserAdvance.addTextProcesser(NormalInputUtils::deAccentConvert);
-		textProcesser = new CommonCommandTextProcesser(textProcesserAdvance);
+		SystemManager.textProcesserAdvance = textProcesserAdvance;
+		textProcesser = new CommonCommandTextProcesser(SystemManager.textProcesserAdvance);
 	}
-	
+	public static void addTextProcesser(TextProcesser processer) {
+		SystemManager.textProcesserAdvance.addTextProcesser(processer);
+	}
+	public static void removeTextProcesser(TextProcesser processer) {
+		SystemManager.textProcesserAdvance.removeTextProcesser(processer);
+	}
 	public static void loadLogProperties(String fileName) {//logging.properties
 		InputStream stream = null;
 		try {
@@ -148,4 +154,6 @@ public class SystemManager {
 		}
 	}
 	private SystemManager() {}
+	
+	private static CommandTextProcesserAdvance textProcesserAdvance;
 }

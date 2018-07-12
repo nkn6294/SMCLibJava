@@ -69,7 +69,8 @@ public final class StringUtil {
 		return builder.toString();
 	}
     public static String[] splitString(String key) {
-    	return key.replaceAll("_", " _").split("\\s+");
+    	return key.split("\\s+");//key.replaceAll("_", " _").split("\\s+");
+//        return splitStringToList(key).stream().toArray(String[]::new);
     }
     
     public static List<String> splitStringToList(String key) {
