@@ -17,10 +17,7 @@ public abstract class CollectionModel extends AbstractModel implements Iterable<
 	 * Custom process mode with {@link PipeLineModelSupplier} generate next model from before result.
 	 */
 	public static final int CUSTOM_OPTIONAL = 3;
-	@Override
-	public void test(String[]... commands) {
-		this.pipeLineModel.stream().forEach(item -> item.test(commands));
-	}
+
 	public CollectionModel() {
 		super();
 	}
@@ -30,6 +27,7 @@ public abstract class CollectionModel extends AbstractModel implements Iterable<
 	}
 	@Override
 	public ResultsProcess process(ResultsProcess input) {
+		//TODO UPDATE config all model item
 		if (this.processOptional != CUSTOM_OPTIONAL) {
 			for (Model model : this.pipeLineModel) {
 				input = model.process(input);
@@ -44,6 +42,7 @@ public abstract class CollectionModel extends AbstractModel implements Iterable<
 				input = model.process(input);
 				model = models.get(input);
 			}
+			models.reset();
 		}
 		return input;
 	}

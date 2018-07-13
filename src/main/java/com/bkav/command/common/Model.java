@@ -30,13 +30,6 @@ public interface Model {
     	return input;
     }
     
-    default public void test(String[]... commands) {
-    	Arrays.stream(commands)
-    		.map(ResultsProcess::new)
-    		.map(this::process)
-    		.forEach(Object::toString);
-    }
-    
     default public ModelConfig getModelConfig() {
     	return new ModelConfig();
     }

@@ -19,7 +19,13 @@ public abstract class AbstractModel implements Model {
 		this.modelConfig = new ModelConfig();
 		this.init();
 	}
-	
+
+//	public void test(String[]... commands) {
+//		Arrays.stream(commands)
+//		.map(ResultsProcess::new)
+//		.map(this::process)
+//		.forEach(Object::toString);
+//	}
 	@Override
 	public String getModelName() {
 		return this.modelName;

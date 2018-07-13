@@ -30,7 +30,7 @@ public abstract class ParseStringModel<T> extends AbstractModel {
 	public ParseStringModel() {
 		this.parseStringMode = ParseStringMode.ONE_MAP_ONE;
 	}
-	@Override
+	
 	public void test(String[]... commands) {
 		Arrays.stream(commands).map(words -> new ResultsProcess(words))
 			.map(this::process)

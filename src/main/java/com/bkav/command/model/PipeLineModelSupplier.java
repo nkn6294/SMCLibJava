@@ -13,7 +13,7 @@ public class PipeLineModelSupplier implements ModelSupplierWithResultProcess {
 			throw new NullPointerException();
 		}
 		this.pipeLineModel = pipeLine;
-		this.iterator = this.pipeLineModel.iterator();
+		this.reset();
 	}
 	
 	@Override
@@ -22,6 +22,10 @@ public class PipeLineModelSupplier implements ModelSupplierWithResultProcess {
 			return iterator.next();
 		}
 		return null;
+	}
+	@Override
+	public void reset() {
+		this.iterator = this.pipeLineModel.iterator();
 	}
 	
 	protected PipeLineModel pipeLineModel;

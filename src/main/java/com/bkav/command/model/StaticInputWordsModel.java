@@ -15,11 +15,11 @@ import com.bkav.command.struct.ResultsProcess;
  * @param <T> type of value map for each words input.
  */
 public abstract class StaticInputWordsModel<T> extends InputWordsModel<T> {
-	@Override
-	public void test(String[]... commands) {
-		Arrays.stream(commands)
-				.forEach(command -> this.wordTrieNode.findPharases(command).stream().map(Object::toString).forEach(SystemManager.logger::info));
-	}
+	
+//	public void test(String[]... commands) {
+//		Arrays.stream(commands)
+//				.forEach(command -> this.wordTrieNode.findPharases(command).stream().map(Object::toString).forEach(SystemManager.logger::info));
+//	}
 
 	public StaticInputWordsModel(Collection<String> dataInput) {
 		super(dataInput.stream());

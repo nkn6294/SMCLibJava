@@ -1,6 +1,5 @@
 package com.bkav.command.model;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -51,13 +50,12 @@ public abstract class InputWordsModel<T> extends AbstractModel {
 		}
 		return 0;
 	};
-	@Override
-	public void test(String[]... commands) {
-		Arrays.stream(commands)
-				.forEach(command -> this.wordTrieNode.findPharases(command).stream()
-						.map(Object::toString)
-						.forEach(SystemManager.logger::info));
-	}
+//	public void test(String[]... commands) {
+//		Arrays.stream(commands)
+//				.forEach(command -> this.wordTrieNode.findPharases(command).stream()
+//						.map(Object::toString)
+//						.forEach(SystemManager.logger::info));
+//	}
 
 	public InputWordsModel(Stream<? extends Object> stream) {
 		super();
