@@ -36,8 +36,7 @@ public class ShortDateModel extends ParseStringModel<Object> {
 	
 	@Override
 	protected String getStringData(String word) {
-//		return word.replaceFirst("_date\\((.+)\\)", "$1");
-		return word.replaceFirst("_date_(.+)_", "$1");
+		return word.replaceAll("_date_(.+)_", "$1");
 	}
 	
 	@Override

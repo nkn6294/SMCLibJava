@@ -53,7 +53,7 @@ public abstract class ParseStringModel<T> extends AbstractModel {
 			}
 			String stringData = this.getStringData(word);
 			if (this.parseStringMode == ParseStringMode.ONE_MAP_ONE) {
-				T data = this.createData(word);
+				T data = this.createData(stringData);
 				if (data != null) {
 					indexs.add(index);
 					input.addValue(data);
