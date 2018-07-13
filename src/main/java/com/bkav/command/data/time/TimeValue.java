@@ -12,22 +12,22 @@ public class TimeValue {
 	public enum DayContext {
 		AM, PM, AM_PM
 	}
-	public TimeValue(LocalTime localTime, Period period, DayContext dayContext) {
+	public TimeValue(LocalTime localTime, Duration duration, DayContext dayContext) {
 		this.localTime = localTime;
-		this.period = period;
+		this.period = duration == null ? null : duration.toPeriod();
 		this.dayContext = dayContext;
 		this.normal();
 		this.updateMode();
 	}
-	public TimeValue(LocalTime localTime, Period period) {
-		this(localTime, period, DayContext.AM_PM);
+	public TimeValue(LocalTime localTime, Duration duration) {
+		this(localTime, duration, DayContext.AM_PM);
 	}
 	public TimeValue(LocalTime localTime) {
 		this(localTime, null);
 	}
 	
-	public TimeValue(Period period) {
-		this(null, period);
+	public TimeValue(Duration duration) {
+		this(null, duration);
 	}
 	
 	public TimeValue() {
@@ -50,7 +50,7 @@ public class TimeValue {
 		if (this.localTime != null) {
 			return this.localTime;
 		} else if (this.period != null) {
-			output = LocalTime.now() .plus(period);				
+			output = LocalTime.now().plus(period.toPeriod());				
 		} else {
 		}
 		return output;

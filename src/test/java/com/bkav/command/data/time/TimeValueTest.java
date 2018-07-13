@@ -2,8 +2,8 @@ package com.bkav.command.data.time;
 
 import static org.junit.Assert.assertTrue;
 
+import org.joda.time.Duration;
 import org.joda.time.LocalTime;
-import org.joda.time.Period;
 import org.junit.Test;
 
 import com.bkav.command.SystemManager;
@@ -25,9 +25,8 @@ public class TimeValueTest {
 	public void testTime() {
 		int hour = 0;
 		int minute = 30;
-		Period period = Period.hours(hour).plusMinutes(minute);
-		
-		TimeValue timeValue = new TimeValue(period);
+		Duration duration = Duration.standardHours(hour).plus(Duration.standardMinutes(minute));
+		TimeValue timeValue = new TimeValue(duration);
 		LocalTime time = timeValue.time();
 		SystemManager.logger.info(time.toString());
 		assertTrue(true);

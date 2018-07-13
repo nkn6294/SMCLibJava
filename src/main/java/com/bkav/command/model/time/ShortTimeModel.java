@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.joda.time.Duration;
 import org.joda.time.LocalTime;
 import org.joda.time.Period;
 
@@ -66,7 +67,8 @@ public class ShortTimeModel extends ParseStringModel<Object> {// extends Abstrac
 			int minute = Integer.parseInt(matcher.group(4));
 
 			if (this.isContextTimeFormat(param)) {
-				objects.add(Period.hours(hour).plusMinutes(minute));
+				Duration duration = Duration.standardHours(hour).plus(Duration.standardMinutes(minute));
+				objects.add(duration);//Period.hours(hour).plusMinutes(minute));
 			} else {
 				objects.add(new LocalTime(hour, minute));
 				boolean isAM = matcher.group(5) != null;
