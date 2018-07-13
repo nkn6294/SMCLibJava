@@ -19,7 +19,7 @@ public class ShortTimeModel extends ParseStringModel<Object> {// extends Abstrac
 		this.modelName = "SHORT_TIME_MODEL";
 	}
 
-	protected static final String TIME_REGEX_PATTERN = "((\\D)?(\\d{1,2}):(\\d{1,2})?(a?))";
+	protected static final String TIME_REGEX_PATTERN = "((\\D)?(\\d{1,2}):(\\d{1,2})?(a)?)";
 	protected static final Pattern timePattern = Pattern.compile(TIME_REGEX_PATTERN);
  
 	@Override
