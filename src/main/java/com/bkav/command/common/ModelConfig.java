@@ -7,7 +7,7 @@ public class ModelConfig {
 	}
 	
 	public ModelProcessMode getModelProcessMode() {
-		return ModelProcessMode.PROCESS_AND_MARKED;
+		return this.modelProcessMode;
 	}
 	
 	public void setModelProcessMode(ModelProcessMode modelProcessMode) {

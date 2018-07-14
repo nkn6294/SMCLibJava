@@ -33,10 +33,11 @@ public abstract class CollectionModel extends AbstractModel implements Iterable<
 				input = model.process(input);
 			}			
 		} else {
-			PipeLineModelSupplier models = this.createPipeLineModelSupplier(this.pipeLineModel);
+			ModelSupplierWithResultProcess models = this.createPipeLineModelSupplier(this.pipeLineModel);
 			if (models == null) {
 				return input;
 			}
+			models.reset();
 			Model model = models.get(input);
 			while (model != null) {
 				input = model.process(input);
@@ -87,7 +88,7 @@ public abstract class CollectionModel extends AbstractModel implements Iterable<
 	 * {@link CollectionModel#CUSTOM_OPTIONAL} mode. 
 	 * Override and return new instance of {@link PipeLineModelSupplier} if need.
 	 */
-	protected PipeLineModelSupplier createPipeLineModelSupplier(PipeLineModel pipeLineModel) {
+	protected ModelSupplierWithResultProcess createPipeLineModelSupplier(PipeLineModel pipeLineModel) {
 		return new PipeLineModelSupplier(pipeLineModel);
 	}
 	
