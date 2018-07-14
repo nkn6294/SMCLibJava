@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.bkav.command.SystemManager;
+import com.bkav.command.common.CommandTextProcesser;
 import com.bkav.command.struct.WordTrieNodeDistinctValues;
 import com.bkav.command.util.Utils;
 
@@ -21,11 +22,15 @@ public abstract class ObjectInputWordsModel<T> extends InputWordsModel<T> {
 	public ObjectInputWordsModel(Stream<? extends Object> stream) {
 		super(stream);
 	}
-	
+	public ObjectInputWordsModel(Stream<? extends Object> stream, CommandTextProcesser textProcesser) {
+		super(stream, textProcesser);
+	}
 	public ObjectInputWordsModel(Collection<? extends Object> objects) {
 		super(objects.stream());
 	}
-	
+	public ObjectInputWordsModel(Collection<? extends Object> objects, CommandTextProcesser textProcesser) {
+		super(objects.stream(), textProcesser);
+	}
 	protected List<T> inputs;
 	
 	@Override
@@ -38,7 +43,9 @@ public abstract class ObjectInputWordsModel<T> extends InputWordsModel<T> {
 	@Override
 	protected void createModelTree() {
 		Function<T, String[]> makeOutput = this::getAlias;
-		this.wordTrieNode = updateTrieNode(makeOutput, this.inputs.stream(), SystemManager.textProcesser, new WordTrieNodeDistinctValues<>());
+		CommandTextProcesser textProcesser = SystemManager.textProcesser;
+		textProcesser = this.commandTextProcesser;
+		this.wordTrieNode = updateTrieNode(makeOutput, this.inputs.stream(), textProcesser, new WordTrieNodeDistinctValues<>());
 	}
 	
 	@SuppressWarnings("unchecked")

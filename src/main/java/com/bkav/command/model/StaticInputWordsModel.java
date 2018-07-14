@@ -6,8 +6,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import com.bkav.command.SystemManager;
-import com.bkav.command.common.ModelProcessMode;
-import com.bkav.command.struct.ResultsProcess;
+import com.bkav.command.common.CommandTextProcesser;
 
 /***
  * Model is builded from static collection words input with value map for each word.
@@ -40,12 +39,27 @@ public abstract class StaticInputWordsModel<T> extends InputWordsModel<T> {
 		super(dataInput.stream().map(convert::apply));
 		Arrays.sort(this.dataProcessed, DEFAULT_STRING_ARRAY_COMPARATOR);
 	}
-	@Override
-	public ResultsProcess process(ResultsProcess input) {
-		boolean isMarkedOrigin = this.modelConfig.getModelProcessMode() == ModelProcessMode.PROCESS_AND_MARKED;
-		return this.wordTrieNode.findPharases(input, isMarkedOrigin);
+
+	public StaticInputWordsModel(Collection<String> dataInput, CommandTextProcesser textProcesser) {
+		super(dataInput.stream(), textProcesser);
+		Arrays.sort(this.dataProcessed, DEFAULT_STRING_ARRAY_COMPARATOR);
 	}
 
+	public StaticInputWordsModel(String[] dataInput, CommandTextProcesser textProcesser) {
+		super(Arrays.stream(dataInput), textProcesser);
+		Arrays.sort(this.dataProcessed, DEFAULT_STRING_ARRAY_COMPARATOR);
+	}
+	
+	public StaticInputWordsModel(String[] dataInput, Function<Object, String> convert, CommandTextProcesser textProcesser) {
+		super(Arrays.stream(dataInput).map(convert::apply), textProcesser);
+		Arrays.sort(this.dataProcessed, DEFAULT_STRING_ARRAY_COMPARATOR);
+	}
+
+	public StaticInputWordsModel(Collection<Object> dataInput, Function<Object, String> convert, CommandTextProcesser textProcesser) {
+		super(dataInput.stream().map(convert::apply), textProcesser);
+		Arrays.sort(this.dataProcessed, DEFAULT_STRING_ARRAY_COMPARATOR);
+	}
+	
 	/***
 	 * data[commands] -> data[command[]], created in {@link #normalInputData(Stream)}
 	 */

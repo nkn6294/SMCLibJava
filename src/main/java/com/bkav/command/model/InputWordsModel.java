@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 import com.bkav.command.SystemManager;
 import com.bkav.command.common.CommandTextProcesser;
 import com.bkav.command.common.ModelProcessMode;
+import com.bkav.command.common.TextProcesser;
 import com.bkav.command.struct.ResultsProcess;
 import com.bkav.command.struct.WordTrieNode;
 import com.bkav.command.struct.WordTrieNodeDistinctValues;
@@ -62,11 +63,18 @@ public abstract class InputWordsModel<T> extends AbstractModel {
 		this.normalInputData(stream);
 		this.createModelTree();
 	}
+	
+	public InputWordsModel(Stream<? extends Object> stream, CommandTextProcesser textProcesser) {
+		super();
+		this.commandTextProcesser = textProcesser;
+		this.normalInputData(stream);
+		this.createModelTree();
+	}
 
 	@Override
 	public ResultsProcess process(ResultsProcess input) {
 		boolean isMarkedOrigin = this.modelConfig.getModelProcessMode() == ModelProcessMode.PROCESS_AND_MARKED;
-		return this.wordTrieNode.findPharases(input, isMarkedOrigin);
+		return this.wordTrieNode.findPharases(input, isMarkedOrigin, this.commandTextProcesser);
 	}
 
 	public WordTrieNode<T> getWordTrieNode() {
@@ -81,11 +89,18 @@ public abstract class InputWordsModel<T> extends AbstractModel {
 		this.normalInputData(data.stream());
 		this.createModelTree();
 	}
-
+	public TextProcesser commandTextProcesser() {
+		return this.commandTextProcesser;
+	}
+	
+	public void commandTextProcesser(CommandTextProcesser textProcesser) {
+		this.commandTextProcesser = textProcesser;
+	}
 	/***
 	 * Tree model for input data.
 	 */
 	protected WordTrieNode<T> wordTrieNode;
+	protected CommandTextProcesser commandTextProcesser;
 
 	protected static final <T> WordTrieNode<T> createDefaultWordTrieNode() {
 		return new WordTrieNodeDistinctValues<>();

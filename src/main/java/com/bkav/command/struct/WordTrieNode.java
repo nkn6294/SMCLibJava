@@ -10,7 +10,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.bkav.command.SystemManager;
 import com.bkav.command.common.CommandTextProcesser;
+import com.bkav.command.common.TextProcesser;
 
 public class WordTrieNode<T> {
 
@@ -108,8 +110,9 @@ public class WordTrieNode<T> {
 	public void addMultiPharase(String[] alias, T value, CommandTextProcesser textProcesser) {
 		Arrays.stream(alias)
 			.map(textProcesser::apply)
-//			.peek(output -> SystemManager.logger.info("ADD_MULTI_PHARASE:" + output))
-			.map(textProcesser::textToWords).forEach(words -> this.addPhrase(words, value));
+			.peek(output -> SystemManager.logger.info("ADD_MULTI_PHARASE:" + output))
+			.map(textProcesser::textToWords)
+			.forEach(words -> this.addPhrase(words, value));
 	}
 	public void addPhrase(Iterator<String> words, T value) {
 		if (!words.hasNext()) {
@@ -167,6 +170,49 @@ public class WordTrieNode<T> {
 		List<Integer> indexs = new ArrayList<>();
 		for (int index = 0; index < words.length;) {
 			WordTrieNode<T> childNode = currentNode.getChildrens().get(words[index]);
+			if (childNode != null) {
+				currentNode = childNode;
+				indexs.add(index);
+				index++;
+				continue;
+			}
+			if (currentNode.isHasValue()) {
+				currentNode.values.forEach(currentResult::addValue);
+				wordsWithMark.setMark(indexs);
+			}	
+			if (currentNode == this) {
+				index++;
+			} else {
+				currentNode = this;
+			}
+			indexs.clear();
+		}
+		if (currentNode.isHasValue()) {
+			currentNode.values.forEach(currentResult::addValue);
+			wordsWithMark.setMark(indexs);
+		}
+		indexs.clear();
+		if (isMarkedOrigin) {
+			currentResult.stringsMark().setMarkWithRelativeIndex(wordsWithMark.markIndexs());			
+		}
+		return currentResult;
+	}
+	
+	public ResultsProcess findPharases(ResultsProcess currentResult, boolean isMarkedOrigin, TextProcesser textProcesser) {
+		WordTrieNode<T> currentNode = this;
+		String[] words = currentResult.remains();
+		if (words.length == 0) {
+			return currentResult;
+		}
+		ListStringWithMask wordsWithMark =  new ListStringWithMask(words);
+		wordsWithMark.setConfig(MaskConfig.getDefaultConfig());
+		List<Integer> indexs = new ArrayList<>();
+		for (int index = 0; index < words.length;) {
+			String word = words[index];
+			if (textProcesser != null) {
+				word = textProcesser.apply(word);
+			}
+			WordTrieNode<T> childNode = currentNode.getChildrens().get(word);
 			if (childNode != null) {
 				currentNode = childNode;
 				indexs.add(index);

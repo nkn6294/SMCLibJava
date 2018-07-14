@@ -2,6 +2,7 @@ package com.bkav.command.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,6 +62,9 @@ public final class StringUtil {
 		return checkSame(splitString(source), dest);
 	}
 	public static String joinString(String[] words) {
+		return String.join(" ", words);
+	}
+	public static String joinString(Collection<String> words) {
 		return String.join(" ", words);
 	}
     public static String[] splitString(String key) {

@@ -58,6 +58,12 @@ public abstract class DatasWithMask<T> extends MaskWrapper implements Iterable<T
 				temp.clear();
 			}
 		}
+		if (!temp.isEmpty()) {
+			List<T> item = new ArrayList<>();
+			temp.forEach(item::add);
+			result.add(item);
+			temp.clear();
+		}
 		return result;
 	}
 	public List<T> getFragment(int containIndex) {
