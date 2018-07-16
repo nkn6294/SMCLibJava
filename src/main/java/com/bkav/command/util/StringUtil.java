@@ -61,11 +61,17 @@ public final class StringUtil {
 		}
 		return checkSame(splitString(source), dest);
 	}
+	public static String joinString(String[] words, String delimeter) {
+		return String.join(delimeter, words);
+	}
 	public static String joinString(String[] words) {
-		return String.join(" ", words);
+		return joinString(words, " ");
+	}
+	public static String joinString(Collection<String> words, String delimeter) {
+		return String.join(delimeter, words);
 	}
 	public static String joinString(Collection<String> words) {
-		return String.join(" ", words);
+		return joinString(words, " ");
 	}
     public static String[] splitString(String key) {
     	return key.split("\\s+");//key.replaceAll("_", " _").split("\\s+");
