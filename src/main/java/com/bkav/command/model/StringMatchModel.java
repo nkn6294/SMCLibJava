@@ -45,8 +45,8 @@ public class StringMatchModel extends StaticInputWordsModel<StringWithTypeData> 
 		return String.join(" ", datas);
 	}
 
-	protected StringWithTypeData creatStringWithData(String datas) {
-		return new StringWithTypeData(this.type, datas);
+	protected StringWithTypeData creatStringWithData(String data) {
+		return new StringWithTypeData(this.type, data);
 	}
 
 	protected String type;

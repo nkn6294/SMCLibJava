@@ -1,5 +1,9 @@
 package com.bkav.command.util;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+
 public class Utils {
 
 	public static boolean isNull(Object object) {
@@ -28,4 +32,30 @@ public class Utils {
 	public static String getShortString(String content) {
 		return getShortString(content, 10);
 	}   
+	public static String getJSONStringWithoutComment(Reader reader) throws IOException {
+		return getJSONStringWithoutComment(reader, '#');
+	}
+	public static String getJSONStringWithoutComment(Reader reader, char commentSign) throws IOException {
+		if (reader == null) {
+			throw new NullPointerException(); 
+		}
+		StringBuilder builder = new StringBuilder();
+		BufferedReader bufferReader = null;
+		if (reader instanceof BufferedReader) {
+			bufferReader = (BufferedReader) reader;
+		} else {
+			bufferReader = new BufferedReader(reader);
+		}
+		String line = null;
+		
+		while ((line = bufferReader.readLine()) != null) {
+			line = line.replaceAll("\\s*" + commentSign, commentSign + "");//Read JSON file support comment '//' 
+			line = line.replaceAll(commentSign + ".*", "");
+			if (line.isEmpty()) {
+				continue;
+			}
+			builder.append(line);
+		}
+		return builder.toString();
+	}
 }
