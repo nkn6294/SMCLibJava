@@ -308,16 +308,10 @@ public class CollectionUtil {
 		return new Predicate<T[]>() {
 			@Override
 			public boolean test(T[] itemInput) {
-
-				boolean isContain = false;
 				for (T[] item : seen) {
 					if (arrayEquals(itemInput, item)) {
-						isContain = true;
-						break;
+						return false;
 					}
-				}
-				if (isContain) {
-					return false;
 				}
 				seen.add(itemInput);
 				return true;
@@ -428,12 +422,13 @@ public class CollectionUtil {
 
 	public static int[][] optimalArrayInteger(int[][] inputs) {
 		List<int[]> listOutput = new ArrayList<>();
+		Predicate<int[]> predicate = CollectionUtil.distinctArrayInteger();
 		for (int[] input : inputs) {
 			if (input.length == 0) {
 				continue;
 			}
-			if (CollectionUtil.distinctArrayInteger().test(input)) {
-
+			if (predicate.test(input)) {
+				listOutput.add(input);
 			}
 		}
 		int[][] output = new int[listOutput.size()][];
@@ -445,12 +440,13 @@ public class CollectionUtil {
 
 	public static long[][] optimalArrayLong(long[][] inputs) {
 		List<long[]> listOutput = new ArrayList<>();
+		Predicate<long[]> predicate = CollectionUtil.distinctArrayLong();
 		for (long[] input : inputs) {
 			if (input.length == 0) {
 				continue;
 			}
-			if (CollectionUtil.distinctArrayLong().test(input)) {
-
+			if (predicate.test(input)) {
+				listOutput.add(input);
 			}
 		}
 		long[][] output = new long[listOutput.size()][];
@@ -462,12 +458,13 @@ public class CollectionUtil {
 
 	public static boolean[][] optimalArrayBoolean(boolean[][] inputs) {
 		List<boolean[]> listOutput = new ArrayList<>();
+		Predicate<boolean[]> predicate = CollectionUtil.distinctArrayBoolean(); 
 		for (boolean[] input : inputs) {
 			if (input.length == 0) {
 				continue;
 			}
-			if (CollectionUtil.distinctArrayBoolean().test(input)) {
-
+			if (predicate.test(input)) {
+				listOutput.add(input);
 			}
 		}
 		boolean[][] output = new boolean[listOutput.size()][];
@@ -479,12 +476,13 @@ public class CollectionUtil {
 
 	public static float[][] optimalArrayFloat(float[][] inputs) {
 		List<float[]> listOutput = new ArrayList<>();
+		Predicate<float[]> predicate = CollectionUtil.distinctArrayFloat();
 		for (float[] input : inputs) {
 			if (input.length == 0) {
 				continue;
 			}
-			if (CollectionUtil.distinctArrayFloat().test(input)) {
-
+			if (predicate.test(input)) {
+				listOutput.add(input);
 			}
 		}
 		float[][] output = new float[listOutput.size()][];
@@ -496,12 +494,13 @@ public class CollectionUtil {
 
 	public static double[][] optimalArrayDouble(double[][] inputs) {
 		List<double[]> listOutput = new ArrayList<>();
+		Predicate<double[]> predicate = CollectionUtil.distinctArrayDouble();
 		for (double[] input : inputs) {
 			if (input.length == 0) {
 				continue;
 			}
-			if (CollectionUtil.distinctArrayDouble().test(input)) {
-
+			if (predicate.test(input)) {
+				listOutput.add(input);
 			}
 		}
 		double[][] output = new double[listOutput.size()][];
