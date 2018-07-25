@@ -293,12 +293,12 @@ public class CollectionUtil {
 			@Override
 			public boolean test(T t) {
 				for (T item : seen) {
-					if (compator.compare(t, item) != 0) {
-						seen.add(item);
-						return true;
+					if (compator.compare(t, item) == 0) {
+						return false;
 					}
 				}
-				return false;
+				seen.add(t);
+				return true;
 			}
 		};
 	}
