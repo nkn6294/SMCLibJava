@@ -283,11 +283,11 @@ public class WordTrieNode<T> {
 		return this.childrens;
 	}
 
-	protected void updateValue(T value) {
-		if (this.filterValue(value)) {
-			this.values.add(value);
-		}
-	};
+//	protected void updateValue(T value) {
+//		if (this.filterValue(value)) {
+//			this.values.add(value);
+//		}
+//	};
 
 	protected Collection<T> createValues() {
 		return new ArrayList<>();

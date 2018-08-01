@@ -51,12 +51,12 @@ public class WordTrieNodeDistinctValues<T> extends WordTrieNode<T> {
 		}
 	}
 
-	@Override
-	protected void updateValue(T value) {
-		if (this.filterValue(value)) {
-			this.values.add(value);			
-		}
-	}
+//	@Override
+//	protected void updateValue(T value) {
+//		if (this.filterValue(value)) {
+//			this.values.add(value);			
+//		}
+//	}
 
 	@Override
 	protected Collection<T> createValues() {

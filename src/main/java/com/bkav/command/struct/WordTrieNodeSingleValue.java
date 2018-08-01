@@ -21,7 +21,6 @@ public class WordTrieNodeSingleValue<T> extends WordTrieNode<T>{
 		super();
 	}
 
-	@Override
 	protected void updateValue(T value) {
 		if (this.filterValue(value)) {
 			this.values.clear();
@@ -29,6 +28,11 @@ public class WordTrieNodeSingleValue<T> extends WordTrieNode<T>{
 		}
 	}
 
+	@Override
+	protected void addValue(T value) {
+		this.updateValue(value);
+	}
+	
 	@Override
 	protected Collection<T> createValues() {
 		return new ArrayList<>(1);

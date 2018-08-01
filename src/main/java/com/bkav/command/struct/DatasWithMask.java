@@ -38,6 +38,14 @@ public abstract class DatasWithMask<T> extends MaskWrapper implements Iterable<T
 				temp.clear();
 			}
 		}
+		if (!temp.isEmpty()) {
+			List<T> item = new ArrayList<>();
+			for (T t : temp) {
+				item.add(t);
+			}
+			result.add(item);
+			temp.clear();
+		}
 		return result;
 	}
 
@@ -55,6 +63,14 @@ public abstract class DatasWithMask<T> extends MaskWrapper implements Iterable<T
 				result.add(item);
 				temp.clear();
 			}
+		}
+		if (!temp.isEmpty()) {
+			List<T> item = new ArrayList<>();
+			for (T t : temp) {
+				item.add(t);
+			}
+			result.add(item);
+			temp.clear();
 		}
 		return result;
 	}
