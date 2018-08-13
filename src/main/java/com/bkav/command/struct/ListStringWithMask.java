@@ -34,7 +34,7 @@ public class ListStringWithMask extends DatasWithMask<String> implements Iterabl
 	}
 
 	@Override
-	protected Mask createMash(int length, MaskConfig config) {
+	protected Mask createMask(int length, MaskConfig config) {
 		return new IntMask(length, config);
 	}
 

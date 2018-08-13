@@ -12,10 +12,10 @@ public abstract class MaskWrapper implements Mask {
 	}
 	
 	public MaskWrapper(int length, MaskConfig config) {
-		this.mash = this.createMash(length, config);
+		this.mash = this.createMask(length, config);
 	}
 	public MaskWrapper(int length) {
-		this.mash = this.createMash(length, MaskConfig.getDefaultConfig());
+		this.mash = this.createMask(length, MaskConfig.getDefaultConfig());
 	}
 	@Override
 	public int length() {
@@ -245,5 +245,5 @@ public abstract class MaskWrapper implements Mask {
 	}
 	protected Mask mash;
 	
-	protected abstract Mask createMash(int length, MaskConfig config);
+	protected abstract Mask createMask(int length, MaskConfig config);
 }

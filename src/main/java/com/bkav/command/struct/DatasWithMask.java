@@ -138,7 +138,7 @@ public abstract class DatasWithMask<T> extends MaskWrapper implements Iterable<T
 	 */
 	protected final void init(T[] datas, MaskConfig config) {
 		this.datas = datas;
-		this.createMash(datas.length, config);
+		this.createMask(datas.length, config);
 	}
 
 	/***

@@ -38,7 +38,7 @@ public class TimeRepeat extends CommonData {
 
 	@Override
 	public String toString() {
-		return String.format("%s [typeControl=%s, name=%s]",
+		return String.format("%s [timeRepeatType=%s, name=%s]",
 				this.getClass().getSimpleName(),
 				timeRepeatType, name);
 	}
