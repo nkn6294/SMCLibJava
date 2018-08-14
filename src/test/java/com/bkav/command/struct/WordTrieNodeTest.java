@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.bkav.command.SystemManager;
+import com.bkav.command.SMCManager;
 import com.bkav.command.common.Model;
 import com.bkav.command.demo.SampleData;
 import com.bkav.command.demo.model.HomeDeviceTypeModel;
@@ -37,11 +37,11 @@ public class WordTrieNodeTest {
 	public final void testFindPharases() {
 		String[] s1 = { "phong", "khach", "phong", "an", "dieu", "hoa", "buoi", "trua", "dieu", "den", "abc"};
 		Model model = new HomeDeviceTypeModel(SampleData.DEVICE_TYPE);
-		SystemManager.logger.info(Arrays.toString(s1));
+		SMCManager.logger.info(Arrays.toString(s1));
 		ResultsProcess results = model.process(new ResultsProcess(s1));
 //		assertTrue(results.size() == 2);
 		assertTrue(true);//TODO testFindPharases
-		results.stream().map(Object::toString).forEach(SystemManager.logger::info);
-		SystemManager.logger.info(Arrays.toString(results.remains()));
+		results.stream().map(Object::toString).forEach(SMCManager.logger::info);
+		SMCManager.logger.info(Arrays.toString(results.remains()));
 	}
 }

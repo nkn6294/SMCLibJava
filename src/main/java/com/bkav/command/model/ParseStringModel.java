@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
-import com.bkav.command.SystemManager;
+import com.bkav.command.SMCManager;
 import com.bkav.command.common.ModelProcessMode;
 import com.bkav.command.struct.ResultsProcess;
 
@@ -35,7 +35,7 @@ public abstract class ParseStringModel<T> extends AbstractModel {
 		Arrays.stream(commands).map(words -> new ResultsProcess(words))
 			.map(this::process)
 			.map(Object::toString)
-			.forEach(SystemManager.logger::info);
+			.forEach(SMCManager.logger::info);
 	}
 
 	public ParseStringModel(Stream<? extends Object> stream) {

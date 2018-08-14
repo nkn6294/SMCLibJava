@@ -7,7 +7,7 @@ import java.time.LocalTime;
 
 import org.junit.Test;
 
-import com.bkav.command.SystemManager;
+import com.bkav.command.SMCManager;
 
 public class TimeValueTest {
 
@@ -29,7 +29,7 @@ public class TimeValueTest {
 		Duration duration = Duration.ofHours(hour).plusMinutes(minute);
 		TimeValue timeValue = new TimeValue(duration);
 		LocalTime time = timeValue.time();
-		SystemManager.logger.info(time.toString());
+		SMCManager.logger.info(time.toString());
 		assertTrue(true);
 	}
 

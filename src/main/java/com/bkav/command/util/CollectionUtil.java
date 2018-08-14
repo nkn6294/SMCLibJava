@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import com.bkav.command.SystemManager;
+import com.bkav.command.SMCManager;
 import com.bkav.command.common.CommandTextProcesser;
 
 public class CollectionUtil {
@@ -163,7 +163,7 @@ public class CollectionUtil {
 		saveMap.values().stream()
 			.flatMap(map -> map.values().stream())
 			.flatMap(Set::stream)
-			.forEach(SystemManager.logger::info);
+			.forEach(SMCManager.logger::info);
     }
     
     public static final String[][] convert(String[] inputs) {    	

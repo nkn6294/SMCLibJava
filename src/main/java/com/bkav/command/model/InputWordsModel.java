@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import com.bkav.command.SystemManager;
+import com.bkav.command.SMCManager;
 import com.bkav.command.common.CommandTextProcesser;
 import com.bkav.command.common.ModelProcessMode;
 import com.bkav.command.common.TextProcesser;
@@ -107,7 +107,7 @@ public abstract class InputWordsModel<T> extends AbstractModel {
 	}
 	
 	protected static final CommandTextProcesser getDefaultCommandTextProcesser() {
-		return SystemManager.textProcesser;
+		return SMCManager.textProcesser;
 	}
 	
 	protected static final <T> WordTrieNode<T> updateTrieNode(Stream<String[]> stream, Function<String[], T> makeObject, WordTrieNode<T> wordTrieNode) {

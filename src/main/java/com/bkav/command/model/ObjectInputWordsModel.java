@@ -6,7 +6,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.bkav.command.SystemManager;
+import com.bkav.command.SMCManager;
 import com.bkav.command.common.CommandTextProcesser;
 import com.bkav.command.struct.WordTrieNodeDistinctValues;
 import com.bkav.command.util.Utils;
@@ -43,7 +43,7 @@ public abstract class ObjectInputWordsModel<T> extends InputWordsModel<T> {
 	@Override
 	protected void createModelTree() {
 		Function<T, String[]> makeOutput = this::getAlias;
-		CommandTextProcesser textProcesser = SystemManager.textProcesser;
+		CommandTextProcesser textProcesser = SMCManager.textProcesser;
 		textProcesser = this.commandTextProcesser;
 		this.wordTrieNode = updateTrieNode(makeOutput, this.inputs.stream(), textProcesser, new WordTrieNodeDistinctValues<>());
 	}

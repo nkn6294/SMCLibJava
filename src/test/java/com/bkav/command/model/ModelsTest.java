@@ -8,9 +8,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static com.bkav.command.SystemManager.*;
+import static com.bkav.command.SMCManager.*;
 
-import com.bkav.command.SystemManager;
+import com.bkav.command.SMCManager;
 import com.bkav.command.demo.SampleData;
 import com.bkav.command.struct.ResultsProcess;
 import com.bkav.command.util.CollectionUtil;
@@ -65,7 +65,7 @@ public abstract class ModelsTest {
 
 	protected abstract PipeLineModel createModels();
 	protected String[][] createCommands() {
-		return CollectionUtil.convert(this.getTestCommands(), SystemManager.textProcesser);
+		return CollectionUtil.convert(this.getTestCommands(), SMCManager.textProcesser);
 	}
 	protected String[] getTestCommands() {
 		return SampleData.SampleCommands;

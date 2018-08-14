@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.bkav.command.SystemManager;
+import com.bkav.command.SMCManager;
 import com.bkav.command.common.CommandTextProcesser;
 import com.bkav.command.common.Model;
 import com.bkav.command.model.PipeLineModel;
@@ -87,7 +87,7 @@ public class TextWrapper {
 		protected Model model;
 	}
 	
-	public static final CommandTextProcesser DefaultTextProcesser = SystemManager.textProcesser;
+	public static final CommandTextProcesser DefaultTextProcesser = SMCManager.textProcesser;
 	private final String text;
 	private final String textProccessed;
 	private final String[] words;

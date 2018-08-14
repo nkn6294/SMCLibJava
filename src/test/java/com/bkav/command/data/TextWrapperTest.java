@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.bkav.command.SystemManager;
+import com.bkav.command.SMCManager;
 import com.bkav.command.demo.SampleData;
 import com.bkav.command.demo.data.HomeTest;
 import com.bkav.command.demo.model.HomeEntityModel;
@@ -42,7 +42,7 @@ public class TextWrapperTest {
 	public final void testProccess() {
 		Arrays.stream(this.commands).map(TextWrapper::new)
 				.map(textWrapper -> textWrapper.proccess(pipeLineModel).toString())
-				.forEach(SystemManager.logger::info);
+				.forEach(SMCManager.logger::info);
 		assertTrue(true);// TODO test TextWrapper.process
 	}
 

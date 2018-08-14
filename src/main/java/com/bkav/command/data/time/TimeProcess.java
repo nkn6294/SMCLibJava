@@ -5,7 +5,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.bkav.command.SystemManager;
+import com.bkav.command.SMCManager;
 
 public class TimeProcess {
 	public TimeProcess() {
@@ -22,11 +22,11 @@ public class TimeProcess {
 
 	private void process() {
 		if (this.processNormal()) {
-			SystemManager.logger.info("processnormal");
+			SMCManager.logger.info("processnormal");
 		} else if (this.processMore()) {
-			SystemManager.logger.info("processmore");
+			SMCManager.logger.info("processmore");
 		} else {
-			SystemManager.logger.info("Not found");
+			SMCManager.logger.info("Not found");
 		}
 	}
 	

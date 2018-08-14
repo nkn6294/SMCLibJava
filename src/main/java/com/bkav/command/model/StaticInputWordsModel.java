@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import com.bkav.command.SystemManager;
+import com.bkav.command.SMCManager;
 import com.bkav.command.common.CommandTextProcesser;
 
 /***
@@ -74,8 +74,8 @@ public abstract class StaticInputWordsModel<T> extends InputWordsModel<T> {
 	@Override
 	protected void normalInputData(Stream<? extends Object> stream) {
 		this.dataProcessed = stream.map(Object::toString)
-				.map(SystemManager.textProcesser::apply)
-				.map(SystemManager.textProcesser::textToWords).toArray(String[][]::new);
+				.map(SMCManager.textProcesser::apply)
+				.map(SMCManager.textProcesser::textToWords).toArray(String[][]::new);
 	}
 
 	/***

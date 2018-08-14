@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import com.bkav.command.SystemManager;
+import com.bkav.command.SMCManager;
 
 public class WordTrieNodeManager {
 
@@ -118,7 +118,7 @@ public class WordTrieNodeManager {
 			try {
 				wordsWithMark.resetFragment(words.length - 1);				
 			} catch(Exception ex) {
-				SystemManager.logger.info(ex.getMessage());
+				SMCManager.logger.info(ex.getMessage());
 			}
 		}
 		String[] remains = wordsWithMark.unMarkStream().toArray(String[]::new);

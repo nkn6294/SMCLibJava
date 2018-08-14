@@ -9,8 +9,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
-import com.bkav.command.SystemManager;
-import static com.bkav.command.SystemManager.*;
+import com.bkav.command.SMCManager;
+import static com.bkav.command.SMCManager.*;
 
 public class TextProcesserTest {
 
@@ -24,7 +24,7 @@ public class TextProcesserTest {
 
 	@Before
 	public void setUp() throws Exception {
-		this.textProcesser = SystemManager.textProcesser;
+		this.textProcesser = SMCManager.textProcesser;
 	}
 
 	@After
