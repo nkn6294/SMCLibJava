@@ -40,6 +40,7 @@ public abstract class CollectionModel extends AbstractModel implements Iterable<
 				input = model.process(input);
 				model = models.get(input);
 			}
+			models.reset();
 		}
 		return input;
 	}

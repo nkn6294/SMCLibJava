@@ -20,7 +20,7 @@ public abstract class AbstractModel implements Model {
 		this.modelConfig = new ModelConfig();
 		this.init();
 	}
-	
+
 	@Override
 	public String getModelName() {
 		return this.modelName;

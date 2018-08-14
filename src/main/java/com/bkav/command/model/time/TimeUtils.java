@@ -71,9 +71,9 @@ public class TimeUtils {
 				} else if ("trưa".equals(timeInDay)) {
 					int hour = Integer.parseInt(matcher.group(1));
 					if (hour >= 1 && hour <= 3) {
-						builder.append("am");
-					} else {
 						builder.append("pm");
+					} else {
+						builder.append("am");
 					}
 				} else if ("đêm".equals(timeInDay)) {
 					int hour = Integer.parseInt(matcher.group(1));
@@ -94,7 +94,7 @@ public class TimeUtils {
 		String patternString = "\\b(\\d+)(:\\d{2})?am\\b";
 		return textProcessByRegex(input, patternString, new Function2<Matcher, StringBuilder, StringBuilder>() {
 			public StringBuilder apply(Matcher matcher, StringBuilder builder) {
-				return builder.append(matcher.group(1)).append(matcher.group(2) == null ? ":00" : matcher.group(2));
+				return builder.append(matcher.group(1)).append(matcher.group(2) == null ? ":00" : matcher.group(2)).append("a");
 			}
 		});
 	}

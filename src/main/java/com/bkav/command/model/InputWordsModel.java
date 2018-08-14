@@ -59,16 +59,21 @@ public abstract class InputWordsModel<T> extends AbstractModel {
 		}
 	};
 
-	public InputWordsModel(Collection<? extends Object> data) {
+	public InputWordsModel(Collection<? extends Object> data, CommandTextProcesser textProcesser) {
 		super();
+		this.commandTextProcesser = textProcesser;
 		this.normalInputData(data);
 		this.createModelTree();
+	}
+	
+	public InputWordsModel(Collection<? extends Object> data) {
+		this(data, null);
 	}
 
 	@Override
 	public ResultsProcess process(ResultsProcess input) {
 		boolean isMarkedOrigin = this.modelConfig.getModelProcessMode() == ModelProcessMode.PROCESS_AND_MARKED;
-		return this.wordTrieNode.findPharases(input, isMarkedOrigin);
+		return this.wordTrieNode.findPharases(input, isMarkedOrigin, this.commandTextProcesser);
 	}
 
 	public WordTrieNode<T> getWordTrieNode() {
@@ -84,11 +89,20 @@ public abstract class InputWordsModel<T> extends AbstractModel {
 		this.normalInputData(data);
 		this.createModelTree();
 	}
+	
+	public CommandTextProcesser commandTextProcesser() {
+		return commandTextProcesser;
+	}
+
+	public void commandTextProcesser(CommandTextProcesser commandTextProcesser) {
+		this.commandTextProcesser = commandTextProcesser;
+	}
 
 	/***
 	 * Tree model for input data.
 	 */
 	protected WordTrieNode<T> wordTrieNode;
+	protected CommandTextProcesser commandTextProcesser;
 
 	protected static final <T> WordTrieNode<T> createDefaultWordTrieNode() {
 		return new WordTrieNodeDistinctValues<T>();

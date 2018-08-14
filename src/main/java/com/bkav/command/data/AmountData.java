@@ -3,6 +3,9 @@ package com.bkav.command.data;
 import com.bkav.command.model.misc.TypeAmount;
 
 public class AmountData extends CommonData {
+	public static AmountData of(TypeAmount typeAmount ) {
+		return new AmountData("", typeAmount);
+	}
 	public static AmountData createFromStringArray(String[] datas) {
 		return new AmountData(getSimpleName(datas), TypeAmount.NONE);
 	}

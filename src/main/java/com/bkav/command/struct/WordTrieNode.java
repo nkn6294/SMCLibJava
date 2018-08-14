@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.bkav.command.common.CommandTextProcesser;
+import com.bkav.command.common.TextProcesser;
 
 public class WordTrieNode<T> {
 
@@ -89,8 +90,9 @@ public class WordTrieNode<T> {
 	}
 
 	public void addPhrase(String[] words, T value) {
-		if (words.length == 0)
-			return;
+		if (words.length == 0) {
+			return;			
+		}
 		WordTrieNode<T> node = this;
 		for (int index = 0; index < words.length; index++) {
 			String word = words[index];
@@ -168,6 +170,9 @@ public class WordTrieNode<T> {
 	}
 
 	public ResultsProcess findPharases(ResultsProcess currentResult, boolean isMarkedOrigin) {
+		return findPharases(currentResult, isMarkedOrigin, null);
+	}
+	public ResultsProcess findPharases(ResultsProcess currentResult, boolean isMarkedOrigin, TextProcesser textProcesser) {
 		WordTrieNode<T> currentNode = this;
 		String[] words = currentResult.remains();
 		if (words.length == 0) {
@@ -177,7 +182,11 @@ public class WordTrieNode<T> {
 		wordsWithMark.setConfig(MaskConfig.getDefaultConfig());
 		List<Integer> indexs = new ArrayList<>();
 		for (int index = 0; index < words.length;) {
-			WordTrieNode<T> childNode = currentNode.getChildrens().get(words[index]);
+			String word = words[index];
+			if (textProcesser != null) {
+				word = textProcesser.apply(word);
+			}
+			WordTrieNode<T> childNode = currentNode.getChildrens().get(word);
 			if (childNode != null) {
 				currentNode = childNode;
 				indexs.add(index);
@@ -209,7 +218,6 @@ public class WordTrieNode<T> {
 		}
 		return currentResult;
 	}
-
 	public Collection<T> findPharases(String[] words) {
 		return findPharases(words, null);
 	}

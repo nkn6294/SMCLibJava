@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.bkav.command.SystemManager;
+import com.bkav.command.common.CommandTextProcesser;
 import com.bkav.command.common.Function;
 import com.bkav.command.struct.WordTrieNodeDistinctValues;
 
@@ -19,7 +20,9 @@ public abstract class ObjectInputWordsModel<T> extends InputWordsModel<T> {
 	public ObjectInputWordsModel(Collection<? extends Object> stream) {
 		super(stream);
 	}
-
+	public ObjectInputWordsModel(Collection<? extends Object> stream, CommandTextProcesser textProcesser) {
+		super(stream, textProcesser);
+	}
 	protected List<T> inputs;
 
 	@Override
@@ -44,7 +47,11 @@ public abstract class ObjectInputWordsModel<T> extends InputWordsModel<T> {
 				return getAlias(value);
 			}
 		};
-		this.wordTrieNode = updateTrieNode(makeOutput, this.inputs, SystemManager.textProcesser,
+		CommandTextProcesser textProcesser =  this.commandTextProcesser;
+		if (textProcesser == null) {
+			textProcesser = SystemManager.textProcesser;
+		}
+		this.wordTrieNode = updateTrieNode(makeOutput, this.inputs, textProcesser,
 				new WordTrieNodeDistinctValues<T>());
 	}
 

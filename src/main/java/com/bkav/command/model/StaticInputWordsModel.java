@@ -6,9 +6,8 @@ import java.util.Collections;
 import java.util.List;
 
 import com.bkav.command.SystemManager;
+import com.bkav.command.common.CommandTextProcesser;
 import com.bkav.command.common.Function;
-import com.bkav.command.common.ModelProcessMode;
-import com.bkav.command.struct.ResultsProcess;
 import com.bkav.command.struct.WordTrieNode;
 
 /***
@@ -31,16 +30,17 @@ public abstract class StaticInputWordsModel<T> extends InputWordsModel<T> {
 		Collections.sort(this.dataProcessed, DEFAULT_STRING_ARRAY_COMPARATOR);
 	}
 
+	public StaticInputWordsModel(Collection<String> dataInput, CommandTextProcesser textProcesser) {
+		super(dataInput, textProcesser);
+		Collections.sort(this.dataProcessed, DEFAULT_STRING_ARRAY_COMPARATOR);
+	}
+	
 	public StaticInputWordsModel(String[] dataInput) {
 		this(stringsToCollection(dataInput));
 	}
-	
-	@Override
-	public ResultsProcess process(ResultsProcess input) {
-		boolean isMarkedOrigin = this.modelConfig.getModelProcessMode() == ModelProcessMode.PROCESS_AND_MARKED;
-		return this.wordTrieNode.findPharases(input, isMarkedOrigin);
+	public StaticInputWordsModel(String[] dataInput, CommandTextProcesser textProcesser) {
+		this(stringsToCollection(dataInput), textProcesser);
 	}
-
 	/***
 	 * data[commands] -> data[command[]], created in {@link #normalInputData(Stream)}
 	 */
