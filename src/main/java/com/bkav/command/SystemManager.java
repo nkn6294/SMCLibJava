@@ -61,6 +61,12 @@ public class SystemManager {
 		textProcesserAdvance.addTextProcesser(new TextProcesser() {
 			@Override
 			public String apply(String value) {
+				return DateUtils.dateToNormal(value);
+			}
+		});
+		textProcesserAdvance.addTextProcesser(new TextProcesser() {
+			@Override
+			public String apply(String value) {
 				return NumberUtils.textToNumber(value);
 			}
 		});

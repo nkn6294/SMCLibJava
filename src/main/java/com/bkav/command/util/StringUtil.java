@@ -1,6 +1,8 @@
 package com.bkav.command.util;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,16 +59,34 @@ public final class StringUtil {
 		}
 		return checkSame(splitString(source), dest);
 	}
-	public static String joinString(String[] words) {
+	public static String joinString(String[] words, String delimeter) {
 		if (words.length == 0) {
 			return "";
 		}
 		StringBuilder builder = new StringBuilder();
 		builder.append(words[0]);
 		for (int index = 1; index < words.length; index++) {
-			builder.append(" ").append(words[index]);
+			builder.append(delimeter).append(words[index]);
 		}
 		return builder.toString();
+	}
+	public static String joinString(String[] words) {
+		return joinString(words, " ");
+	}
+	public static String joinString(Collection<String> words, String delimeter) {
+		if (words.size() == 0) {
+			return "";
+		}
+		StringBuilder builder = new StringBuilder();
+		Iterator<String> iterator = words.iterator();
+		builder.append(iterator.next());
+		while (iterator.hasNext()) {
+			builder.append(" ").append(iterator.next());
+		}
+		return builder.toString();
+	}
+	public static String joinString(Collection<String> words) {
+		return joinString(words, " ");
 	}
     public static String[] splitString(String key) {
     	return key.split("\\s+");//key.replaceAll("_", " _").split("\\s+");
