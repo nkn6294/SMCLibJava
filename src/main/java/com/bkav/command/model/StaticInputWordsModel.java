@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import com.bkav.command.SystemManager;
+import com.bkav.command.SMCManager;
 import com.bkav.command.common.CommandTextProcesser;
 import com.bkav.command.common.Function;
 import com.bkav.command.struct.WordTrieNode;
@@ -62,8 +62,8 @@ public abstract class StaticInputWordsModel<T> extends InputWordsModel<T> {
 	protected void normalInputData(Collection<? extends Object> stream) {
 		List<String[]> listOutput = new ArrayList<>();
 		for (Object object: stream) {
-			String objectString = SystemManager.textProcesser.apply(object.toString());
-			String data[] = SystemManager.textProcesser.textToWords(objectString);
+			String objectString = SMCManager.textProcesser.apply(object.toString());
+			String data[] = SMCManager.textProcesser.textToWords(objectString);
 			listOutput.add(data);
 		}
 		this.dataProcessed = listOutput;

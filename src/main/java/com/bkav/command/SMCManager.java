@@ -18,7 +18,7 @@ import com.bkav.command.data.NumberUtils;
 import com.bkav.command.model.time.DateUtils;
 import com.bkav.command.model.time.TimeUtils;
 
-public class SystemManager {
+public class SMCManager {
 	public static Logger logger;// = null;
 	public static CommandTextProcesser textProcesser;
 	/*
@@ -44,7 +44,7 @@ public class SystemManager {
 			//TODO run all Handler in other thread. ???
 		} catch (Exception e) {
 		}
-		logger = Logger.getLogger(SystemManager.class.getSimpleName());
+		logger = Logger.getLogger(SMCManager.class.getSimpleName());
 		CommandTextProcesserAdvance textProcesserAdvance = new CommonTextProcesserAdvance();
 		textProcesserAdvance.addTextProcesser(new TextProcesser() {
 			@Override
@@ -89,14 +89,14 @@ public class SystemManager {
 			}
 		});
 //		textProcesserAdvance.addTextProcesser(NormalInputUtils::deAccentConvert);
-		SystemManager.textProcesserAdvance = textProcesserAdvance;
-		textProcesser = new CommonCommandTextProcesser(SystemManager.textProcesserAdvance);
+		SMCManager.textProcesserAdvance = textProcesserAdvance;
+		textProcesser = new CommonCommandTextProcesser(SMCManager.textProcesserAdvance);
 	}
 	public static void addTextProcesser(TextProcesser processer) {
-		SystemManager.textProcesserAdvance.addTextProcesser(processer);
+		SMCManager.textProcesserAdvance.addTextProcesser(processer);
 	}
 	public static void removeTextProcesser(TextProcesser processer) {
-		SystemManager.textProcesserAdvance.removeTextProcesser(processer);
+		SMCManager.textProcesserAdvance.removeTextProcesser(processer);
 	}
 	public static void loadLogProperties(String fileName) {//logging.properties
 		InputStream stream = null;
@@ -159,7 +159,7 @@ public class SystemManager {
 			System.out.println(Arrays.toString(os));
 		}
 	}
-	private SystemManager() {}
+	private SMCManager() {}
 	
 	private static CommandTextProcesserAdvance textProcesserAdvance;
 }

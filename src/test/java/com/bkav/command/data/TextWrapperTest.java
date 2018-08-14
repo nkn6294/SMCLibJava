@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.bkav.command.SystemManager;
+import com.bkav.command.SMCManager;
 import com.bkav.command.demo.SampleData;
 import com.bkav.command.demo.data.HomeTest;
 import com.bkav.command.demo.model.HomeEntityModel;
@@ -41,7 +41,7 @@ public class TextWrapperTest {
 		for (String command : commands) {
 			TextWrapper textWrapper = new TextWrapper(command);
 			String output = textWrapper.proccess(pipeLineModel).toString();
-			SystemManager.logger.info(output);
+			SMCManager.logger.info(output);
 		}
 		assertTrue(true);// TODO test TextWrapper.process
 	}

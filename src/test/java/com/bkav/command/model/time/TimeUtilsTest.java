@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.bkav.command.SystemManager;
+import com.bkav.command.SMCManager;
 
 public class TimeUtilsTest {
 
@@ -64,7 +64,7 @@ public class TimeUtilsTest {
 		};
 		for (int index = 0; index < inputs.length; index++) {
 			String output = TimeUtils.timeToNormal("< " + inputs[index] + " >");
-			SystemManager.logger.info(output);
+			SMCManager.logger.info(output);
 			assertEquals("< _time(" + expecteds[index] + ") >", output);
 		}
 	}

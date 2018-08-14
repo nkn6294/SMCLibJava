@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.bkav.command.SystemManager;
+import com.bkav.command.SMCManager;
 import com.bkav.command.common.Model;
 import com.bkav.command.demo.SampleData;
 import com.bkav.command.struct.ResultsProcess;
@@ -42,11 +42,11 @@ public abstract class ModelTest {
 		}
 		for (String[] command : this.commands) {
 			String commandString = StringUtil.joinString(command);
-			SystemManager.logger.info("<" + commandString + ">");
+			SMCManager.logger.info("<" + commandString + ">");
 			ResultsProcess result = new ResultsProcess(command);
 			result = this.model.process(result);
 //			this.model.test(command);
-			SystemManager.logger.info(result.toString());			
+			SMCManager.logger.info(result.toString());			
 		}
 		assertTrue(true); // TODO TestModel model
 	}
@@ -56,7 +56,7 @@ public abstract class ModelTest {
 
 	protected abstract Model createModel();
 	protected String[][] createCommands() {
-		return CollectionUtil.convert(this.getTestCommands(), SystemManager.textProcesser);
+		return CollectionUtil.convert(this.getTestCommands(), SMCManager.textProcesser);
 	}
 	protected String[] getTestCommands() {
 		return SampleData.SampleCommands;

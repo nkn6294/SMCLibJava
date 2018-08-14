@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 
-import com.bkav.command.SystemManager;
+import com.bkav.command.SMCManager;
 import com.bkav.command.common.CommandTextProcesser;
 import com.bkav.command.common.Function;
 import com.bkav.command.common.ModelProcessMode;
@@ -109,7 +109,7 @@ public abstract class InputWordsModel<T> extends AbstractModel {
 	}
 
 	protected static final CommandTextProcesser getDefaultCommandTextProcesser() {
-		return SystemManager.textProcesser;
+		return SMCManager.textProcesser;
 	}
 
 	protected static final <T> WordTrieNode<T> updateTrieNode(Collection<String[]> datas,

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.bkav.command.SystemManager;
+import com.bkav.command.SMCManager;
 import com.bkav.command.common.CommandTextProcesser;
 import com.bkav.command.common.Function;
 import com.bkav.command.struct.WordTrieNodeDistinctValues;
@@ -49,7 +49,7 @@ public abstract class ObjectInputWordsModel<T> extends InputWordsModel<T> {
 		};
 		CommandTextProcesser textProcesser =  this.commandTextProcesser;
 		if (textProcesser == null) {
-			textProcesser = SystemManager.textProcesser;
+			textProcesser = SMCManager.textProcesser;
 		}
 		this.wordTrieNode = updateTrieNode(makeOutput, this.inputs, textProcesser,
 				new WordTrieNodeDistinctValues<T>());

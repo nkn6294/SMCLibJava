@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.bkav.command.SystemManager;
+import com.bkav.command.SMCManager;
 
 public class DateUtilsTest {
 
@@ -45,7 +45,7 @@ public class DateUtilsTest {
 //			String output = DateUtils.dateToNormal(inputs[index]);
 //			SystemManager.logger.info(output);
 			output = DateUtils.dateToNormal(output);
-			SystemManager.logger.info(output);
+			SMCManager.logger.info(output);
 			assertEquals("< _date_" + expecteds[index] + "_ >", output);
 //			assertTrue(true);
 		}

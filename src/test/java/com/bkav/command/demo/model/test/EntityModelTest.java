@@ -3,7 +3,7 @@ package com.bkav.command.demo.model.test;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.bkav.command.SystemManager;
+import com.bkav.command.SMCManager;
 import com.bkav.command.common.Model;
 import com.bkav.command.demo.SampleData;
 import com.bkav.command.demo.data.HomeTest;
@@ -33,7 +33,7 @@ public class EntityModelTest extends ModelTest {
 		ResultsProcess result = new ResultsProcess(command);
 		result = this.model.process(result);
 		String commandString = StringUtil.joinString(command);
-		SystemManager.logger.info("<" + commandString + ">");
-		SystemManager.logger.info(result.toString());
+		SMCManager.logger.info("<" + commandString + ">");
+		SMCManager.logger.info(result.toString());
 	}
 }

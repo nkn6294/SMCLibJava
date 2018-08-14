@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.bkav.command.SystemManager;
+import com.bkav.command.SMCManager;
 import com.bkav.command.demo.SampleData;
 import com.bkav.command.demo.data.HomeArea;
 import com.bkav.command.demo.data.HomeDevice;
@@ -48,7 +48,7 @@ public class WordTrieNodeManagerTest {
 	public final void testFindCommands() {
 		String[] s1 = { "phong", "khach", "phong", "trung", "tam", "den", "dieu", "hoa", "buoi", "trua" };
 		ResultNode<?> node = this.wordTrieNodes.find(s1);
-		SystemManager.logger.info(node.toString());
+		SMCManager.logger.info(node.toString());
 		assertTrue(true); // TODO testFindCommands
 	}
 
@@ -56,7 +56,7 @@ public class WordTrieNodeManagerTest {
 	public final void testFindAdvanceCommands() {
 		String[] s1 = { "phong", "khach", "phong", "trung", "tam", "den", "dieu", "hoa", "buoi", "trua" };
 		ResultTreeNode<?> node = this.wordTrieNodes.findAdvance(s1);
-		SystemManager.logger.info(node.toString());
+		SMCManager.logger.info(node.toString());
 		assertTrue(true); // TODO testFindCommands
 	}
 
@@ -64,7 +64,7 @@ public class WordTrieNodeManagerTest {
 	public final void testFindPharasesWithReset() {
 		WordTrieNode<HomeDeviceType> wordTrieNode = new HomeDeviceTypeModel(SampleData.DEVICE_TYPE).getWordTrieNode();
 		String[] s1 = { "phong", "khach", "phong", "an", "dieu", "hoa", "buoi", "den", "trua" };
-		SystemManager.logger.info(Arrays.toString(s1));
+		SMCManager.logger.info(Arrays.toString(s1));
 		for (ResultFind<?> resultFind : WordTrieNodeManager
 				.findPharasesWithReset(new ResultFind<Object>(null, new String[] {}, s1), wordTrieNode)) {
 			assertTrue(resultFind.getValue() instanceof HomeDeviceType);
@@ -81,7 +81,7 @@ public class WordTrieNodeManagerTest {
 				strings.remove(remain);
 			}
 			assertTrue(strings.size() == 0);
-			SystemManager.logger.info(resultFind.toString());
+			SMCManager.logger.info(resultFind.toString());
 		}
 
 	}
@@ -90,14 +90,14 @@ public class WordTrieNodeManagerTest {
 	public final void testFindPharases() {
 		WordTrieNode<HomeDeviceType> wordTrieNode = new HomeDeviceTypeModel(SampleData.DEVICE_TYPE).getWordTrieNode();
 		String[] s1 = { "phong", "khach", "phong", "an", "dieu", "hoa", "buoi", "trua", "dieu", "den", "abc" };
-		SystemManager.logger.info(Arrays.toString(s1));
+		SMCManager.logger.info(Arrays.toString(s1));
 		ResultsFind<HomeDeviceType> results = WordTrieNodeManager.findPharases(new ResultsFind<>(s1), wordTrieNode);
 		// assertTrue(results.size() == 2);
 		assertTrue(true);// TODO testFindPharases
 		for (HomeDeviceType deviceType : results) {
-			SystemManager.logger.info(deviceType.getName());
+			SMCManager.logger.info(deviceType.getName());
 		}
-		SystemManager.logger.info(Arrays.toString(results.remains()));
+		SMCManager.logger.info(Arrays.toString(results.remains()));
 	}
 
 	private WordTrieNodeManager wordTrieNodes;
