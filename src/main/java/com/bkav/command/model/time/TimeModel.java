@@ -1,6 +1,6 @@
 package com.bkav.command.model.time;
 
-import com.bkav.command.model.CollectionModel;
+import com.bkav.command.model.common.CollectionModel;
 
 public class TimeModel extends CollectionModel { 
 

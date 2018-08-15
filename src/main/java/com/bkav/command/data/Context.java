@@ -3,7 +3,7 @@ package com.bkav.command.data;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
-import com.bkav.command.common.DayOfWeek;
+import com.bkav.command.data.time.DayOfWeek;
 
 /***
  * 

@@ -7,11 +7,11 @@ import org.joda.time.LocalDate;
 import org.joda.time.MonthDay;
 import org.joda.time.Period;
 
-import com.bkav.command.common.DayOfWeek;
 import com.bkav.command.data.time.DayOfMonth;
+import com.bkav.command.data.time.DayOfWeek;
 import com.bkav.command.data.time.TimeRepeat;
 import com.bkav.command.data.time.TimeRepeat.TimeRepeatType;
-import com.bkav.command.model.ParseStringModel;
+import com.bkav.command.model.common.ParseStringModel;
 
 public class ShortDateModel extends ParseStringModel<Object> {
 

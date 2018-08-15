@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.bkav.command.data.time.ValueUnit;
-import com.bkav.command.model.ParseStringModel;
+import com.bkav.command.model.common.ParseStringModel;
 
 public class ValueModel extends ParseStringModel<ValueUnit> {
 

@@ -7,7 +7,6 @@ import org.joda.time.LocalTime;
 import org.joda.time.MonthDay;
 import org.joda.time.ReadablePeriod;
 
-import com.bkav.command.common.DayOfWeek;
 import com.bkav.command.data.Context;
 import com.bkav.command.data.time.TimeRepeat.TimeRepeatType;
 import com.bkav.command.data.time.TimeValue.DayContext;

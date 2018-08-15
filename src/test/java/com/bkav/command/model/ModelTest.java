@@ -10,8 +10,8 @@ import org.junit.Test;
 
 import com.bkav.command.SMCManager;
 import com.bkav.command.common.Model;
-import com.bkav.command.demo.SampleData;
-import com.bkav.command.struct.ResultsProcess;
+import com.bkav.command.data.SampleData;
+import com.bkav.command.struct.result.ResultsProcess;
 import com.bkav.command.util.CollectionUtil;
 import com.bkav.command.util.StringUtil;
 

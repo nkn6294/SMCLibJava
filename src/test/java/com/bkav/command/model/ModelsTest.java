@@ -1,5 +1,6 @@
 package com.bkav.command.model;
 
+import static com.bkav.command.SMCManager.logger;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
@@ -8,11 +9,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static com.bkav.command.SMCManager.*;
-
 import com.bkav.command.SMCManager;
-import com.bkav.command.demo.SampleData;
-import com.bkav.command.struct.ResultsProcess;
+import com.bkav.command.data.SampleData;
+import com.bkav.command.model.common.PipeLineModel;
+import com.bkav.command.struct.result.ResultsProcess;
 import com.bkav.command.util.CollectionUtil;
 import com.bkav.command.util.StringUtil;
 

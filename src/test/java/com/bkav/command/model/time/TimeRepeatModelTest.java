@@ -1,8 +1,7 @@
 package com.bkav.command.model.time;
 
 import com.bkav.command.common.Model;
-import com.bkav.command.demo.SampleData;
-import com.bkav.command.model.time.repeat.TimeRepeatModel;
+import com.bkav.command.data.SampleData;
 
 public class TimeRepeatModelTest extends TimeModelTest {
 

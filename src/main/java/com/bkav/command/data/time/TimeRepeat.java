@@ -1,6 +1,6 @@
 package com.bkav.command.data.time;
 
-import com.bkav.command.data.CommonData;
+import com.bkav.command.common.CommonData;
 
 public class TimeRepeat extends CommonData {
 	public enum TimeRepeatType {

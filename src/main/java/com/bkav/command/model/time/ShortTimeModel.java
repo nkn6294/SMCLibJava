@@ -10,7 +10,7 @@ import org.joda.time.LocalTime;
 import org.joda.time.Period;
 
 import com.bkav.command.data.time.TimeValue.DayContext;
-import com.bkav.command.model.ParseStringModel;
+import com.bkav.command.model.common.ParseStringModel;
 
 public class ShortTimeModel extends ParseStringModel<Object> {// extends AbstractModel {
 

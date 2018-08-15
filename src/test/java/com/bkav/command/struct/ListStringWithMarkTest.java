@@ -14,7 +14,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.bkav.command.struct.ListStringWithMask;
+import com.bkav.command.struct.mask.ListStringWithMask;
 
 public class ListStringWithMarkTest {
 

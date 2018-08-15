@@ -1,19 +1,10 @@
 package com.bkav.command.struct;
 
-import static org.junit.Assert.assertTrue;
-
-import java.util.Arrays;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import com.bkav.command.SMCManager;
-import com.bkav.command.common.Model;
-import com.bkav.command.demo.SampleData;
-import com.bkav.command.demo.model.HomeDeviceTypeModel;
 
 public class WordTrieNodeTest {
 
@@ -35,16 +26,6 @@ public class WordTrieNodeTest {
 
 	@Test
 	public final void testFindPharases() {
-		String[] s1 = { "phong", "khach", "phong", "an", "dieu", "hoa", "buoi", "trua", "dieu", "den", "abc"};
-		Model model = new HomeDeviceTypeModel(SampleData.DEVICE_TYPE);
-		SMCManager.logger.info(Arrays.toString(s1));
-		ResultsProcess results = model.process(new ResultsProcess(s1));
-//		assertTrue(results.size() == 2);
-		assertTrue(true);//TODO testFindPharases
-		for (Object result : results) {
-			String resultResult = result.toString();
-			SMCManager.logger.info(resultResult);
-		}
-		SMCManager.logger.info(Arrays.toString(results.remains()));
+		
 	}
 }

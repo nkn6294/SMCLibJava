@@ -4,8 +4,6 @@ import org.joda.time.LocalDate;
 import org.joda.time.MonthDay;
 import org.joda.time.Period;
 
-import com.bkav.command.common.DayOfWeek;
-
 public class DateValue {
 	public enum DateValueType {
 		FULL_VALUE,

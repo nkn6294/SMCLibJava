@@ -1,6 +1,6 @@
 package com.bkav.command.common;
 
-import com.bkav.command.struct.ResultsProcess;
+import com.bkav.command.struct.result.ResultsProcess;
 
 public interface Model {
 	/***

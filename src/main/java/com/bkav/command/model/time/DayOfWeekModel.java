@@ -1,7 +1,7 @@
 package com.bkav.command.model.time;
 
-import com.bkav.command.common.DayOfWeek;
-import com.bkav.command.model.ParseStringModel;
+import com.bkav.command.data.time.DayOfWeek;
+import com.bkav.command.model.common.ParseStringModel;
 
 public class DayOfWeekModel extends ParseStringModel<DayOfWeek> {
 

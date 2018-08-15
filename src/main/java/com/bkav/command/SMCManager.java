@@ -13,10 +13,10 @@ import com.bkav.command.common.CommandTextProcesserAdvance;
 import com.bkav.command.common.CommonCommandTextProcesser;
 import com.bkav.command.common.CommonTextProcesserAdvance;
 import com.bkav.command.common.TextProcesser;
-import com.bkav.command.data.NormalInputUtils;
-import com.bkav.command.data.NumberUtils;
-import com.bkav.command.model.time.DateUtils;
-import com.bkav.command.model.time.TimeUtils;
+import com.bkav.command.util.DateUtils;
+import com.bkav.command.util.NormalInputUtils;
+import com.bkav.command.util.NumberUtils;
+import com.bkav.command.util.TimeUtils;
 
 public class SMCManager {
 	public static Logger logger;// = null;
